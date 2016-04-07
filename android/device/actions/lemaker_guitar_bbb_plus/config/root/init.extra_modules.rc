@@ -111,6 +111,10 @@ service speakup /LMKNetwork.sh speak
     class modules
     oneshot
 
+service dulnetwork /LMKNetwork.sh DulNetwork
+    class modules
+    oneshot
+
 service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
     class main
     disabled

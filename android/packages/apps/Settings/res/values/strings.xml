@@ -35,7 +35,7 @@
 
     <string name="hdmi_audio">LeMaker Hdmi Audio ON</string>
 
-    <string name="mic_audio">LeMaker Mic Audio ON</string>
+    <string name="dual_network_support">Dual network support</string>
     <!-- Device Info --> <skip />
     <!-- Device Info screen. Used for a status item's value when the proper value is not known -->
     <string name="device_info_default">Unknown</string>

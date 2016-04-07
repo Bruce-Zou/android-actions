@@ -82,6 +82,7 @@ public class WirelessSettings extends SettingsPreferenceFragment
     public static final String KEY_LEMAKER_NETWORK_ETH0 = "eth0_device_restart_button";
     public static final String KEY_LEMAKER_NETWORK_ETH1 = "eth1_device_restart_button";//hdmi_audio_switch_button
     public static final String KEY_LEMAKER_HDMI_SWITCH = "hdmi_audio_switch_button";
+    public static final String KEY_DUAL_NETWORK_SWITCH = "dual_network_button";
     public static final int REQUEST_CODE_EXIT_ECM = 1;
 
     private AirplaneModeEnabler mAirplaneModeEnabler;
@@ -130,7 +131,9 @@ public class WirelessSettings extends SettingsPreferenceFragment
 			SystemProperties.set("lemaker.audio", "speak");
 			SystemProperties.set("ctl.start", "speakup");
 		}
-        }
+        } else if (preference == findPreference(KEY_DUAL_NETWORK_SWITCH)){
+		SystemProperties.set("ctl.start", "dulnetwork");
+	}
         // Let the intents be launched by the Preference manager
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

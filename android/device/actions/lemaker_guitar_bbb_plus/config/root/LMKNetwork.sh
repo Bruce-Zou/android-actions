@@ -19,6 +19,10 @@ if [ $2 == "start" ];then
 else
 	netcfg $1 down
 fi
+elif [ $1 == "DulNetwork" ]; then
+
+	busybox ifconfig eth0 192.168.0.11
+	ip rule add from all table main fwmark 0x0/0xffff pref 1000	
 
 else
 	if [ $1 == "hdmi" ];then

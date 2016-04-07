@@ -5,14 +5,14 @@ mkdir /data/misc/dhcp 0770 dhcp dhcp
 chown dhcp dhcp /data/misc/dhcp
 
 
-service dhcpcd_eth0 /system/bin/dhcpcd -aABDKL
-    class late_start
-    disabled
-    oneshot
+#service dhcpcd_eth0 /system/bin/dhcpcd -aABDKL
+#    class main
+#    disabled
+#    oneshot
     
     
-service iprenew_eth0 /system/bin/dhcpcd -n
-    class late_start
-    disabled
-    oneshot
+#service iprenew_eth0 /system/bin/dhcpcd -n
+#    class main
+#    disabled
+#    oneshot
 
