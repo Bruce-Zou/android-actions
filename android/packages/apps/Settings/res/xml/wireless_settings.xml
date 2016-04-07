@@ -117,4 +117,9 @@
         android:title="@string/hdmi_audio"
 	android:persistent="false"/>
 
+   <SwitchPreference
+        android:key="dual_network_button"
+        android:title="@string/dual_network_support"
+        android:persistent="false"/>
+
 </PreferenceScreen>
