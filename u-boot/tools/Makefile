@@ -185,19 +185,19 @@ LOGO-$(CONFIG_VIDEO_LOGO) += $(LOGO_H)
 LOGO-$(CONFIG_VIDEO_LOGO) += $(LOGO_DATA_H)
 
 # Generic logo
-ifeq ($(LOGO_BMP),)
+#ifeq ($(LOGO_BMP),)
 LOGO_BMP= $(srctree)/$(src)/logos/denx.bmp
 
-# Use board logo and fallback to vendor
-ifneq ($(wildcard $(srctree)/$(src)/logos/$(BOARD).bmp),)
-LOGO_BMP= $(srctree)/$(src)/logos/$(BOARD).bmp
-else
-ifneq ($(wildcard $(srctree)/$(src)/logos/$(VENDOR).bmp),)
-LOGO_BMP= $(srctree)/$(src)/logos/$(VENDOR).bmp
-endif
-endif
+## Use board logo and fallback to vendor
+#ifneq ($(wildcard $(srctree)/$(src)/logos/$(BOARD).bmp),)
+#LOGO_BMP= $(srctree)/$(src)/logos/$(BOARD).bmp
+#else
+#ifneq ($(wildcard $(srctree)/$(src)/logos/$(VENDOR).bmp),)
+#LOGO_BMP= $(srctree)/$(src)/logos/$(VENDOR).bmp
+#endif
+#endif
 
-endif # !LOGO_BMP
+#endif # !LOGO_BMP
 
 #
 # Use native tools and options
