@@ -521,7 +521,7 @@ public class NotificationManagerService extends SystemService {
 
                     identity = Binder.clearCallingIdentity();
                     try {
-                        mVibrator.cancel();
+//                        mVibrator.cancel();
                     } finally {
                         Binder.restoreCallingIdentity(identity);
                     }
@@ -612,7 +612,7 @@ public class NotificationManagerService extends SystemService {
                 mVibrateNotificationKey = null;
                 identity = Binder.clearCallingIdentity();
                 try {
-                    mVibrator.cancel();
+//                    mVibrator.cancel();
                 } finally {
                     Binder.restoreCallingIdentity(identity);
                 }
@@ -860,7 +860,7 @@ public class NotificationManagerService extends SystemService {
 
         mAm = ActivityManagerNative.getDefault();
         mAppOps = (AppOpsManager) getContext().getSystemService(Context.APP_OPS_SERVICE);
-        mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+//        mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
 
         mHandler = new WorkerHandler();
         mRankingThread.start();
@@ -2132,11 +2132,11 @@ public class NotificationManagerService extends SystemService {
                     // notifying app does not have the VIBRATE permission.
                     long identity = Binder.clearCallingIdentity();
                     try {
-                        mVibrator.vibrate(record.sbn.getUid(), record.sbn.getOpPkg(),
-                            useDefaultVibrate ? mDefaultVibrationPattern
-                                : mFallbackVibrationPattern,
-                            ((notification.flags & Notification.FLAG_INSISTENT) != 0)
-                                ? 0: -1, audioAttributesForNotification(notification));
+//                        mVibrator.vibrate(record.sbn.getUid(), record.sbn.getOpPkg(),
+//                            useDefaultVibrate ? mDefaultVibrationPattern
+//                                : mFallbackVibrationPattern,
+//                            ((notification.flags & Notification.FLAG_INSISTENT) != 0)
+//                                ? 0: -1, audioAttributesForNotification(notification));
                         buzzBeepBlinked = true;
                     } finally {
                         Binder.restoreCallingIdentity(identity);
@@ -2144,10 +2144,10 @@ public class NotificationManagerService extends SystemService {
                 } else if (notification.vibrate.length > 1) {
                     // If you want your own vibration pattern, you need the VIBRATE
                     // permission
-                    mVibrator.vibrate(record.sbn.getUid(), record.sbn.getOpPkg(),
-                            notification.vibrate,
-                        ((notification.flags & Notification.FLAG_INSISTENT) != 0)
-                                ? 0: -1, audioAttributesForNotification(notification));
+//                    mVibrator.vibrate(record.sbn.getUid(), record.sbn.getOpPkg(),
+//                            notification.vibrate,
+//                        ((notification.flags & Notification.FLAG_INSISTENT) != 0)
+//                                ? 0: -1, audioAttributesForNotification(notification));
                     buzzBeepBlinked = true;
                 }
             }
@@ -2501,7 +2501,7 @@ public class NotificationManagerService extends SystemService {
             mVibrateNotificationKey = null;
             long identity = Binder.clearCallingIdentity();
             try {
-                mVibrator.cancel();
+//                mVibrator.cancel();
             }
             finally {
                 Binder.restoreCallingIdentity(identity);

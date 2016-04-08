@@ -621,26 +621,26 @@ service media /system/bin/mediaserver
     group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc mediadrm
     ioprio rt 4
 
-# One shot invocation to deal with encrypted volume.
-service defaultcrypto /system/bin/vdc --wait cryptfs mountdefaultencrypted
-    disabled
-    oneshot
-    # vold will set vold.decrypt to trigger_restart_framework (default
-    # encryption) or trigger_restart_min_framework (other encryption)
+## One shot invocation to deal with encrypted volume.
+#service defaultcrypto /system/bin/vdc --wait cryptfs mountdefaultencrypted
+#    disabled
+#    oneshot
+#    # vold will set vold.decrypt to trigger_restart_framework (default
+#    # encryption) or trigger_restart_min_framework (other encryption)
+#
+## One shot invocation to encrypt unencrypted volumes
+#service encrypt /system/bin/vdc --wait cryptfs enablecrypto inplace default
+#    disabled
+#    oneshot
+#    # vold will set vold.decrypt to trigger_restart_framework (default
+#    # encryption)
 
-# One shot invocation to encrypt unencrypted volumes
-service encrypt /system/bin/vdc --wait cryptfs enablecrypto inplace default
-    disabled
-    oneshot
-    # vold will set vold.decrypt to trigger_restart_framework (default
-    # encryption)
-
-service bootanim /system/bin/bootanimation
-    class main
-    user graphics
-    group graphics
-    disabled
-    oneshot
+#service bootanim /system/bin/bootanimation
+#    class main
+#    user graphics
+#    group graphics
+#    disabled
+#    oneshot
 
 service installd /system/bin/installd
     class main
@@ -667,11 +667,11 @@ service mtpd /system/bin/mtpd
     disabled
     oneshot
 
-service keystore /system/bin/keystore /data/misc/keystore
-    class main
-    user keystore
-    group keystore drmrpc
-
+#service keystore /system/bin/keystore /data/misc/keystore
+#    class main
+#    user keystore
+#    group keystore drmrpc
+#
 service dumpstate /system/bin/dumpstate -s
     class main
     socket dumpstate stream 0660 shell log

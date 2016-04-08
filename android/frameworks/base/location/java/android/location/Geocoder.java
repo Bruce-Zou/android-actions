@@ -57,7 +57,9 @@ public final class Geocoder {
      * empty lists.
      */
     public static boolean isPresent() {
-        IBinder b = ServiceManager.getService(Context.LOCATION_SERVICE);
+        IBinder b = ServiceManager.getService(Context.LOCATION_SERVICE);  
+        if(b == null)
+        	return false;
         ILocationManager lm = ILocationManager.Stub.asInterface(b);
         try {
             return lm.geocoderIsPresent();
@@ -81,8 +83,8 @@ public final class Geocoder {
             throw new NullPointerException("locale == null");
         }
         mParams = new GeocoderParams(context, locale);
-        IBinder b = ServiceManager.getService(Context.LOCATION_SERVICE);
-        mService = ILocationManager.Stub.asInterface(b);
+//        IBinder b = ServiceManager.getService(Context.LOCATION_SERVICE);
+//        mService = ILocationManager.Stub.asInterface(b);
     }
 
     /**
@@ -129,7 +131,9 @@ public final class Geocoder {
             throw new IllegalArgumentException("longitude == " + longitude);
         }
         try {
-            List<Address> results = new ArrayList<Address>();
+            List<Address> results = new ArrayList<Address>();  
+            if(mService == null)
+            	return null;
             String ex =  mService.getFromLocation(latitude, longitude, maxResults,
                 mParams, results);
             if (ex != null) {
@@ -172,6 +176,8 @@ public final class Geocoder {
         }
         try {
             List<Address> results = new ArrayList<Address>();
+            if(mService == null)
+            	return null;            
             String ex = mService.getFromLocationName(locationName,
                 0, 0, 0, 0, maxResults, mParams, results);
             if (ex != null) {
@@ -244,6 +250,8 @@ public final class Geocoder {
         }
         try {
             ArrayList<Address> result = new ArrayList<Address>();
+            if(mService == null)
+            	return null;            
             String ex =  mService.getFromLocationName(locationName,
                 lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude,
                 maxResults, mParams, result);

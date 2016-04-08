@@ -1,0 +1,70 @@
+<resources>
+
+    <string name="app_name">ActionsPcbaTest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_pcba_test">PcbaTestActivity</string>
+	<string name="untest">Untested</string>
+	<string name="testing">Testing...</string>
+	<string name="auto_test_items">Auto Test Options</string>
+	<string name="manual_test_items">Manual Test Options</string>
+	<string name="start_record">Record  </string>
+	<string name="stop_record">Stop Record</string>
+	<string name="test_item_name">TestCase Name</string>
+	<string name="test_item_result">Test Result</string>
+	<string name="item_lable_ddr">Memory Test</string>
+	<string name="item_lable_flash">Flash Test</string>
+	<string name="item_lable_uhost">Uhost Test</string>
+	<string name="item_lable_card">TFCard Test</string>
+	<string name="item_lable_wifi">WIFI Test</string>
+	<string name="item_lable_bluetooth">blueTooth Test</string>	
+	<string name="item_lable_rtc">RTC Time Test</string>	
+	<string name="item_lable_sim">SIM Card Test</string>	
+	<string name="item_lable_phone">Call Phone</string>	
+	<string name="item_lable_gsensor">Gsensor Test</string>
+	<string name="item_lable_usb">USB Test</string>	
+	<string name="item_lable_hdmi">HDMI Test</string>
+	<string name="item_lable_headset">Headset Test</string>
+	<string name="item_lable_voice">Record Test</string>
+	<string name="item_lable_key">Volume key Test</string>
+	<string name="item_lable_camera">Camera Test</string>
+	<string name="item_lable_lcd">LCD Test</string>
+	<string name="item_lable_tp">touch panel Test</string>
+	<string name="item_lable_backlight">BlackLight Test</string>
+	<string name="item_lable_battery">Battery Test</string>
+	<string name="item_lable_mouse">Mouse Connect</string>
+	<string name="item_lable_infrared">Infrared Test</string>
+	<string name="item_lable_ethernet">Ethernet Test</string>
+	<string name="item_lable_usb2">USB2.0 Test</string>
+	<string name="uninstall_apk">Uninstall this app</string>
+	<string name="uninstall_confirm">Please confirm whether to unload !</string>
+	<string name="restore">Restore factory settings</string>
+	<string name="reboot">If unloading after closing machine</string>
+	<string name="is_connected">Connected</string>
+	<string name="is_mtp_connected"></string>
+	<string name="is_unconnected">Pulled out</string>
+	<string name="is_waiting_plugin">Waiting for device to connect...</string>
+	<string name="is_waiting_control">Waiting for infrared to control...</string>
+	<string name="wifi_is_openning">Opeaning...</string>
+	<string name="wifi_is_searching">Scaning...</string>	
+	<string name="wifi_level">Level：</string>	
+	<string name="bluetooth_not_support">Bluetooth devices do not support...</string>
+	<string name="bluetooth_is_openning">Opeaning...</string>
+	<string name="bluetooth_is_searching">Scaning...</string>
+	
+	<string name="key_notify">Please Press Vol+ Vol-</string>
+		
+	<string name="voice_notify">Please Press“Record”</string>
+	<string name="voice_is_recording">Recording</string>
+	<string name="voice_is_replaying">Playing</string>
+	
+	<string name="touch_notify">Please Press“Record”</string>
+	
+	<string name="playing_music">Playing Music</string>
+	<string name="waiting_music">Will Play Music</string>
+	
+	<string name="switch_camera">Switch camera</string>
+	<string name="vibration_confirm">"Please make sure that the vibration"</string>
+	<string name="calibration_button">"calibration"</string>
+
+</resources>

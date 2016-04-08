@@ -123,7 +123,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     private final ArrayList<IBinder> mRemoveList = new ArrayList<IBinder>();
     private final ArrayList<Record> mRecords = new ArrayList<Record>();
 
-    private final IBatteryStats mBatteryStats;
+//    private final IBatteryStats mBatteryStats;
 
     private boolean hasNotifySubscriptionInfoChangedOccurred = false;
 
@@ -279,7 +279,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         CellLocation  location = CellLocation.getEmpty();
 
         mContext = context;
-        mBatteryStats = BatteryStatsService.getService();
+//        mBatteryStats = BatteryStatsService.getService();
         mConnectedApns = new ArrayList<String>();
 
         int numPhones = TelephonyManager.getDefault().getPhoneCount();
@@ -1290,13 +1290,13 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private void broadcastServiceStateChanged(ServiceState state, int subId) {
         long ident = Binder.clearCallingIdentity();
-        try {
-            mBatteryStats.notePhoneState(state.getState());
-        } catch (RemoteException re) {
-            // Can't do much
-        } finally {
+//        try {
+//            mBatteryStats.notePhoneState(state.getState());
+//        } catch (RemoteException re) {
+//            // Can't do much
+//        } finally {
             Binder.restoreCallingIdentity(ident);
-        }
+//        }
 
         Intent intent = new Intent(TelephonyIntents.ACTION_SERVICE_STATE_CHANGED);
         Bundle data = new Bundle();
@@ -1309,13 +1309,13 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private void broadcastSignalStrengthChanged(SignalStrength signalStrength, int subId) {
         long ident = Binder.clearCallingIdentity();
-        try {
-            mBatteryStats.notePhoneSignalStrength(signalStrength);
-        } catch (RemoteException e) {
-            /* The remote entity disappeared, we can safely ignore the exception. */
-        } finally {
+//        try {
+//            mBatteryStats.notePhoneSignalStrength(signalStrength);
+//        } catch (RemoteException e) {
+//            /* The remote entity disappeared, we can safely ignore the exception. */
+//        } finally {
             Binder.restoreCallingIdentity(ident);
-        }
+//        }
 
         Intent intent = new Intent(TelephonyIntents.ACTION_SIGNAL_STRENGTH_CHANGED);
         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
@@ -1328,17 +1328,17 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private void broadcastCallStateChanged(int state, String incomingNumber, int subId) {
         long ident = Binder.clearCallingIdentity();
-        try {
-            if (state == TelephonyManager.CALL_STATE_IDLE) {
-                mBatteryStats.notePhoneOff();
-            } else {
-                mBatteryStats.notePhoneOn();
-            }
-        } catch (RemoteException e) {
-            /* The remote entity disappeared, we can safely ignore the exception. */
-        } finally {
+ //       try {
+ //           if (state == TelephonyManager.CALL_STATE_IDLE) {
+ //               mBatteryStats.notePhoneOff();
+ //           } else {
+ //               mBatteryStats.notePhoneOn();
+ //           }
+ //       } catch (RemoteException e) {
+ //           /* The remote entity disappeared, we can safely ignore the exception. */
+ //       } finally {
             Binder.restoreCallingIdentity(ident);
-        }
+ //       }
 
         Intent intent = new Intent(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
         intent.putExtra(PhoneConstants.STATE_KEY,

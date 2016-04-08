@@ -5,10 +5,10 @@ on post-fs
   #  write /sys/power/wake_lock 1
 	
 
-    insmod /misc/modules/flashlight.ko
-
-    insmod /misc/modules/ethernet.ko
-    #vibrate
+    insmod /misc/modules/flashlight.ko                                                                                                                       
+                                                                                                                                                             
+    insmod /misc/modules/ethernet.ko                                                                                                                         
+    #vibrate                                                                                                                                                 
     insmod /misc/modules/act_vibrate.ko
   
     #tp
@@ -25,11 +25,12 @@ on post-fs
 
 #	insmod /misc/modules/gsensor_mc3232.ko
 
-   start insmod_gsensor
-   wait /dev/input/event2
+#    start insmod_gsensor
+#    wait /dev/input/event2
 
     #tp
-    start insmod_ctp
+    insmod /misc/modules/ctp_ft5x06.ko
+#    start insmod_ctp
 
     setprop service.adb.tcp.port 5555    
 
@@ -42,12 +43,15 @@ on post-fs
     #camera
     #insmod /misc/modules/bisp.ko
     #insmod /misc/modules/gc2035.ko
-    #insmod /misc/modules/gc0308.ko
-    #insmod /misc/modules/owl_camera.ko
+    insmod /misc/modules/flashlight.ko
+    insmod /misc/modules/ov5640.ko
+    insmod /misc/modules/owl_camera.ko
     
-    #camera auto-detect
-    start insmod_camera
-    wait /sys/rear_camera/status
+    
+    
+#    #camera auto-detect
+#    start insmod_camera
+#    wait /sys/rear_camera/status
     
     setprop ro.bt.useusb0 "1" 
     # bluetooth
@@ -71,21 +75,21 @@ on post-fs
 
     #mkdir /data/camera for camcorder_profiles.xml
     mkdir /data/camera 0755 media media
-service insmod_gsensor /insmod_gsensor.sh
-    class modules
-    oneshot
+#service insmod_gsensor /insmod_gsensor.sh
+#    class modules
+#    oneshot
 
-service insmod_camera /insmod_camera.sh
-    class modules
-    oneshot
+#service insmod_camera /insmod_camera.sh
+#    class modules
+#    oneshot
 
 service cp_vendor /cp_vendor_app.sh  &
     class main
     oneshot
     
-service insmod_ctp /insmod_ctp.sh
-    class modules
-    oneshot
+#service insmod_ctp /insmod_ctp.sh
+#    class modules
+#    oneshot
 
 service eth0_up /LMKNetwork.sh eth0 start
     class modules
@@ -111,15 +115,15 @@ service speakup /LMKNetwork.sh speak
     class modules
     oneshot
 
-service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
-    class main
-    disabled
-    oneshot system
-
-service iprenew_bt-pan /system/bin/dhcpcd -n
-    class main
-    disabled
-    oneshot system
+#service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
+#    class main
+#    disabled
+#    oneshot system
+#
+#service iprenew_bt-pan /system/bin/dhcpcd -n
+#    class main
+#    disabled
+#    oneshot system
 
 on charger
      # start charger, load 

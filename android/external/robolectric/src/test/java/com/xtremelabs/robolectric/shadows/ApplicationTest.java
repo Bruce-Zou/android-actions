@@ -79,7 +79,7 @@ public class ApplicationTest {
         checkSystemService(Context.SEARCH_SERVICE, android.app.SearchManager.class);
         checkSystemService(Context.SENSOR_SERVICE, android.hardware.TestSensorManager.class);
         checkSystemService(Context.STORAGE_SERVICE, android.os.storage.StorageManager.class);
-        checkSystemService(Context.VIBRATOR_SERVICE, android.os.TestVibrator.class);
+//        checkSystemService(Context.VIBRATOR_SERVICE, android.os.TestVibrator.class);
 //        checkSystemService(Context.CONNECTIVITY_SERVICE, android.net.ConnectivityManager.class);
 //        checkSystemService(Context.WIFI_SERVICE, android.net.wifi.WifiManager.class);
 //        checkSystemService(Context.AUDIO_SERVICE, android.media.AudioManager.class);

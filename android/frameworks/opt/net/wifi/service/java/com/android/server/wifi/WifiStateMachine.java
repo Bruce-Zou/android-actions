@@ -856,7 +856,7 @@ public class WifiStateMachine extends StateMachine {
      */
     private final WorkSource mLastRunningWifiUids = new WorkSource();
 
-    private final IBatteryStats mBatteryStats;
+    private  IBatteryStats mBatteryStats = null;
 
     private BatchedScanSettings mBatchedScanSettings = null;
 
@@ -882,8 +882,7 @@ public class WifiStateMachine extends StateMachine {
         mContext = context;
         mInterfaceName = wlanInterface;
         mNetworkInfo = new NetworkInfo(ConnectivityManager.TYPE_WIFI, 0, NETWORKTYPE, "");
-        mBatteryStats = IBatteryStats.Stub.asInterface(ServiceManager.getService(
-                BatteryStats.SERVICE_NAME));
+        mBatteryStats = null;//IBatteryStats.Stub.asInterface(ServiceManager.getService(BatteryStats.SERVICE_NAME));
 
         IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
         mNwService = INetworkManagementService.Stub.asInterface(b);
@@ -1791,6 +1790,7 @@ public class WifiStateMachine extends StateMachine {
                 || workSource != null)) {
             mScanWorkSource = workSource != null ? workSource : new WorkSource(callingUid);
             try {
+            	if(mBatteryStats != null)
                 mBatteryStats.noteWifiScanStartedFromSource(mScanWorkSource);
             } catch (RemoteException e) {
                 log(e.toString());
@@ -1815,6 +1815,7 @@ public class WifiStateMachine extends StateMachine {
         }
         if (mScanWorkSource != null) {
             try {
+            	if(mBatteryStats != null)
                 mBatteryStats.noteWifiScanStoppedFromSource(mScanWorkSource);
             } catch (RemoteException e) {
                 log(e.toString());
@@ -1831,6 +1832,7 @@ public class WifiStateMachine extends StateMachine {
                 (mNotedBatchedScanWorkSource.equals(mBatchedScanWorkSource) == false ||
                  mNotedBatchedScanCsph != mBatchedScanCsph)) {
             try {
+            	if(mBatteryStats != null)
                 mBatteryStats.noteWifiBatchedScanStoppedFromSource(mNotedBatchedScanWorkSource);
             } catch (RemoteException e) {
                 log(e.toString());
@@ -1841,6 +1843,7 @@ public class WifiStateMachine extends StateMachine {
         }
         // note the start of the new
         try {
+        	if(mBatteryStats != null)
             mBatteryStats.noteWifiBatchedScanStartedFromSource(mBatchedScanWorkSource,
                     mBatchedScanCsph);
             mNotedBatchedScanWorkSource = mBatchedScanWorkSource;
@@ -1855,6 +1858,7 @@ public class WifiStateMachine extends StateMachine {
 
         if (mNotedBatchedScanWorkSource != null) {
             try {
+            	if(mBatteryStats != null)
                 mBatteryStats.noteWifiBatchedScanStoppedFromSource(mNotedBatchedScanWorkSource);
             } catch (RemoteException e) {
                 log(e.toString());
@@ -2408,20 +2412,21 @@ public class WifiStateMachine extends StateMachine {
                         // If the work source has changed since last time, need
                         // to remove old work from battery stats.
                         if (mLastRunningWifiUids.diff(mRunningWifiUids)) {
+                        	if(mBatteryStats != null)
                             mBatteryStats.noteWifiRunningChanged(mLastRunningWifiUids,
                                     mRunningWifiUids);
                             mLastRunningWifiUids.set(mRunningWifiUids);
                         }
                     } else {
                         // Now being started, report it.
-                        mBatteryStats.noteWifiRunning(mRunningWifiUids);
+//                        mBatteryStats.noteWifiRunning(mRunningWifiUids);
                         mLastRunningWifiUids.set(mRunningWifiUids);
                         mReportedRunning = true;
                     }
                 } else {
                     if (mReportedRunning) {
                         // Last reported we were running, time to stop.
-                        mBatteryStats.noteWifiStopped(mLastRunningWifiUids);
+//                        mBatteryStats.noteWifiStopped(mLastRunningWifiUids);
                         mLastRunningWifiUids.clear();
                         mReportedRunning = false;
                     }
@@ -3228,15 +3233,15 @@ public class WifiStateMachine extends StateMachine {
     private void setWifiState(int wifiState) {
         final int previousWifiState = mWifiState.get();
 
-        try {
-            if (wifiState == WIFI_STATE_ENABLED) {
-                mBatteryStats.noteWifiOn();
-            } else if (wifiState == WIFI_STATE_DISABLED) {
-                mBatteryStats.noteWifiOff();
-            }
-        } catch (RemoteException e) {
-            loge("Failed to note battery stats in wifi");
-        }
+//        try {
+//            if (wifiState == WIFI_STATE_ENABLED) {
+//                mBatteryStats.noteWifiOn();
+//            } else if (wifiState == WIFI_STATE_DISABLED) {
+//                mBatteryStats.noteWifiOff();
+//            }
+//        } catch (RemoteException e) {
+//            loge("Failed to note battery stats in wifi");
+//        }
 
         mWifiState.set(wifiState);
 
@@ -3252,15 +3257,15 @@ public class WifiStateMachine extends StateMachine {
     private void setWifiApState(int wifiApState) {
         final int previousWifiApState = mWifiApState.get();
 
-        try {
-            if (wifiApState == WIFI_AP_STATE_ENABLED) {
-                mBatteryStats.noteWifiOn();
-            } else if (wifiApState == WIFI_AP_STATE_DISABLED) {
-                mBatteryStats.noteWifiOff();
-            }
-        } catch (RemoteException e) {
-            loge("Failed to note battery stats in wifi");
-        }
+//        try {
+//            if (wifiApState == WIFI_AP_STATE_ENABLED) {
+//                mBatteryStats.noteWifiOn();
+//            } else if (wifiApState == WIFI_AP_STATE_DISABLED) {
+//                mBatteryStats.noteWifiOff();
+//            }
+//        } catch (RemoteException e) {
+//            loge("Failed to note battery stats in wifi");
+//        }
 
         // Update state
         mWifiApState.set(wifiApState);
@@ -4182,6 +4187,7 @@ public class WifiStateMachine extends StateMachine {
 
     private void sendRssiChangeBroadcast(final int newRssi) {
         try {
+        	if(mBatteryStats != null)
             mBatteryStats.noteWifiRssiChanged(newRssi);
         } catch (RemoteException e) {
             // Won't happen.

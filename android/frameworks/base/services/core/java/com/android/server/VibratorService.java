@@ -65,7 +65,7 @@ public class VibratorService extends IVibratorService.Stub
     private final Context mContext;
     private final PowerManager.WakeLock mWakeLock;
     private final IAppOpsService mAppOpsService;
-    private final IBatteryStats mBatteryStatsService;
+    private  IBatteryStats mBatteryStatsService = null;
     private PowerManagerInternal mPowerManagerInternal;
     private InputManager mIm;
 
@@ -158,8 +158,7 @@ public class VibratorService extends IVibratorService.Stub
         mWakeLock.setReferenceCounted(true);
 
         mAppOpsService = IAppOpsService.Stub.asInterface(ServiceManager.getService(Context.APP_OPS_SERVICE));
-        mBatteryStatsService = IBatteryStats.Stub.asInterface(ServiceManager.getService(
-                BatteryStats.SERVICE_NAME));
+        mBatteryStatsService = null;//IBatteryStats.Stub.asInterface(ServiceManager.getService(BatteryStats.SERVICE_NAME));
 
         mVibrations = new LinkedList<Vibration>();
 
@@ -532,11 +531,11 @@ public class VibratorService extends IVibratorService.Stub
             if (DEBUG) {
                 Slog.d(TAG, "Turning vibrator on for " + millis + " ms.");
             }
-            try {
-                mBatteryStatsService.noteVibratorOn(uid, millis);
+//            try {
+////                mBatteryStatsService.noteVibratorOn(uid, millis);
                 mCurVibUid = uid;
-            } catch (RemoteException e) {
-            }
+//            } catch (RemoteException e) {
+//            }
             final int vibratorCount = mInputDeviceVibrators.size();
             if (vibratorCount != 0) {
                 final AudioAttributes attributes = new AudioAttributes.Builder().setUsage(usageHint)
@@ -556,10 +555,11 @@ public class VibratorService extends IVibratorService.Stub
                 Slog.d(TAG, "Turning vibrator off.");
             }
             if (mCurVibUid >= 0) {
-                try {
-                    mBatteryStatsService.noteVibratorOff(mCurVibUid);
-                } catch (RemoteException e) {
-                }
+//                try {
+//                    mBatteryStatsService.noteVibratorOff(mCurVibUid);
+//										mCurVibUid = -1;
+//                } catch (RemoteException e) {
+//                }
                 mCurVibUid = -1;
             }
             final int vibratorCount = mInputDeviceVibrators.size();

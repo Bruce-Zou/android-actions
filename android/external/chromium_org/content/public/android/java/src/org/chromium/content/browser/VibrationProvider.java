@@ -33,18 +33,18 @@ class VibrationProvider {
     private void vibrate(long milliseconds) {
         if (mAudioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT &&
                 mHasVibratePermission) {
-            mVibrator.vibrate(milliseconds);
+//            mVibrator.vibrate(milliseconds);
         }
     }
 
     @CalledByNative
     private void cancelVibration() {
-        if (mHasVibratePermission) mVibrator.cancel();
+//        if (mHasVibratePermission) mVibrator.cancel();
     }
 
     private VibrationProvider(Context context) {
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+//        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mHasVibratePermission = context.checkCallingOrSelfPermission(
                 android.Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED;
         if (!mHasVibratePermission) {

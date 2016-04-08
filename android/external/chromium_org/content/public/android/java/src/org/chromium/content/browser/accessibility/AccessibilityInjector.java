@@ -229,7 +229,7 @@ public class AccessibilityInjector extends WebContentsObserverAndroid {
     public void onPageLostFocus() {
         if (mContentViewCore.isAlive()) {
             if (mTextToSpeech != null) mTextToSpeech.stop();
-            if (mVibrator != null) mVibrator.cancel();
+//            if (mVibrator != null) mVibrator.cancel();
         }
     }
 
@@ -281,10 +281,10 @@ public class AccessibilityInjector extends WebContentsObserverAndroid {
                         ALIAS_ACCESSIBILITY_JS_INTERFACE);
             }
 
-            if (mVibrator == null && mHasVibratePermission) {
-                mVibrator = new VibratorWrapper(context);
-                mContentViewCore.addJavascriptInterface(mVibrator,
-                        ALIAS_ACCESSIBILITY_JS_INTERFACE_2);
+//            if (mVibrator == null && mHasVibratePermission) {
+//                mVibrator = new VibratorWrapper(context);
+//                mContentViewCore.addJavascriptInterface(mVibrator,
+//                        ALIAS_ACCESSIBILITY_JS_INTERFACE_2);
             }
         }
     }
@@ -297,11 +297,11 @@ public class AccessibilityInjector extends WebContentsObserverAndroid {
             mTextToSpeech = null;
         }
 
-        if (mVibrator != null) {
-            mContentViewCore.removeJavascriptInterface(ALIAS_ACCESSIBILITY_JS_INTERFACE_2);
-            mVibrator.cancel();
-            mVibrator = null;
-        }
+//        if (mVibrator != null) {
+//            mContentViewCore.removeJavascriptInterface(ALIAS_ACCESSIBILITY_JS_INTERFACE_2);
+//            mVibrator.cancel();
+//            mVibrator = null;
+//        }
     }
 
     private int getAxsUrlParameterValue() {
@@ -350,20 +350,20 @@ public class AccessibilityInjector extends WebContentsObserverAndroid {
         private Vibrator mVibrator;
 
         public VibratorWrapper(Context context) {
-            mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+//            mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         }
 
         @JavascriptInterface
         @SuppressWarnings("unused")
         public boolean hasVibrator() {
-            return mVibrator.hasVibrator();
+return false;//           return mVibrator.hasVibrator();
         }
 
         @JavascriptInterface
         @SuppressWarnings("unused")
         public void vibrate(long milliseconds) {
             milliseconds = Math.min(milliseconds, MAX_VIBRATE_DURATION_MS);
-            mVibrator.vibrate(milliseconds);
+//            mVibrator.vibrate(milliseconds);
         }
 
         @JavascriptInterface
@@ -375,13 +375,13 @@ public class AccessibilityInjector extends WebContentsObserverAndroid {
 
             repeat = -1;
 
-            mVibrator.vibrate(pattern, repeat);
+//            mVibrator.vibrate(pattern, repeat);
         }
 
         @JavascriptInterface
         @SuppressWarnings("unused")
         public void cancel() {
-            mVibrator.cancel();
+//            mVibrator.cancel();
         }
     }
 

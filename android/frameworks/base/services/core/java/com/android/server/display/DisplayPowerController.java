@@ -121,7 +121,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private final DisplayPowerCallbacks mCallbacks;
 
     // Battery stats.
-    private final IBatteryStats mBatteryStats;
+//    private final IBatteryStats mBatteryStats;
 
     // The lights service.
     private final LightsManager mLights;
@@ -260,7 +260,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         mHandler = new DisplayControllerHandler(handler.getLooper());
         mCallbacks = callbacks;
 
-        mBatteryStats = BatteryStatsService.getService();
+//        mBatteryStats = BatteryStatsService.getService();
         mLights = LocalServices.getService(LightsManager.class);
         mSensorManager = sensorManager;
         mWindowManagerPolicy = LocalServices.getService(WindowManagerPolicy.class);
@@ -450,13 +450,13 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 mPowerState, DisplayPowerState.SCREEN_BRIGHTNESS);
         mScreenBrightnessRampAnimator.setListener(mRampAnimatorListener);
 
-        // Initialize screen state for battery stats.
-        try {
-            mBatteryStats.noteScreenState(mPowerState.getScreenState());
-            mBatteryStats.noteScreenBrightness(mPowerState.getScreenBrightness());
-        } catch (RemoteException ex) {
-            // same process
-        }
+//        // Initialize screen state for battery stats.
+//        try {
+//            mBatteryStats.noteScreenState(mPowerState.getScreenState());
+//            mBatteryStats.noteScreenBrightness(mPowerState.getScreenBrightness());
+//        } catch (RemoteException ex) {
+//            // same process
+//        }
     }
 
     private final Animator.AnimatorListener mAnimatorListener = new Animator.AnimatorListener() {
@@ -487,249 +487,249 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         final boolean mustNotify;
         boolean mustInitialize = false;
         boolean autoBrightnessAdjustmentChanged = false;
-
-        synchronized (mLock) {
-            mPendingUpdatePowerStateLocked = false;
-            if (mPendingRequestLocked == null) {
-                return; // wait until first actual power request
-            }
-
-            if (mPowerRequest == null) {
-                mPowerRequest = new DisplayPowerRequest(mPendingRequestLocked);
-                mWaitingForNegativeProximity = mPendingWaitForNegativeProximityLocked;
-                mPendingWaitForNegativeProximityLocked = false;
-                mPendingRequestChangedLocked = false;
-                mustInitialize = true;
-            } else if (mPendingRequestChangedLocked) {
-                autoBrightnessAdjustmentChanged = (mPowerRequest.screenAutoBrightnessAdjustment
-                        != mPendingRequestLocked.screenAutoBrightnessAdjustment);
-                mPowerRequest.copyFrom(mPendingRequestLocked);
-                mWaitingForNegativeProximity |= mPendingWaitForNegativeProximityLocked;
-                mPendingWaitForNegativeProximityLocked = false;
-                mPendingRequestChangedLocked = false;
-                mDisplayReadyLocked = false;
-            }
-
-            mustNotify = !mDisplayReadyLocked;
-        }
-
-        // Initialize things the first time the power state is changed.
-        if (mustInitialize) {
-            initialize();
-        }
-
-        // Compute the basic display state using the policy.
-        // We might override this below based on other factors.
-        int state;
-        int brightness = PowerManager.BRIGHTNESS_DEFAULT;
-        boolean performScreenOffTransition = false;
-        switch (mPowerRequest.policy) {
-            case DisplayPowerRequest.POLICY_OFF:
-                state = Display.STATE_OFF;
-                performScreenOffTransition = true;
-                break;
-            case DisplayPowerRequest.POLICY_DOZE:
-                if (mPowerRequest.dozeScreenState != Display.STATE_UNKNOWN) {
-                    state = mPowerRequest.dozeScreenState;
-                } else {
-                    state = Display.STATE_DOZE;
-                }
-                if (!mAllowAutoBrightnessWhileDozingConfig) {
-                    brightness = mPowerRequest.dozeScreenBrightness;
-                }
-                break;
-            case DisplayPowerRequest.POLICY_DIM:
-            case DisplayPowerRequest.POLICY_BRIGHT:
-            default:
-                state = Display.STATE_ON;
-                break;
-        }
-        assert(state != Display.STATE_UNKNOWN);
-
-        // Apply the proximity sensor.
-        if (mProximitySensor != null) {
-            if (mPowerRequest.useProximitySensor && state != Display.STATE_OFF) {
-                setProximitySensorEnabled(true);
-                if (!mScreenOffBecauseOfProximity
-                        && mProximity == PROXIMITY_POSITIVE) {
-                    mScreenOffBecauseOfProximity = true;
-                    sendOnProximityPositiveWithWakelock();
-                }
-            } else if (mWaitingForNegativeProximity
-                    && mScreenOffBecauseOfProximity
-                    && mProximity == PROXIMITY_POSITIVE
-                    && state != Display.STATE_OFF) {
-                setProximitySensorEnabled(true);
-            } else {
-                setProximitySensorEnabled(false);
-                mWaitingForNegativeProximity = false;
-            }
-            if (mScreenOffBecauseOfProximity
-                    && mProximity != PROXIMITY_POSITIVE) {
-                mScreenOffBecauseOfProximity = false;
-                sendOnProximityNegativeWithWakelock();
-            }
-        } else {
-            mWaitingForNegativeProximity = false;
-        }
-        if (mScreenOffBecauseOfProximity) {
-            state = Display.STATE_OFF;
-        }
-
-        // Animate the screen state change unless already animating.
-        // The transition may be deferred, so after this point we will use the
-        // actual state instead of the desired one.
-        animateScreenStateChange(state, performScreenOffTransition);
-        state = mPowerState.getScreenState();
-
-        // Use zero brightness when screen is off.
-        if (state == Display.STATE_OFF) {
-            brightness = PowerManager.BRIGHTNESS_OFF;
-        }
-
-        // Configure auto-brightness.
-        boolean autoBrightnessEnabled = false;
-        if (mAutomaticBrightnessController != null) {
-            final boolean autoBrightnessEnabledInDoze = mAllowAutoBrightnessWhileDozingConfig
-                    && (state == Display.STATE_DOZE || state == Display.STATE_DOZE_SUSPEND);
-            autoBrightnessEnabled = mPowerRequest.useAutoBrightness
-                    && (state == Display.STATE_ON || autoBrightnessEnabledInDoze)
-                    && brightness < 0;
-            mAutomaticBrightnessController.configure(autoBrightnessEnabled,
-                    mPowerRequest.screenAutoBrightnessAdjustment, state != Display.STATE_ON);
-        }
-
-        // Apply brightness boost.
-        // We do this here after configuring auto-brightness so that we don't
-        // disable the light sensor during this temporary state.  That way when
-        // boost ends we will be able to resume normal auto-brightness behavior
-        // without any delay.
-        if (mPowerRequest.boostScreenBrightness
-                && brightness != PowerManager.BRIGHTNESS_OFF) {
-            brightness = PowerManager.BRIGHTNESS_ON;
-        }
-
-        // Apply auto-brightness.
-        boolean slowChange = false;
-        if (brightness < 0) {
-            if (autoBrightnessEnabled) {
-                brightness = mAutomaticBrightnessController.getAutomaticScreenBrightness();
-            }
-            if (brightness >= 0) {
-                // Use current auto-brightness value and slowly adjust to changes.
-                brightness = clampScreenBrightness(brightness);
-                if (mAppliedAutoBrightness && !autoBrightnessAdjustmentChanged) {
-                    slowChange = true; // slowly adapt to auto-brightness
-                }
-                mAppliedAutoBrightness = true;
-            } else {
-                mAppliedAutoBrightness = false;
-            }
-        } else {
-            mAppliedAutoBrightness = false;
-        }
-
-        // Use default brightness when dozing unless overridden.
-        if (brightness < 0 && (state == Display.STATE_DOZE
-                || state == Display.STATE_DOZE_SUSPEND)) {
-            brightness = mScreenBrightnessDozeConfig;
-        }
-
-        // Apply manual brightness.
-        // Use the current brightness setting from the request, which is expected
-        // provide a nominal default value for the case where auto-brightness
-        // is not ready yet.
-        if (brightness < 0) {
-            if(mPowerRequest.screenBrightness != 0 || ActionsConfig.ACTIONS_FEATURE_HDMI_ONOFF_DEFAULT_ON == 0){
-                // ActionsCode(authro:songzhining, comment: fix brighten bug from dim to off state)
-                if (mPowerRequest.policy == DisplayPowerRequest.POLICY_OFF) {
-                    brightness = clampScreenBrightness(mPowerState.getScreenBrightness());
-                } else {
-                    brightness = clampScreenBrightness(mPowerRequest.screenBrightness);
-                }
-            }else{
-                brightness = 0;
-            }
-        }
-        // Apply dimming by at least some minimum amount when user activity
-        // timeout is about to expire.
-        if (mPowerRequest.policy == DisplayPowerRequest.POLICY_DIM) {
-            if (brightness > mScreenBrightnessRangeMinimum) {
-                brightness = Math.max(Math.min(brightness - SCREEN_DIM_MINIMUM_REDUCTION,
-                        mScreenBrightnessDimConfig), mScreenBrightnessRangeMinimum);
-            }
-            if (!mAppliedDimming) {
-                slowChange = false;
-            }
-            mAppliedDimming = true;
-        }
-
-        // If low power mode is enabled, cut the brightness level by half
-        // as long as it is above the minimum threshold.
-        if (mPowerRequest.lowPowerMode) {
-            if (brightness > mScreenBrightnessRangeMinimum) {
-                brightness = Math.max(brightness / 2, mScreenBrightnessRangeMinimum);
-            }
-            if (!mAppliedLowPower) {
-                slowChange = false;
-            }
-            mAppliedLowPower = true;
-        }
-
-        // Animate the screen brightness when the screen is on or dozing.
-        // Skip the animation when the screen is off or suspended.
-        if (!mPendingScreenOff) {
-            if (state == Display.STATE_ON || state == Display.STATE_DOZE) {
-                animateScreenBrightness(brightness,
-                        slowChange ? BRIGHTNESS_RAMP_RATE_SLOW : BRIGHTNESS_RAMP_RATE_FAST);
-            } else {
-                animateScreenBrightness(brightness, 0);
-            }
-        }
-
-        // Determine whether the display is ready for use in the newly requested state.
-        // Note that we do not wait for the brightness ramp animation to complete before
-        // reporting the display is ready because we only need to ensure the screen is in the
-        // right power state even as it continues to converge on the desired brightness.
-        final boolean ready = mPendingScreenOnUnblocker == null
-                && !mColorFadeOnAnimator.isStarted()
-                && !mColorFadeOffAnimator.isStarted()
-                && mPowerState.waitUntilClean(mCleanListener);
-        final boolean finished = ready
-                && !mScreenBrightnessRampAnimator.isAnimating();
-
-        // Grab a wake lock if we have unfinished business.
-        if (!finished && !mUnfinishedBusiness) {
-            if (DEBUG) {
-                Slog.d(TAG, "Unfinished business...");
-            }
-            mCallbacks.acquireSuspendBlocker();
-            mUnfinishedBusiness = true;
-        }
-
-        // Notify the power manager when ready.
-        if (ready && mustNotify) {
-            // Send state change.
-            synchronized (mLock) {
-                if (!mPendingRequestChangedLocked) {
-                    mDisplayReadyLocked = true;
-
-                    if (DEBUG) {
-                        Slog.d(TAG, "Display ready!");
-                    }
-                }
-            }
-            sendOnStateChangedWithWakelock();
-        }
-
-        // Release the wake lock when we have no unfinished business.
-        if (finished && mUnfinishedBusiness) {
-            if (DEBUG) {
-                Slog.d(TAG, "Finished business...");
-            }
-            mUnfinishedBusiness = false;
-            mCallbacks.releaseSuspendBlocker();
-        }
+				return ;
+//        synchronized (mLock) {
+//            mPendingUpdatePowerStateLocked = false;
+//            if (mPendingRequestLocked == null) {
+//                return; // wait until first actual power request
+//            }
+//
+//            if (mPowerRequest == null) {
+//                mPowerRequest = new DisplayPowerRequest(mPendingRequestLocked);
+//                mWaitingForNegativeProximity = mPendingWaitForNegativeProximityLocked;
+//                mPendingWaitForNegativeProximityLocked = false;
+//                mPendingRequestChangedLocked = false;
+//                mustInitialize = true;
+//            } else if (mPendingRequestChangedLocked) {
+//                autoBrightnessAdjustmentChanged = (mPowerRequest.screenAutoBrightnessAdjustment
+//                        != mPendingRequestLocked.screenAutoBrightnessAdjustment);
+//                mPowerRequest.copyFrom(mPendingRequestLocked);
+//                mWaitingForNegativeProximity |= mPendingWaitForNegativeProximityLocked;
+//                mPendingWaitForNegativeProximityLocked = false;
+//                mPendingRequestChangedLocked = false;
+//                mDisplayReadyLocked = false;
+//            }
+//
+//            mustNotify = !mDisplayReadyLocked;
+//        }
+//
+//        // Initialize things the first time the power state is changed.
+//        if (mustInitialize) {
+//            initialize();
+//        }
+//
+//        // Compute the basic display state using the policy.
+//        // We might override this below based on other factors.
+//        int state;
+//        int brightness = PowerManager.BRIGHTNESS_DEFAULT;
+//        boolean performScreenOffTransition = false;
+//        switch (mPowerRequest.policy) {
+//            case DisplayPowerRequest.POLICY_OFF:
+//                state = Display.STATE_OFF;
+//                performScreenOffTransition = true;
+//                break;
+//            case DisplayPowerRequest.POLICY_DOZE:
+//                if (mPowerRequest.dozeScreenState != Display.STATE_UNKNOWN) {
+//                    state = mPowerRequest.dozeScreenState;
+//                } else {
+//                    state = Display.STATE_DOZE;
+//                }
+//                if (!mAllowAutoBrightnessWhileDozingConfig) {
+//                    brightness = mPowerRequest.dozeScreenBrightness;
+//                }
+//                break;
+//            case DisplayPowerRequest.POLICY_DIM:
+//            case DisplayPowerRequest.POLICY_BRIGHT:
+//            default:
+//                state = Display.STATE_ON;
+//                break;
+//        }
+//        assert(state != Display.STATE_UNKNOWN);
+//
+//        // Apply the proximity sensor.
+//        if (mProximitySensor != null) {
+//            if (mPowerRequest.useProximitySensor && state != Display.STATE_OFF) {
+//                setProximitySensorEnabled(true);
+//                if (!mScreenOffBecauseOfProximity
+//                        && mProximity == PROXIMITY_POSITIVE) {
+//                    mScreenOffBecauseOfProximity = true;
+//                    sendOnProximityPositiveWithWakelock();
+//                }
+//            } else if (mWaitingForNegativeProximity
+//                    && mScreenOffBecauseOfProximity
+//                    && mProximity == PROXIMITY_POSITIVE
+//                    && state != Display.STATE_OFF) {
+//                setProximitySensorEnabled(true);
+//            } else {
+//                setProximitySensorEnabled(false);
+//                mWaitingForNegativeProximity = false;
+//            }
+//            if (mScreenOffBecauseOfProximity
+//                    && mProximity != PROXIMITY_POSITIVE) {
+//                mScreenOffBecauseOfProximity = false;
+//                sendOnProximityNegativeWithWakelock();
+//            }
+//        } else {
+//            mWaitingForNegativeProximity = false;
+//        }
+//        if (mScreenOffBecauseOfProximity) {
+//            state = Display.STATE_OFF;
+//        }
+//
+//        // Animate the screen state change unless already animating.
+//        // The transition may be deferred, so after this point we will use the
+//        // actual state instead of the desired one.
+//        animateScreenStateChange(state, performScreenOffTransition);
+//        state = mPowerState.getScreenState();
+//
+//        // Use zero brightness when screen is off.
+//        if (state == Display.STATE_OFF) {
+//            brightness = PowerManager.BRIGHTNESS_OFF;
+//        }
+//
+//        // Configure auto-brightness.
+//        boolean autoBrightnessEnabled = false;
+//        if (mAutomaticBrightnessController != null) {
+//            final boolean autoBrightnessEnabledInDoze = mAllowAutoBrightnessWhileDozingConfig
+//                    && (state == Display.STATE_DOZE || state == Display.STATE_DOZE_SUSPEND);
+//            autoBrightnessEnabled = mPowerRequest.useAutoBrightness
+//                    && (state == Display.STATE_ON || autoBrightnessEnabledInDoze)
+//                    && brightness < 0;
+//            mAutomaticBrightnessController.configure(autoBrightnessEnabled,
+//                    mPowerRequest.screenAutoBrightnessAdjustment, state != Display.STATE_ON);
+//        }
+//
+//        // Apply brightness boost.
+//        // We do this here after configuring auto-brightness so that we don't
+//        // disable the light sensor during this temporary state.  That way when
+//        // boost ends we will be able to resume normal auto-brightness behavior
+//        // without any delay.
+//        if (mPowerRequest.boostScreenBrightness
+//                && brightness != PowerManager.BRIGHTNESS_OFF) {
+//            brightness = PowerManager.BRIGHTNESS_ON;
+//        }
+//
+//        // Apply auto-brightness.
+//        boolean slowChange = false;
+//        if (brightness < 0) {
+//            if (autoBrightnessEnabled) {
+//                brightness = mAutomaticBrightnessController.getAutomaticScreenBrightness();
+//            }
+//            if (brightness >= 0) {
+//                // Use current auto-brightness value and slowly adjust to changes.
+//                brightness = clampScreenBrightness(brightness);
+//                if (mAppliedAutoBrightness && !autoBrightnessAdjustmentChanged) {
+//                    slowChange = true; // slowly adapt to auto-brightness
+//                }
+//                mAppliedAutoBrightness = true;
+//            } else {
+//                mAppliedAutoBrightness = false;
+//            }
+//        } else {
+//            mAppliedAutoBrightness = false;
+//        }
+//
+//        // Use default brightness when dozing unless overridden.
+//        if (brightness < 0 && (state == Display.STATE_DOZE
+//                || state == Display.STATE_DOZE_SUSPEND)) {
+//            brightness = mScreenBrightnessDozeConfig;
+//        }
+//
+//        // Apply manual brightness.
+//        // Use the current brightness setting from the request, which is expected
+//        // provide a nominal default value for the case where auto-brightness
+//        // is not ready yet.
+//        if (brightness < 0) {
+//            if(mPowerRequest.screenBrightness != 0 || ActionsConfig.ACTIONS_FEATURE_HDMI_ONOFF_DEFAULT_ON == 0){
+//                // ActionsCode(authro:songzhining, comment: fix brighten bug from dim to off state)
+//                if (mPowerRequest.policy == DisplayPowerRequest.POLICY_OFF) {
+//                    brightness = clampScreenBrightness(mPowerState.getScreenBrightness());
+//                } else {
+//                    brightness = clampScreenBrightness(mPowerRequest.screenBrightness);
+//                }
+//            }else{
+//                brightness = 0;
+//            }
+//        }
+//        // Apply dimming by at least some minimum amount when user activity
+//        // timeout is about to expire.
+//        if (mPowerRequest.policy == DisplayPowerRequest.POLICY_DIM) {
+//            if (brightness > mScreenBrightnessRangeMinimum) {
+//                brightness = Math.max(Math.min(brightness - SCREEN_DIM_MINIMUM_REDUCTION,
+//                        mScreenBrightnessDimConfig), mScreenBrightnessRangeMinimum);
+//            }
+//            if (!mAppliedDimming) {
+//                slowChange = false;
+//            }
+//            mAppliedDimming = true;
+//        }
+//
+//        // If low power mode is enabled, cut the brightness level by half
+//        // as long as it is above the minimum threshold.
+//        if (mPowerRequest.lowPowerMode) {
+//            if (brightness > mScreenBrightnessRangeMinimum) {
+//                brightness = Math.max(brightness / 2, mScreenBrightnessRangeMinimum);
+//            }
+//            if (!mAppliedLowPower) {
+//                slowChange = false;
+//            }
+//            mAppliedLowPower = true;
+//        }
+//
+//        // Animate the screen brightness when the screen is on or dozing.
+//        // Skip the animation when the screen is off or suspended.
+//        if (!mPendingScreenOff) {
+//            if (state == Display.STATE_ON || state == Display.STATE_DOZE) {
+//                animateScreenBrightness(brightness,
+//                        slowChange ? BRIGHTNESS_RAMP_RATE_SLOW : BRIGHTNESS_RAMP_RATE_FAST);
+//            } else {
+//                animateScreenBrightness(brightness, 0);
+//            }
+//        }
+//
+//        // Determine whether the display is ready for use in the newly requested state.
+//        // Note that we do not wait for the brightness ramp animation to complete before
+//        // reporting the display is ready because we only need to ensure the screen is in the
+//        // right power state even as it continues to converge on the desired brightness.
+//        final boolean ready = mPendingScreenOnUnblocker == null
+//                && !mColorFadeOnAnimator.isStarted()
+//                && !mColorFadeOffAnimator.isStarted()
+//                && mPowerState.waitUntilClean(mCleanListener);
+//        final boolean finished = ready
+//                && !mScreenBrightnessRampAnimator.isAnimating();
+//
+//        // Grab a wake lock if we have unfinished business.
+//        if (!finished && !mUnfinishedBusiness) {
+//            if (DEBUG) {
+//                Slog.d(TAG, "Unfinished business...");
+//            }
+//            mCallbacks.acquireSuspendBlocker();
+//            mUnfinishedBusiness = true;
+//        }
+//
+//        // Notify the power manager when ready.
+//        if (ready && mustNotify) {
+//            // Send state change.
+//            synchronized (mLock) {
+//                if (!mPendingRequestChangedLocked) {
+//                    mDisplayReadyLocked = true;
+//
+//                    if (DEBUG) {
+//                        Slog.d(TAG, "Display ready!");
+//                    }
+//                }
+//            }
+//            sendOnStateChangedWithWakelock();
+//        }
+//
+//        // Release the wake lock when we have no unfinished business.
+//        if (finished && mUnfinishedBusiness) {
+//            if (DEBUG) {
+//                Slog.d(TAG, "Finished business...");
+//            }
+//            mUnfinishedBusiness = false;
+//            mCallbacks.releaseSuspendBlocker();
+//        }
     }
 
     @Override
@@ -761,11 +761,11 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             mPowerState.setScreenState(state);
 
             // Tell battery stats about the transition.
-            try {
-                mBatteryStats.noteScreenState(state);
-            } catch (RemoteException ex) {
-                // same process
-            }
+//            try {
+//                mBatteryStats.noteScreenState(state);
+//            } catch (RemoteException ex) {
+//                // same process
+//            }
 
             // Tell the window manager what's happening.
             // Temporarily block turning the screen on until the window manager is ready
@@ -796,13 +796,13 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         if (DEBUG) {
             Slog.d(TAG, "Animating brightness: target=" + target +", rate=" + rate);
         }
-        if (mScreenBrightnessRampAnimator.animateTo(target, rate)) {
-            try {
-                mBatteryStats.noteScreenBrightness(target);
-            } catch (RemoteException ex) {
-                // same process
-            }
-        }
+//        if (mScreenBrightnessRampAnimator.animateTo(target, rate)) {
+//            try {
+//                mBatteryStats.noteScreenBrightness(target);
+//            } catch (RemoteException ex) {
+//                // same process
+//            }
+//        }
     }
 
     private void animateScreenStateChange(int target, boolean performScreenOffTransition) {

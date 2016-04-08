@@ -95,20 +95,22 @@ public class LocationBasedCountryDetector extends CountryDetectorBase {
      * Register a listener with a provider name
      */
     protected void registerListener(String provider, LocationListener listener) {
-        mLocationManager.requestLocationUpdates(provider, 0, 0, listener);
+//        mLocationManager.requestLocationUpdates(provider, 0, 0, listener);
     }
 
     /**
      * Unregister an already registered listener
      */
     protected void unregisterListener(LocationListener listener) {
-        mLocationManager.removeUpdates(listener);
+//        mLocationManager.removeUpdates(listener);
     }
 
     /**
      * @return the last known location from all providers
      */
     protected Location getLastKnownLocation() {
+    	if(mLocationManager == null)
+    		return null;
         List<String> providers = mLocationManager.getAllProviders();
         Location bestLocation = null;
         for (String provider : providers) {
@@ -133,7 +135,7 @@ public class LocationBasedCountryDetector extends CountryDetectorBase {
 
     protected List<String> getEnabledProviders() {
         if (mEnabledProviders == null) {
-            mEnabledProviders = mLocationManager.getProviders(true);
+//            mEnabledProviders = mLocationManager.getProviders(true);
         }
         return mEnabledProviders;
     }

@@ -361,12 +361,12 @@ class ContextImpl extends Context {
                     return new CaptioningManager(ctx);
                 }});
 
-        registerService(ACCOUNT_SERVICE, new ServiceFetcher() {
-                public Object createService(ContextImpl ctx) {
-                    IBinder b = ServiceManager.getService(ACCOUNT_SERVICE);
-                    IAccountManager service = IAccountManager.Stub.asInterface(b);
-                    return new AccountManager(ctx, service);
-                }});
+//        registerService(ACCOUNT_SERVICE, new ServiceFetcher() {
+//                public Object createService(ContextImpl ctx) {
+//                    IBinder b = ServiceManager.getService(ACCOUNT_SERVICE);
+//                    IAccountManager service = IAccountManager.Stub.asInterface(b);
+//                    return new AccountManager(ctx, service);
+//                }});
 
         registerService(ACTIVITY_SERVICE, new ServiceFetcher() {
                 public Object createService(ContextImpl ctx) {
@@ -413,11 +413,11 @@ class ContextImpl extends Context {
                     return new ConnectivityManager(IConnectivityManager.Stub.asInterface(b));
                 }});
 
-        registerService(COUNTRY_DETECTOR, new StaticServiceFetcher() {
-                public Object createStaticService() {
-                    IBinder b = ServiceManager.getService(COUNTRY_DETECTOR);
-                    return new CountryDetector(ICountryDetector.Stub.asInterface(b));
-                }});
+//        registerService(COUNTRY_DETECTOR, new StaticServiceFetcher() {
+//                public Object createStaticService() {
+//                    IBinder b = ServiceManager.getService(COUNTRY_DETECTOR);
+//                    return new CountryDetector(ICountryDetector.Stub.asInterface(b));
+//                }});
 
         registerService(DEVICE_POLICY_SERVICE, new ServiceFetcher() {
                 public Object createService(ContextImpl ctx) {
@@ -429,10 +429,10 @@ class ContextImpl extends Context {
                     return new DownloadManager(ctx.getContentResolver(), ctx.getPackageName());
                 }});
 
-        registerService(BATTERY_SERVICE, new ServiceFetcher() {
-                public Object createService(ContextImpl ctx) {
-                    return new BatteryManager();
-                }});
+//        registerService(BATTERY_SERVICE, new ServiceFetcher() {
+//                public Object createService(ContextImpl ctx) {
+//                    return new BatteryManager();
+//                }});
 
         registerService(NFC_SERVICE, new ServiceFetcher() {
                 public Object createService(ContextImpl ctx) {
@@ -479,11 +479,11 @@ class ContextImpl extends Context {
                     return PolicyManager.makeNewLayoutInflater(ctx.getOuterContext());
                 }});
 
-        registerService(LOCATION_SERVICE, new ServiceFetcher() {
-                public Object createService(ContextImpl ctx) {
-                    IBinder b = ServiceManager.getService(LOCATION_SERVICE);
-                    return new LocationManager(ctx, ILocationManager.Stub.asInterface(b));
-                }});
+//        registerService(LOCATION_SERVICE, new ServiceFetcher() {
+//                public Object createService(ContextImpl ctx) {
+//                    IBinder b = ServiceManager.getService(LOCATION_SERVICE);
+//                    return new LocationManager(ctx, ILocationManager.Stub.asInterface(b));
+//                }});
 
         registerService(NETWORK_POLICY_SERVICE, new ServiceFetcher() {
             @Override
@@ -589,10 +589,10 @@ class ContextImpl extends Context {
                     return new SerialManager(ctx, ISerialManager.Stub.asInterface(b));
                 }});
 
-        registerService(VIBRATOR_SERVICE, new ServiceFetcher() {
-                public Object createService(ContextImpl ctx) {
-                    return new SystemVibrator(ctx);
-                }});
+//        registerService(VIBRATOR_SERVICE, new ServiceFetcher() {
+//                public Object createService(ContextImpl ctx) {
+//                    return new SystemVibrator(ctx);
+//                }});
 
         registerService(WALLPAPER_SERVICE, WALLPAPER_FETCHER);
 

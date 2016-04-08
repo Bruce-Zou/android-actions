@@ -45,7 +45,7 @@ public class ShadowApplication extends ShadowContextWrapper {
         SYSTEM_SERVICE_MAP.put(Context.WINDOW_SERVICE, "com.xtremelabs.robolectric.tester.android.view.TestWindowManager");
         SYSTEM_SERVICE_MAP.put(Context.CLIPBOARD_SERVICE, "com.xtremelabs.robolectric.tester.android.text.TestClipboardManager");
         SYSTEM_SERVICE_MAP.put(Context.SENSOR_SERVICE, "android.hardware.TestSensorManager");
-        SYSTEM_SERVICE_MAP.put(Context.VIBRATOR_SERVICE, "android.os.TestVibrator");
+//        SYSTEM_SERVICE_MAP.put(Context.VIBRATOR_SERVICE, "android.os.TestVibrator");
         
         // the rest are as mapped in docs...
         SYSTEM_SERVICE_MAP.put(Context.LAYOUT_INFLATER_SERVICE, "android.view.LayoutInflater");

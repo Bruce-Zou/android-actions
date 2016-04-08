@@ -77,8 +77,8 @@ public class FlpHardwareProvider {
         mContext = context;
 
         // register for listening for passive provider data
-        LocationManager manager = (LocationManager) mContext.getSystemService(
-                Context.LOCATION_SERVICE);
+//        LocationManager manager = (LocationManager) mContext.getSystemService(
+//                Context.LOCATION_SERVICE);
         final long minTime = 0;
         final float minDistance = 0;
         final boolean oneShot = false;
@@ -90,10 +90,10 @@ public class FlpHardwareProvider {
         // Don't keep track of this request since it's done on behalf of other clients
         // (which are kept track of separately).
         request.setHideFromAppOps(true);
-        manager.requestLocationUpdates(
-                request,
-                new NetworkLocationListener(),
-                Looper.myLooper());
+//        manager.requestLocationUpdates(
+//                request,
+//                new NetworkLocationListener(),
+//                Looper.myLooper());
     }
 
     public static boolean isSupported() {

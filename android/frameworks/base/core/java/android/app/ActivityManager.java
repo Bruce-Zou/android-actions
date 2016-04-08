@@ -2625,12 +2625,12 @@ public class ActivityManager {
         pw.println();
         dumpService(pw, fd, "meminfo", new String[] { "--local", "--package", packageName });
         pw.println();
-        dumpService(pw, fd, ProcessStats.SERVICE_NAME, new String[] { packageName });
-        pw.println();
+//        dumpService(pw, fd, ProcessStats.SERVICE_NAME, new String[] { packageName });
+//        pw.println();
         dumpService(pw, fd, "usagestats", new String[] { "--packages", packageName });
         pw.println();
-        dumpService(pw, fd, BatteryStats.SERVICE_NAME, new String[] { packageName });
-        pw.flush();
+//        dumpService(pw, fd, BatteryStats.SERVICE_NAME, new String[] { packageName });
+//        pw.flush();
     }
 
     private static void dumpService(PrintWriter pw, FileDescriptor fd, String name, String[] args) {

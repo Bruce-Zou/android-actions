@@ -108,7 +108,7 @@ public final class WifiServiceImpl extends IWifiManager.Stub {
     private int mMulticastEnabled;
     private int mMulticastDisabled;
 
-    private final IBatteryStats mBatteryStats;
+//    private final IBatteryStats mBatteryStats;
     private final AppOpsManager mAppOps;
 
     private String mInterfaceName;
@@ -305,7 +305,7 @@ public final class WifiServiceImpl extends IWifiManager.Stub {
         mTrafficPoller = new WifiTrafficPoller(mContext, mInterfaceName);
         mWifiStateMachine = new WifiStateMachine(mContext, mInterfaceName, mTrafficPoller);
         mWifiStateMachine.enableRssiPolling(true);
-        mBatteryStats = BatteryStatsService.getService();
+//        mBatteryStats = BatteryStatsService.getService();
         mAppOps = (AppOpsManager)context.getSystemService(Context.APP_OPS_SERVICE);
 
         mNotificationController = new WifiNotificationController(mContext, mWifiStateMachine);
@@ -1565,7 +1565,7 @@ public final class WifiServiceImpl extends IWifiManager.Stub {
             case WifiManager.WIFI_MODE_FULL:
             case WifiManager.WIFI_MODE_FULL_HIGH_PERF:
             case WifiManager.WIFI_MODE_SCAN_ONLY:
-                mBatteryStats.noteFullWifiLockAcquiredFromSource(wifiLock.mWorkSource);
+//                mBatteryStats.noteFullWifiLockAcquiredFromSource(wifiLock.mWorkSource);
                 break;
         }
     }
@@ -1575,7 +1575,7 @@ public final class WifiServiceImpl extends IWifiManager.Stub {
             case WifiManager.WIFI_MODE_FULL:
             case WifiManager.WIFI_MODE_FULL_HIGH_PERF:
             case WifiManager.WIFI_MODE_SCAN_ONLY:
-                mBatteryStats.noteFullWifiLockReleasedFromSource(wifiLock.mWorkSource);
+//                mBatteryStats.noteFullWifiLockReleasedFromSource(wifiLock.mWorkSource);
                 break;
         }
     }
@@ -1754,12 +1754,12 @@ public final class WifiServiceImpl extends IWifiManager.Stub {
 
         int uid = Binder.getCallingUid();
         final long ident = Binder.clearCallingIdentity();
-        try {
-            mBatteryStats.noteWifiMulticastEnabled(uid);
-        } catch (RemoteException e) {
-        } finally {
+//        try {
+//            mBatteryStats.noteWifiMulticastEnabled(uid);
+//        } catch (RemoteException e) {
+//        } finally {
             Binder.restoreCallingIdentity(ident);
-        }
+ //       }
     }
 
     public void releaseMulticastLock() {
@@ -1790,12 +1790,12 @@ public final class WifiServiceImpl extends IWifiManager.Stub {
         }
 
         final long ident = Binder.clearCallingIdentity();
-        try {
-            mBatteryStats.noteWifiMulticastDisabled(uid);
-        } catch (RemoteException e) {
-        } finally {
+//        try {
+//            mBatteryStats.noteWifiMulticastDisabled(uid);
+//        } catch (RemoteException e) {
+//        } finally {
             Binder.restoreCallingIdentity(ident);
-        }
+ //       }
     }
 
     public boolean isMulticastEnabled() {

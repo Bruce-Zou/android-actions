@@ -121,7 +121,7 @@ public class JobSchedulerService extends com.android.server.SystemService
     final JobHandler mHandler;
     final JobSchedulerStub mJobSchedulerStub;
 
-    IBatteryStats mBatteryStats;
+    IBatteryStats mBatteryStats = null;
 
     /**
      * Set to true once we are allowed to run third party apps.
@@ -298,14 +298,13 @@ public class JobSchedulerService extends com.android.server.SystemService
             synchronized (mJobs) {
                 // Let's go!
                 mReadyToRock = true;
-                mBatteryStats = IBatteryStats.Stub.asInterface(ServiceManager.getService(
-                        BatteryStats.SERVICE_NAME));
+                mBatteryStats = null;//IBatteryStats.Stub.asInterface(ServiceManager.getService(BatteryStats.SERVICE_NAME));
                 // Create the "runners".
-                for (int i = 0; i < MAX_JOB_CONTEXTS_COUNT; i++) {
-                    mActiveServices.add(
-                            new JobServiceContext(this, mBatteryStats,
-                                    getContext().getMainLooper()));
-                }
+//                for (int i = 0; i < MAX_JOB_CONTEXTS_COUNT; i++) {
+//                    mActiveServices.add(
+//                            new JobServiceContext(this, mBatteryStats,
+//                                    getContext().getMainLooper()));
+//                }
                 // Attach jobs to their controllers.
                 ArraySet<JobStatus> jobs = mJobs.getJobs();
                 for (int i=0; i<jobs.size(); i++) {

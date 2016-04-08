@@ -159,10 +159,10 @@ public final class PowerManagerService extends SystemService
     private LightsManager mLightsManager;
     private BatteryManagerInternal mBatteryManagerInternal;
     private DisplayManagerInternal mDisplayManagerInternal;
-    private IBatteryStats mBatteryStats;
+//    private IBatteryStats mBatteryStats;
     private IAppOpsService mAppOps;
     private WindowManagerPolicy mPolicy;
-    private Notifier mNotifier;
+    private Notifier mNotifier = null;
     private WirelessChargerDetector mWirelessChargerDetector;
     private SettingsObserver mSettingsObserver;
     private DreamManagerInternal mDreamManager;
@@ -599,7 +599,7 @@ public final class PowerManagerService extends SystemService
             mDreamManager = getLocalService(DreamManagerInternal.class);
             mDisplayManagerInternal = getLocalService(DisplayManagerInternal.class);
             mPolicy = getLocalService(WindowManagerPolicy.class);
-            mBatteryManagerInternal = getLocalService(BatteryManagerInternal.class);
+//            mBatteryManagerInternal = getLocalService(BatteryManagerInternal.class);
 
             PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
             mScreenBrightnessSettingMinimum = pm.getMinimumScreenBrightnessSetting();
@@ -610,10 +610,10 @@ public final class PowerManagerService extends SystemService
 
             // The notifier runs on the system server's main looper so as not to interfere
             // with the animations and other critical functions of the power manager.
-            mBatteryStats = BatteryStatsService.getService();
-            mNotifier = new Notifier(Looper.getMainLooper(), mContext, mBatteryStats,
-                    mAppOps, createSuspendBlockerLocked("PowerManagerService.Broadcasts"),
-                    mPolicy);
+//            mBatteryStats = BatteryStatsService.getService();
+//            mNotifier = new Notifier(Looper.getMainLooper(), mContext, mBatteryStats,
+//                    mAppOps, createSuspendBlockerLocked("PowerManagerService.Broadcasts"),
+//                    mPolicy);
 
             mWirelessChargerDetector = new WirelessChargerDetector(sensorManager,
                     createSuspendBlockerLocked("PowerManagerService.WirelessChargerDetector"),
@@ -1011,28 +1011,28 @@ public final class PowerManagerService extends SystemService
     private void notifyWakeLockAcquiredLocked(WakeLock wakeLock) {
         if (mSystemReady) {
             wakeLock.mNotifiedAcquired = true;
-            mNotifier.onWakeLockAcquired(wakeLock.mFlags, wakeLock.mTag, wakeLock.mPackageName,
-                    wakeLock.mOwnerUid, wakeLock.mOwnerPid, wakeLock.mWorkSource,
-                    wakeLock.mHistoryTag);
+//            mNotifier.onWakeLockAcquired(wakeLock.mFlags, wakeLock.mTag, wakeLock.mPackageName,
+//                    wakeLock.mOwnerUid, wakeLock.mOwnerPid, wakeLock.mWorkSource,
+//                    wakeLock.mHistoryTag);
         }
     }
 
     private void notifyWakeLockChangingLocked(WakeLock wakeLock, int flags, String tag,
             String packageName, int uid, int pid, WorkSource ws, String historyTag) {
-        if (mSystemReady && wakeLock.mNotifiedAcquired) {
-            mNotifier.onWakeLockChanging(wakeLock.mFlags, wakeLock.mTag, wakeLock.mPackageName,
-                    wakeLock.mOwnerUid, wakeLock.mOwnerPid, wakeLock.mWorkSource,
-                    wakeLock.mHistoryTag, flags, tag, packageName, uid, pid, ws, historyTag);
-        }
+//        if (mSystemReady && wakeLock.mNotifiedAcquired) {
+//            mNotifier.onWakeLockChanging(wakeLock.mFlags, wakeLock.mTag, wakeLock.mPackageName,
+//                    wakeLock.mOwnerUid, wakeLock.mOwnerPid, wakeLock.mWorkSource,
+//                    wakeLock.mHistoryTag, flags, tag, packageName, uid, pid, ws, historyTag);
+//        }
     }
 
     private void notifyWakeLockReleasedLocked(WakeLock wakeLock) {
-        if (mSystemReady && wakeLock.mNotifiedAcquired) {
-            wakeLock.mNotifiedAcquired = false;
-            mNotifier.onWakeLockReleased(wakeLock.mFlags, wakeLock.mTag,
-                    wakeLock.mPackageName, wakeLock.mOwnerUid, wakeLock.mOwnerPid,
-                    wakeLock.mWorkSource, wakeLock.mHistoryTag);
-        }
+//        if (mSystemReady && wakeLock.mNotifiedAcquired) {
+//            wakeLock.mNotifiedAcquired = false;
+//            mNotifier.onWakeLockReleased(wakeLock.mFlags, wakeLock.mTag,
+//                    wakeLock.mPackageName, wakeLock.mOwnerUid, wakeLock.mOwnerPid,
+//                    wakeLock.mWorkSource, wakeLock.mHistoryTag);
+//        }
     }
 
     @SuppressWarnings("deprecation")
@@ -1087,7 +1087,7 @@ public final class PowerManagerService extends SystemService
                 mLastInteractivePowerHintTime = eventTime;
             }
 
-            mNotifier.onUserActivity(event, uid);
+//            mNotifier.onUserActivity(event, uid);
 
             if (mWakefulness == WAKEFULNESS_ASLEEP
                     || mWakefulness == WAKEFULNESS_DOZING
@@ -1302,13 +1302,13 @@ public final class PowerManagerService extends SystemService
             mWakefulness = wakefulness;
             mWakefulnessChanging = true;
             mDirty |= DIRTY_WAKEFULNESS;
-            mNotifier.onWakefulnessChangeStarted(wakefulness, reason);
+//            mNotifier.onWakefulnessChangeStarted(wakefulness, reason);
         }
     }
 
     private void finishWakefulnessChangeLocked() {
         if (mWakefulnessChanging) {
-            mNotifier.onWakefulnessChangeFinished(mWakefulness);
+//            mNotifier.onWakefulnessChangeFinished(mWakefulness);
             mWakefulnessChanging = false;
         }
     }
@@ -1382,10 +1382,10 @@ public final class PowerManagerService extends SystemService
             final boolean wasPowered = mIsPowered;
             final int oldPlugType = mPlugType;
             final boolean oldLevelLow = mBatteryLevelLow;
-            mIsPowered = mBatteryManagerInternal.isPowered(BatteryManager.BATTERY_PLUGGED_ANY);
-            mPlugType = mBatteryManagerInternal.getPlugType();
-            mBatteryLevel = mBatteryManagerInternal.getBatteryLevel();
-            mBatteryLevelLow = mBatteryManagerInternal.getBatteryLevelLow();
+//            mIsPowered = mBatteryManagerInternal.isPowered(BatteryManager.BATTERY_PLUGGED_ANY);
+//            mPlugType = mBatteryManagerInternal.getPlugType();
+//            mBatteryLevel = mBatteryManagerInternal.getBatteryLevel();
+//            mBatteryLevelLow = mBatteryManagerInternal.getBatteryLevelLow();
 
             if (DEBUG_SPEW) {
                 Slog.d(TAG, "updateIsPoweredLocked: wasPowered=" + wasPowered
@@ -1479,7 +1479,7 @@ public final class PowerManagerService extends SystemService
             final boolean wasStayOn = mStayOn;
             if (mStayOnWhilePluggedInSetting != 0
                     && !isMaximumScreenOffTimeoutFromDeviceAdminEnforcedLocked()) {
-                mStayOn = mBatteryManagerInternal.isPowered(mStayOnWhilePluggedInSetting);
+//                mStayOn = mBatteryManagerInternal.isPowered(mStayOnWhilePluggedInSetting);
             } else {
                 mStayOn = false;
             }

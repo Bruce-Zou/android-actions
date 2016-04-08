@@ -189,9 +189,9 @@ public final class BatteryStatsHelper {
                 }
             }
         }
-        return getStats(IBatteryStats.Stub.asInterface(
-                        ServiceManager.getService(BatteryStats.SERVICE_NAME)));
+        return null;//getStats(IBatteryStats.Stub.asInterface(ServiceManager.getService(BatteryStats.SERVICE_NAME)));
     }
+    
 
     public static void dropFile(Context context, String fname) {
         makeFilePath(context, fname).delete();
@@ -234,8 +234,7 @@ public final class BatteryStatsHelper {
             mStats = sStatsXfer;
             mBatteryBroadcast = sBatteryBroadcastXfer;
         }
-        mBatteryInfo = IBatteryStats.Stub.asInterface(
-                ServiceManager.getService(BatteryStats.SERVICE_NAME));
+        mBatteryInfo = null;//IBatteryStats.Stub.asInterface(ServiceManager.getService(BatteryStats.SERVICE_NAME));
         mPowerProfile = new PowerProfile(mContext);
     }
 
@@ -965,7 +964,7 @@ public final class BatteryStatsHelper {
         if (mBatteryInfo == null) {
             return;
         }
-        mStats = getStats(mBatteryInfo);
+        mStats = null;//getStats(mBatteryInfo);
         if (mCollectBatteryBroadcast) {
             mBatteryBroadcast = mContext.registerReceiver(null,
                     new IntentFilter(Intent.ACTION_BATTERY_CHANGED));

@@ -295,7 +295,7 @@ public class AccountManager {
      */
     public static AccountManager get(Context context) {
         if (context == null) throw new IllegalArgumentException("context is null");
-        return (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+        return null;//(AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
     }
 
     /**

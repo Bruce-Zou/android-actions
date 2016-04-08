@@ -397,7 +397,7 @@ public class AudioService extends IAudioService.Stub {
     private int mVibrateSetting;
 
     // Is there a vibrator
-    private final boolean mHasVibrator;
+    private final boolean mHasVibrator = false;
 
     // Broadcast receiver for device connections intent broadcasts
     private final BroadcastReceiver mReceiver = new AudioServiceBroadcastReceiver();
@@ -577,8 +577,8 @@ public class AudioService extends IAudioService.Stub {
         PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         mAudioEventWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "handleAudioEvent");
 
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        mHasVibrator = vibrator == null ? false : vibrator.hasVibrator();
+//        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+//        mHasVibrator = vibrator == null ? false : vibrator.hasVibrator();
 
        // Intialized volume
         int maxVolume = SystemProperties.getInt("ro.config.vc_call_vol_steps",

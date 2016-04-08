@@ -150,12 +150,12 @@ public class LocationProviderFactory {
             // bounce notifications to the Geolocation thread as they arrive in the mainLooper.
             try {
                 Criteria criteria = new Criteria();
-                mLocationManager.requestLocationUpdates(0, 0, criteria, this,
-                        ThreadUtils.getUiThreadLooper());
-                if (isGpsEnabled) {
-                    criteria.setAccuracy(Criteria.ACCURACY_FINE);
-                    mLocationManager.requestLocationUpdates(0, 0, criteria, this,
-                            ThreadUtils.getUiThreadLooper());
+//                mLocationManager.requestLocationUpdates(0, 0, criteria, this,
+//                        ThreadUtils.getUiThreadLooper());
+//                if (isGpsEnabled) {
+//                    criteria.setAccuracy(Criteria.ACCURACY_FINE);
+//                    mLocationManager.requestLocationUpdates(0, 0, criteria, this,
+//                            ThreadUtils.getUiThreadLooper());
                 }
             } catch (SecurityException e) {
                 Log.e(TAG, "Caught security exception registering for location updates from " +
@@ -171,7 +171,7 @@ public class LocationProviderFactory {
         private void unregisterFromLocationUpdates() {
             if (mIsRunning) {
                 mIsRunning = false;
-                mLocationManager.removeUpdates(this);
+//                mLocationManager.removeUpdates(this);
             }
         }
 
@@ -181,16 +181,16 @@ public class LocationProviderFactory {
             // Do not request a location update if the only available location provider is
             // the passive one. Make use of the last known location and call
             // onLocationChanged directly.
-            final Location location = mLocationManager.getLastKnownLocation(
-                    LocationManager.PASSIVE_PROVIDER);
-            if (location != null) {
-                ThreadUtils.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateNewLocation(location);
-                    }
-                });
-            }
+//            final Location location = mLocationManager.getLastKnownLocation(
+//                    LocationManager.PASSIVE_PROVIDER);
+//            if (location != null) {
+//                ThreadUtils.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        updateNewLocation(location);
+//                    }
+//                });
+//            }
             return true;
         }
 
@@ -199,6 +199,8 @@ public class LocationProviderFactory {
          * in the system.
          */
         private boolean isOnlyPassiveLocationProviderEnabled() {
+        	if(mLocationManager == null)
+        		return false;
             List<String> providers = mLocationManager.getProviders(true);
             return providers != null && providers.size() == 1
                     && providers.get(0).equals(LocationManager.PASSIVE_PROVIDER);

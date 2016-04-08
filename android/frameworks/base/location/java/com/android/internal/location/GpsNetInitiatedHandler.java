@@ -99,7 +99,7 @@ public class GpsNetInitiatedHandler {
     private final PhoneStateListener mPhoneStateListener;
 
     // parent gps location provider
-    private final LocationManager mLocationManager;
+    private final LocationManager mLocationManager = null;
 
     // configuration of notificaiton behavior
     private boolean mPlaySounds = false;
@@ -187,7 +187,7 @@ public class GpsNetInitiatedHandler {
         }
 
         setSuplEsEnabled(isSuplEsEnabled);
-        mLocationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+//        mLocationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         updateLocationMode();
         mTelephonyManager =
             (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -222,7 +222,7 @@ public class GpsNetInitiatedHandler {
      * Updates Location enabler based on location setting.
      */
     public void updateLocationMode() {
-        mIsLocationEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+//        mIsLocationEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     /**

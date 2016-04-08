@@ -51,7 +51,7 @@ class SupplicantStateTracker extends StateMachine {
 
     private final WifiStateMachine mWifiStateMachine;
     private final WifiConfigStore mWifiConfigStore;
-    private final IBatteryStats mBatteryStats;
+    private  IBatteryStats mBatteryStats = null;
     private int mAuthenticationFailuresCount = 0;
     private int mAssociationRejectCount = 0;
     /* Indicates authentication failure in supplicant broadcast.
@@ -97,7 +97,7 @@ class SupplicantStateTracker extends StateMachine {
         mContext = c;
         mWifiStateMachine = wsm;
         mWifiConfigStore = wcs;
-        mBatteryStats = (IBatteryStats)ServiceManager.getService(BatteryStats.SERVICE_NAME);
+        mBatteryStats = null;//(IBatteryStats)ServiceManager.getService(BatteryStats.SERVICE_NAME);
         addState(mDefaultState);
             addState(mUninitializedState, mDefaultState);
             addState(mInactiveState, mDefaultState);
@@ -195,6 +195,7 @@ class SupplicantStateTracker extends StateMachine {
                 break;
         }
         try {
+        	if(mBatteryStats != null)
             mBatteryStats.noteWifiSupplicantStateChanged(supplState, failedAuth);
         } catch (RemoteException e) {
             // Won't happen.

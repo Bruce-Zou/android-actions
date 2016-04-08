@@ -55,7 +55,7 @@ struct special_dir {
 /* Directory paths that we will not backup/restore */
 static const struct special_dir SKIP_PATHS[] = {
     { "/data/misc", SPECIAL_NO_TOUCH },
-    { "/data/system/batterystats.bin", SPECIAL_NO_TOUCH },
+//    { "/data/system/batterystats.bin", SPECIAL_NO_TOUCH },
     { "/data/system/location", SPECIAL_NO_TOUCH },
     { "/data/dalvik-cache", SPECIAL_NO_BACKUP },
     { NULL, 0 },

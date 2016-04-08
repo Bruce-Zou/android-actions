@@ -113,9 +113,9 @@ public class IsolatedContext extends ContextWrapper {
 
     @Override
     public Object getSystemService(String name) {
-        if (Context.ACCOUNT_SERVICE.equals(name)) {
-            return mMockAccountManager;
-        }
+//        if (Context.ACCOUNT_SERVICE.equals(name)) {
+//            return mMockAccountManager;
+//        }
         // No other services exist in this context.
         return null;
     }

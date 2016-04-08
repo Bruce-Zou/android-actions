@@ -168,17 +168,17 @@ public final class BatteryService extends SystemService {
 
     @Override
     public void onStart() {
-        IBinder b = ServiceManager.getService("batteryproperties");
-        final IBatteryPropertiesRegistrar batteryPropertiesRegistrar =
-                IBatteryPropertiesRegistrar.Stub.asInterface(b);
-        try {
-            batteryPropertiesRegistrar.registerListener(new BatteryListener());
-        } catch (RemoteException e) {
-            // Should never happen.
-        }
+//        IBinder b = ServiceManager.getService("batteryproperties");
+//        final IBatteryPropertiesRegistrar batteryPropertiesRegistrar =
+//                IBatteryPropertiesRegistrar.Stub.asInterface(b);
+//        try {
+//            batteryPropertiesRegistrar.registerListener(new BatteryListener());
+//        } catch (RemoteException e) {
+//            // Should never happen.
+//        }
 
-        publishBinderService("battery", new BinderService());
-        publishLocalService(BatteryManagerInternal.class, new LocalService());
+//        publishBinderService("battery", new BinderService());
+//        publishLocalService(BatteryManagerInternal.class, new LocalService());
     }
 
     @Override
@@ -338,14 +338,14 @@ public final class BatteryService extends SystemService {
         }
 
         // Let the battery stats keep track of the current level.
-        try {
-            mBatteryStats.setBatteryState(mBatteryProps.batteryStatus, mBatteryProps.batteryHealth,
-                    mPlugType, mBatteryProps.batteryLevel, mBatteryProps.batteryTemperature,
-                    mBatteryProps.batteryVoltage);
-        } catch (RemoteException e) {
-            // Should never happen.
-        }
-
+//        try {
+//            mBatteryStats.setBatteryState(mBatteryProps.batteryStatus, mBatteryProps.batteryHealth,
+//                    mPlugType, mBatteryProps.batteryLevel, mBatteryProps.batteryTemperature,
+//                    mBatteryProps.batteryVoltage);
+//        } catch (RemoteException e) {
+//            // Should never happen.
+//        }
+//
         shutdownIfNoPowerLocked();
         shutdownIfOverTempLocked();
 
@@ -528,7 +528,7 @@ public final class BatteryService extends SystemService {
     }
 
     private void logBatteryStatsLocked() {
-        IBinder batteryInfoService = ServiceManager.getService(BatteryStats.SERVICE_NAME);
+        IBinder batteryInfoService = null;//ServiceManager.getService(BatteryStats.SERVICE_NAME);
         if (batteryInfoService == null) return;
 
         DropBoxManager db = (DropBoxManager) mContext.getSystemService(Context.DROPBOX_SERVICE);
@@ -536,33 +536,33 @@ public final class BatteryService extends SystemService {
 
         File dumpFile = null;
         FileOutputStream dumpStream = null;
-        try {
-            // dump the service to a file
-            dumpFile = new File(DUMPSYS_DATA_PATH + BatteryStats.SERVICE_NAME + ".dump");
-            dumpStream = new FileOutputStream(dumpFile);
-            batteryInfoService.dump(dumpStream.getFD(), DUMPSYS_ARGS);
-            FileUtils.sync(dumpStream);
-
-            // add dump file to drop box
-            db.addFile("BATTERY_DISCHARGE_INFO", dumpFile, DropBoxManager.IS_TEXT);
-        } catch (RemoteException e) {
-            Slog.e(TAG, "failed to dump battery service", e);
-        } catch (IOException e) {
-            Slog.e(TAG, "failed to write dumpsys file", e);
-        } finally {
-            // make sure we clean up
-            if (dumpStream != null) {
-                try {
-                    dumpStream.close();
-                } catch (IOException e) {
-                    Slog.e(TAG, "failed to close dumpsys output stream");
-                }
-            }
-            if (dumpFile != null && !dumpFile.delete()) {
-                Slog.e(TAG, "failed to delete temporary dumpsys file: "
-                        + dumpFile.getAbsolutePath());
-            }
-        }
+//        try {
+//            // dump the service to a file
+//            dumpFile = new File(DUMPSYS_DATA_PATH + BatteryStats.SERVICE_NAME + ".dump");
+//            dumpStream = new FileOutputStream(dumpFile);
+//            batteryInfoService.dump(dumpStream.getFD(), DUMPSYS_ARGS);
+//            FileUtils.sync(dumpStream);
+//
+//            // add dump file to drop box
+//            db.addFile("BATTERY_DISCHARGE_INFO", dumpFile, DropBoxManager.IS_TEXT);
+//        } catch (RemoteException e) {
+//            Slog.e(TAG, "failed to dump battery service", e);
+//        } catch (IOException e) {
+//            Slog.e(TAG, "failed to write dumpsys file", e);
+//        } finally {
+//            // make sure we clean up
+//            if (dumpStream != null) {
+//                try {
+//                    dumpStream.close();
+//                } catch (IOException e) {
+//                    Slog.e(TAG, "failed to close dumpsys output stream");
+//                }
+//            }
+//            if (dumpFile != null && !dumpFile.delete()) {
+//                Slog.e(TAG, "failed to delete temporary dumpsys file: "
+//                        + dumpFile.getAbsolutePath());
+//            }
+//        }
     }
 
     private void logOutlierLocked(long duration) {
@@ -756,6 +756,7 @@ public final class BatteryService extends SystemService {
         public void batteryPropertiesChanged(BatteryProperties props) {
             final long identity = Binder.clearCallingIdentity();
             try {
+//            	if(BatteryService != null)
                 BatteryService.this.update(props);
             } finally {
                 Binder.restoreCallingIdentity(identity);

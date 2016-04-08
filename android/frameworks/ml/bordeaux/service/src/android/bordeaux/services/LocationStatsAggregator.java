@@ -150,6 +150,8 @@ public class LocationStatsAggregator extends Aggregator {
     }
 
     private Location getLastKnownLocation() {
+    		if(mLocationManager == null)
+    			return null;
         List<String> providers = mLocationManager.getAllProviders();
         Location bestResult = null;
         float bestAccuracy = Float.MAX_VALUE;
@@ -187,10 +189,10 @@ public class LocationStatsAggregator extends Aggregator {
             Location location = getLastKnownLocation();
 
             if (location == null) {
-                String provider = mLocationManager.getBestProvider(mCriteria, true);
-                Log.i(TAG, "Best Available Location Provider: " + provider);
-                mLocationManager.requestSingleUpdate(provider, mLocationListener,
-                                                     mHandlerThread.getLooper());
+//                String provider = mLocationManager.getBestProvider(mCriteria, true);
+//                Log.i(TAG, "Best Available Location Provider: " + provider);
+//                mLocationManager.requestSingleUpdate(provider, mLocationListener,
+//                                                     mHandlerThread.getLooper());
             } else {
                 mHandler.sendMessage(mHandler.obtainMessage(LOCATION_CHANGE, location));
             }
@@ -227,7 +229,7 @@ public class LocationStatsAggregator extends Aggregator {
 
         public void onLocationChanged(Location location) {
             mHandler.sendMessage(mHandler.obtainMessage(LOCATION_CHANGE, location));
-            mLocationManager.removeUpdates(this);
+//            mLocationManager.removeUpdates(this);
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) { }

@@ -15,7 +15,7 @@
  */
 package com.replica.replicaisland;
 
-import android.os.Vibrator;
+//import android.os.Vibrator;
 import android.content.Context;
 
 /** A system for accessing the Android vibrator.  Note that this system requires the app's 
@@ -34,9 +34,9 @@ public class VibrationSystem extends BaseObject {
     public void vibrate(float seconds) {
         ContextParameters params = sSystemRegistry.contextParameters;
         if (params != null && params.context != null) {
-            Vibrator vibrator = (Vibrator)params.context.getSystemService(Context.VIBRATOR_SERVICE);
-            if (vibrator != null) {
-                vibrator.vibrate((int)(seconds * 1000));
+//            Vibrator vibrator = (Vibrator)params.context.getSystemService(Context.VIBRATOR_SERVICE);
+//            if (vibrator != null) {
+//                vibrator.vibrate((int)(seconds * 1000));
             }
         }
     }

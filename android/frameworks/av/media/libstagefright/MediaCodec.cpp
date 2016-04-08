@@ -66,14 +66,14 @@ MediaCodec::BatteryNotifier::BatteryNotifier() :
     mVideoRefCount(0),
     mAudioRefCount(0) {
     // get battery service
-    const sp<IServiceManager> sm(defaultServiceManager());
-    if (sm != NULL) {
-        const String16 name("batterystats");
-        mBatteryStatService = interface_cast<IBatteryStats>(sm->getService(name));
-        if (mBatteryStatService == NULL) {
-            ALOGE("batterystats service unavailable!");
-        }
-    }
+//    const sp<IServiceManager> sm(defaultServiceManager());
+//    if (sm != NULL) {
+//        const String16 name("batterystats");
+//        mBatteryStatService = interface_cast<IBatteryStats>(sm->getService(name));
+//        if (mBatteryStatService == NULL) {
+//            ALOGE("batterystats service unavailable!");
+//        }
+//    }
 }
 
 void MediaCodec::BatteryNotifier::noteStartVideo() {

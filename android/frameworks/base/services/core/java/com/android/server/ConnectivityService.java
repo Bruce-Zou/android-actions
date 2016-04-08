@@ -1517,15 +1517,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             final long ident = Binder.clearCallingIdentity();
             if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
-                final IBatteryStats bs = BatteryStatsService.getService();
-                try {
+                 IBatteryStats bs = null;//BatteryStatsService.getService();
+//                try {
                     NetworkInfo ni = intent.getParcelableExtra(
                             ConnectivityManager.EXTRA_NETWORK_INFO);
-                    bs.noteConnectivityChanged(intent.getIntExtra(
-                            ConnectivityManager.EXTRA_NETWORK_TYPE, ConnectivityManager.TYPE_NONE),
-                            ni != null ? ni.getState().toString() : "?");
-                } catch (RemoteException e) {
-                }
+//                    bs.noteConnectivityChanged(intent.getIntExtra(
+//                            ConnectivityManager.EXTRA_NETWORK_TYPE, ConnectivityManager.TYPE_NONE),
+//                            ni != null ? ni.getState().toString() : "?");
+//                } catch (RemoteException e) {
+//                }
             }
             try {
                 mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
@@ -4186,19 +4186,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Notify battery stats service about this network, both the normal
             // interface and any stacked links.
             // TODO: Avoid redoing this; this must only be done once when a network comes online.
-            try {
-                final IBatteryStats bs = BatteryStatsService.getService();
+//            try {
+                final IBatteryStats bs = null;//BatteryStatsService.getService();
                 final int type = newNetwork.networkInfo.getType();
 
                 final String baseIface = newNetwork.linkProperties.getInterfaceName();
-                bs.noteNetworkInterfaceType(baseIface, type);
+//                bs.noteNetworkInterfaceType(baseIface, type);
                 for (LinkProperties stacked : newNetwork.linkProperties.getStackedLinks()) {
                     final String stackedIface = stacked.getInterfaceName();
-                    bs.noteNetworkInterfaceType(stackedIface, type);
+//                    bs.noteNetworkInterfaceType(stackedIface, type);
                     NetworkStatsFactory.noteStackedIface(stackedIface, baseIface);
                 }
-            } catch (RemoteException ignored) {
-            }
+//            } catch (RemoteException ignored) {
+//            }
 
             // This has to happen after the notifyNetworkCallbacks as that tickles each
             // ConnectivityManager instance so that legacy requests correctly bind dns

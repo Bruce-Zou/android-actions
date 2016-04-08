@@ -41,7 +41,7 @@ public class HapticFeedbackController {
      * Call to setup the controller.
      */
     public void start() {
-        mVibrator = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
+//        mVibrator = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
 
         // Setup a listener for changes in haptic feedback settings
         mIsGloballyEnabled = checkGlobalSetting(mContext);
@@ -53,7 +53,7 @@ public class HapticFeedbackController {
      * Call this when you don't need the controller anymore.
      */
     public void stop() {
-        mVibrator = null;
+//        mVibrator = null;
         mContext.getContentResolver().unregisterContentObserver(mContentObserver);
     }
 
@@ -62,13 +62,13 @@ public class HapticFeedbackController {
      * happen if we have vibrated very recently.
      */
     public void tryVibrate() {
-        if (mVibrator != null && mIsGloballyEnabled) {
-            long now = SystemClock.uptimeMillis();
-            // We want to try to vibrate each individual tick discretely.
-            if (now - mLastVibrate >= VIBRATE_DELAY_MS) {
-                mVibrator.vibrate(VIBRATE_LENGTH_MS);
-                mLastVibrate = now;
-            }
-        }
+//        if (mVibrator != null && mIsGloballyEnabled) {
+//            long now = SystemClock.uptimeMillis();
+//            // We want to try to vibrate each individual tick discretely.
+//            if (now - mLastVibrate >= VIBRATE_DELAY_MS) {
+//                mVibrator.vibrate(VIBRATE_LENGTH_MS);
+//                mLastVibrate = now;
+//            }
+//        }
     }
 }

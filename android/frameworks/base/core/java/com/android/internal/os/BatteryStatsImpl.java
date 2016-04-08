@@ -6397,12 +6397,12 @@ public final class BatteryStatsImpl extends BatteryStats {
     }
 
     public BatteryStatsImpl(File systemDir, Handler handler) {
-        if (systemDir != null) {
-            mFile = new JournaledFile(new File(systemDir, "batterystats.bin"),
-                    new File(systemDir, "batterystats.bin.tmp"));
-        } else {
+//        if (systemDir != null) {
+//            mFile = new JournaledFile(new File(systemDir, "batterystats.bin"),
+//                    new File(systemDir, "batterystats.bin.tmp"));
+//        } else {
             mFile = null;
-        }
+//        }
         mCheckinFile = new AtomicFile(new File(systemDir, "batterystats-checkin.bin"));
         mHandler = new MyHandler(handler.getLooper());
         mStartCount++;

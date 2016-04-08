@@ -253,16 +253,16 @@ public final class TwilightService extends SystemService {
                     // Unregister the current location monitor, so we can
                     // register a new one for it to get an immediate update.
                     mNetworkListenerEnabled = false;
-                    mLocationManager.removeUpdates(mEmptyLocationListener);
+//                    mLocationManager.removeUpdates(mEmptyLocationListener);
 
                     // Fall through to re-register listener.
                 case MSG_ENABLE_LOCATION_UPDATES:
                     // enable network provider to receive at least location updates for a given
                     // distance.
-                    boolean networkLocationEnabled;
+                    boolean networkLocationEnabled = false;
                     try {
-                        networkLocationEnabled =
-                            mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+ //                       networkLocationEnabled =
+ //                           mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
                     } catch (Exception e) {
                         // we may get IllegalArgumentException if network location provider
                         // does not exist or is not yet installed.
@@ -271,8 +271,8 @@ public final class TwilightService extends SystemService {
                     if (!mNetworkListenerEnabled && networkLocationEnabled) {
                         mNetworkListenerEnabled = true;
                         mLastNetworkRegisterTime = SystemClock.elapsedRealtime();
-                        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                                LOCATION_UPDATE_MS, 0, mEmptyLocationListener);
+//                        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+//                                LOCATION_UPDATE_MS, 0, mEmptyLocationListener);
 
                         if (!mDidFirstInit) {
                             mDidFirstInit = true;
@@ -284,10 +284,10 @@ public final class TwilightService extends SystemService {
 
                     // enable passive provider to receive updates from location fixes (gps
                     // and network).
-                    boolean passiveLocationEnabled;
+                    boolean passiveLocationEnabled = false;
                     try {
-                        passiveLocationEnabled =
-                            mLocationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
+//                        passiveLocationEnabled =
+//                            mLocationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
                     } catch (Exception e) {
                         // we may get IllegalArgumentException if passive location provider
                         // does not exist or is not yet installed.
@@ -296,8 +296,8 @@ public final class TwilightService extends SystemService {
 
                     if (!mPassiveListenerEnabled && passiveLocationEnabled) {
                         mPassiveListenerEnabled = true;
-                        mLocationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
-                                0, LOCATION_UPDATE_DISTANCE_METER , mLocationListener);
+//                       mLocationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
+//                               0, LOCATION_UPDATE_DISTANCE_METER , mLocationListener);
                     }
 
                     if (!(mNetworkListenerEnabled && mPassiveListenerEnabled)) {
@@ -319,6 +319,8 @@ public final class TwilightService extends SystemService {
 
         private void retrieveLocation() {
             Location location = null;
+            if(mLocationManager == null)
+            	return;
             final Iterator<String> providers =
                     mLocationManager.getProviders(new Criteria(), true).iterator();
             while (providers.hasNext()) {

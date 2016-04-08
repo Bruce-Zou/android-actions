@@ -135,10 +135,10 @@ public class NetInitiatedActivity extends AlertActivity implements DialogInterfa
 
     // Respond to NI Handler under GpsLocationProvider, 1 = accept, 2 = deny
     private void sendUserResponse(int response) {
-        if (DEBUG) Log.d(TAG, "sendUserResponse, response: " + response);
-        LocationManager locationManager = (LocationManager)
-            this.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.sendNiResponse(notificationId, response);
+//        if (DEBUG) Log.d(TAG, "sendUserResponse, response: " + response);
+//        LocationManager locationManager = (LocationManager)
+//            this.getSystemService(Context.LOCATION_SERVICE);
+//        locationManager.sendNiResponse(notificationId, response);
     }
 
     private void handleNIVerify(Intent intent) {

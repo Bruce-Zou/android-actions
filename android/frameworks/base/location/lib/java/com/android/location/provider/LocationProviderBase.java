@@ -56,7 +56,7 @@ import com.android.internal.util.FastPrintWriter;
 public abstract class LocationProviderBase {
     private final String TAG;
 
-    protected final ILocationManager mLocationManager;
+    protected final ILocationManager mLocationManager = null;
     private final ProviderProperties mProperties;
     private final IBinder mBinder;
 
@@ -114,8 +114,8 @@ public abstract class LocationProviderBase {
 
     public LocationProviderBase(String tag, ProviderPropertiesUnbundled properties) {
         TAG = tag;
-        IBinder b = ServiceManager.getService(Context.LOCATION_SERVICE);
-        mLocationManager = ILocationManager.Stub.asInterface(b);
+//        IBinder b = ServiceManager.getService(Context.LOCATION_SERVICE);
+//        mLocationManager = ILocationManager.Stub.asInterface(b);
         mProperties = properties.getProviderProperties();
         mBinder = new Service();
     }
@@ -133,6 +133,7 @@ public abstract class LocationProviderBase {
      */
     public final void reportLocation(Location location) {
         try {
+        	if(mLocationManager != null)
             mLocationManager.reportLocation(location, false);
         } catch (RemoteException e) {
             Log.e(TAG, "RemoteException", e);

@@ -73,7 +73,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     
     public void publish(Context context) {
         mContext = context;
-        ServiceManager.addService(BatteryStats.SERVICE_NAME, asBinder());
+//        ServiceManager.addService(BatteryStats.SERVICE_NAME, asBinder());
         mStats.setNumSpeedSteps(new PowerProfile(mContext).getNumSpeedSteps());
         mStats.setRadioScanningTimeout(mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_radioScanningTimeout)
@@ -102,9 +102,10 @@ public final class BatteryStatsService extends IBatteryStats.Stub
         if (sService != null) {
             return sService;
         }
-        IBinder b = ServiceManager.getService(BatteryStats.SERVICE_NAME);
-        sService = asInterface(b);
-        return sService;
+//        IBinder b = ServiceManager.getService(BatteryStats.SERVICE_NAME);
+//        sService = asInterface(b);
+//        return sService;     
+					return null;
     }
 
     @Override

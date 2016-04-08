@@ -212,7 +212,7 @@ public class GeofenceManager implements LocationListener, PendingIntent.OnFinish
         // Prefer mLastLocationUpdate to LocationManager.getLastLocation().
         Location location = mReceivingLocationUpdates ? mLastLocationUpdate : null;
         if (location == null && !mFences.isEmpty()) {
-            location = mLocationManager.getLastLocation();
+//            location = mLocationManager.getLastLocation();
         }
 
         // Early out for null location.
@@ -313,7 +313,7 @@ public class GeofenceManager implements LocationListener, PendingIntent.OnFinish
 
                     LocationRequest request = new LocationRequest();
                     request.setInterval(intervalMs).setFastestInterval(0);
-                    mLocationManager.requestLocationUpdates(request, this, mHandler.getLooper());
+//                    mLocationManager.requestLocationUpdates(request, this, mHandler.getLooper());
                 }
             } else {
                 // Cancel location updates.
@@ -322,7 +322,7 @@ public class GeofenceManager implements LocationListener, PendingIntent.OnFinish
                     mLocationUpdateInterval = 0;
                     mLastLocationUpdate = null;
 
-                    mLocationManager.removeUpdates(this);
+//                    mLocationManager.removeUpdates(this);
                 }
             }
 

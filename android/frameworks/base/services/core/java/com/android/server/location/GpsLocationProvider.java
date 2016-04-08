@@ -386,7 +386,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private final PendingIntent mTimeoutIntent;
 
     private final IAppOpsService mAppOpsService;
-    private final IBatteryStats mBatteryStats;
+    private  IBatteryStats mBatteryStats = null;
 
     // only modified on handler thread
     private WorkSource mClientSource = new WorkSource();
@@ -628,8 +628,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
                 Context.APP_OPS_SERVICE));
 
         // Battery statistics service to be notified when GPS turns on or off
-        mBatteryStats = IBatteryStats.Stub.asInterface(ServiceManager.getService(
-                BatteryStats.SERVICE_NAME));
+        mBatteryStats = null;//IBatteryStats.Stub.asInterface(ServiceManager.getService(BatteryStats.SERVICE_NAME));
 
         // Load GPS configuration.
         mProperties = new Properties();
@@ -658,8 +657,8 @@ public class GpsLocationProvider implements LocationProviderInterface {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                LocationManager locManager =
-                        (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+//                LocationManager locManager =
+//                        (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
                 final long minTime = 0;
                 final float minDistance = 0;
                 final boolean oneShot = false;
@@ -671,10 +670,10 @@ public class GpsLocationProvider implements LocationProviderInterface {
                 // Don't keep track of this request since it's done on behalf of other clients
                 // (which are kept track of separately).
                 request.setHideFromAppOps(true);
-                locManager.requestLocationUpdates(
-                        request,
-                        new NetworkLocationListener(),
-                        mHandler.getLooper());
+//                locManager.requestLocationUpdates(
+//                        request,
+//                        new NetworkLocationListener(),
+//                        mHandler.getLooper());
             }
         });
 
@@ -1174,7 +1173,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
                             AppOpsManager.OP_GPS, uid, newWork.getName(i));
                     if (uid != lastuid) {
                         lastuid = uid;
-                        mBatteryStats.noteStartGps(uid);
+//                        mBatteryStats.noteStartGps(uid);
                     }
                 } catch (RemoteException e) {
                     Log.w(TAG, "RemoteException", e);
@@ -1192,7 +1191,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
                             AppOpsManager.OP_GPS, uid, goneWork.getName(i));
                     if (uid != lastuid) {
                         lastuid = uid;
-                        mBatteryStats.noteStopGps(uid);
+//                        mBatteryStats.noteStopGps(uid);
                     }
                 } catch (RemoteException e) {
                     Log.w(TAG, "RemoteException", e);

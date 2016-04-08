@@ -163,7 +163,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     private final Handler mDaemonHandler;
     private final PhoneStateListener mPhoneStateListener;
 
-    private IBatteryStats mBatteryStats;
+    private IBatteryStats mBatteryStats = null;
 
     private final Thread mThread;
     private CountDownLatch mConnectedSignal = new CountDownLatch(1);
@@ -285,8 +285,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             if (mBatteryStats != null) {
                 return mBatteryStats;
             }
-            mBatteryStats = IBatteryStats.Stub.asInterface(ServiceManager.getService(
-                    BatteryStats.SERVICE_NAME));
+            mBatteryStats = null;//IBatteryStats.Stub.asInterface(ServiceManager.getService(BatteryStats.SERVICE_NAME));
             return mBatteryStats;
         }
     }
@@ -488,12 +487,12 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
         SystemProperties.set(PROP_QTAGUID_ENABLED, mBandwidthControlEnabled ? "1" : "0");
 
-        if (mBandwidthControlEnabled) {
-            try {
-                getBatteryStats().noteNetworkStatsEnabled();
-            } catch (RemoteException e) {
-            }
-        }
+//        if (mBandwidthControlEnabled) {
+//            try {
+//                getBatteryStats().noteNetworkStatsEnabled();
+//            } catch (RemoteException e) {
+//            }
+//        }
 
         // push any existing quota or UID rules
         synchronized (mQuotaLock) {

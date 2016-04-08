@@ -584,11 +584,11 @@ public class WaveView extends View implements ValueAnimator.AnimatorUpdateListen
                 mContext.getContentResolver(), Settings.System.HAPTIC_FEEDBACK_ENABLED, 1,
                 UserHandle.USER_CURRENT) != 0;
         if (hapticEnabled) {
-            if (mVibrator == null) {
-                mVibrator = (android.os.Vibrator) getContext()
-                        .getSystemService(Context.VIBRATOR_SERVICE);
-            }
-            mVibrator.vibrate(duration, VIBRATION_ATTRIBUTES);
+//            if (mVibrator == null) {
+//                mVibrator = (android.os.Vibrator) getContext()
+//                        .getSystemService(Context.VIBRATOR_SERVICE);
+//            }
+//            mVibrator.vibrate(duration, VIBRATION_ATTRIBUTES);
         }
     }
 

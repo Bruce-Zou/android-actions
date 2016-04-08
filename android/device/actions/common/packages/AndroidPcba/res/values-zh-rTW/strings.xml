@@ -1,0 +1,74 @@
+<resources>
+
+    <string name="app_name">ActionsPcbaTest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_pcba_test">PcbaTestActivity</string>
+	<string name="untest">未測試</string>
+	<string name="testing">正在測試...</string>
+	<string name="auto_test_items">自動測試選項</string>
+	<string name="manual_test_items">手動測試選項</string>
+	<string name="start_record">開始錄音</string>
+	<string name="stop_record">停止錄音</string>
+	<string name="test_item_name">測試項名稱</string>
+	<string name="test_item_result">測試項結果</string>
+	
+	<string name="item_lable_ddr">記憶體測試</string>
+	<string name="item_lable_flash">快閃記憶體測試</string>
+	<string name="item_lable_uhost">U盤測試</string>
+	<string name="item_lable_card">插卡測試</string>
+	<string name="item_lable_wifi">WIFI測試</string>
+	<string name="item_lable_bluetooth">藍牙測試</string>	
+	<string name="item_lable_rtc">RTC時間測試</string>	
+	<string name="item_lable_sim">SIM卡測試</string>	
+	<string name="item_lable_phone">撥打電話</string>	
+	<string name="item_lable_gsensor">重力感測器</string>
+	<string name="item_lable_usb">USB連接</string>	
+	<string name="item_lable_hdmi">HDMI連接</string>
+	<string name="item_lable_headset">耳機連接</string>
+	<string name="item_lable_voice">錄放音測試</string>
+	<string name="item_lable_key">音量鍵測試</string>
+	<string name="item_lable_camera">攝像頭連接</string>
+	<string name="item_lable_lcd">LCD測試</string>
+	<string name="item_lable_tp">觸屏測試</string>
+	<string name="item_lable_backlight">背光測試</string>
+	<string name="item_lable_battery">電池測試</string>
+	<string name="item_lable_mouse">滑鼠連接</string>
+	<string name="item_lable_infrared">紅外測試</string>
+	<string name="item_lable_ethernet">以太網測試</string>
+	<string name="item_lable_usb2">USB2.0測試</string>
+	
+	<string name="uninstall_apk">卸載本程式</string>
+	<string name="uninstall_confirm">"請確認是否卸載 ！"</string>
+	
+	<string name="restore">恢復出廠設置</string>
+	<string name="reboot">卸載後是否關閉機器</string>
+	<string name="is_connected">已插入</string>
+	<string name="is_mtp_connected">已插入</string>
+	<string name="is_unconnected">已拔出</string>
+	<string name="is_waiting_plugin">等待插入...</string>
+	<string name="is_waiting_control">等待控制...</string>
+	<string name="wifi_level">強 度 值:</string>	
+	<string name="wifi_is_openning">正在打開...</string>
+	<string name="wifi_is_searching">正在掃描...</string>	
+	
+	<string name="bluetooth_not_support">設備不支援藍牙...</string>
+	<string name="bluetooth_is_openning">正在打開...</string>
+	<string name="bluetooth_is_searching">正在掃描...</string>
+	
+	<string name="key_notify">請按Vol+ Vol-</string>
+		
+	<string name="voice_notify">請點擊“開始錄音”</string>
+	<string name="voice_is_recording">正在錄音</string>
+	<string name="voice_is_replaying">正在放音</string>
+	
+	<string name="touch_notify">請點擊“開始錄音”</string>
+	
+	<string name="playing_music">正在播放音樂</string>
+	<string name="waiting_music">即將播放音樂</string>
+	
+	<string name="switch_camera">切換前後攝像頭</string>
+	<string name="vibration_confirm">"請確認一下開始振動"</string>
+	<string name="calibration_button">"校准"</string>
+
+</resources>

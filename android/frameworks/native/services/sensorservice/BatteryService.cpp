@@ -32,10 +32,10 @@ namespace android {
 
 BatteryService::BatteryService() {
     const sp<IServiceManager> sm(defaultServiceManager());
-    if (sm != NULL) {
-        const String16 name("batterystats");
-        mBatteryStatService = interface_cast<IBatteryStats>(sm->getService(name));
-    }
+//    if (sm != NULL) {
+//        const String16 name("batterystats");
+//        mBatteryStatService = interface_cast<IBatteryStats>(sm->getService(name));
+//    }
 }
 
 bool BatteryService::addSensor(uid_t uid, int handle) {

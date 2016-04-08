@@ -137,9 +137,9 @@ public class BatteryController extends StateController {
          * Track whether we're "charging", where charging means that we're ready to commit to
          * doing work.
          */
-        private boolean mCharging;
+        private boolean mCharging = false;
         /** Keep track of whether the battery is charged enough that we want to do work. */
-        private boolean mBatteryHealthy;
+        private boolean mBatteryHealthy = false;
 
         public ChargingTracker() {
             mAlarm = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
@@ -161,10 +161,10 @@ public class BatteryController extends StateController {
             mContext.registerReceiver(this, filter);
 
             // Initialise tracker state.
-            BatteryManagerInternal batteryManagerInternal =
-                    LocalServices.getService(BatteryManagerInternal.class);
-            mBatteryHealthy = !batteryManagerInternal.getBatteryLevelLow();
-            mCharging = batteryManagerInternal.isPowered(BatteryManager.BATTERY_PLUGGED_ANY);
+//            BatteryManagerInternal batteryManagerInternal =
+//                    LocalServices.getService(BatteryManagerInternal.class);
+//            mBatteryHealthy = !batteryManagerInternal.getBatteryLevelLow();
+//            mCharging = batteryManagerInternal.isPowered(BatteryManager.BATTERY_PLUGGED_ANY);
         }
 
         boolean isOnStablePower() {

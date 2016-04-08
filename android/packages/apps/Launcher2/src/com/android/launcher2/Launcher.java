@@ -462,6 +462,23 @@ public final class Launcher extends Activity
         
         // On large interfaces, we want the screen to auto-rotate based on the current orientation
         unlockScreenOrientation(true);
+
+//        startCalculator();//zjz
+         startPCBATest();//zjz
+    }
+    void startPCBATest(){
+        Intent intent = new Intent("android.intent.action.MAIN");
+        intent.addCategory("android.intent.category.LAUNCHER");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setComponent(new ComponentName("com.test.pcbatest", "com.test.pcbatest.PcbaTestActivity"));
+        startActivity(intent);
+    }
+    void startCalculator(){
+				Intent mIntent = new Intent( );
+				ComponentName comp = new ComponentName("com.android.calculator2", "com.android.calculator2.Calculator");    
+				mIntent.setComponent(comp);
+				mIntent.setAction("android.intent.action.VIEW");
+				startActivity(mIntent);
     }
 
     protected void onUserLeaveHint() {

@@ -389,7 +389,7 @@ public final class SystemServer {
         mSystemServiceManager.startService(LightsService.class);
 
         // Tracks the battery level.  Requires LightService.
-        mSystemServiceManager.startService(BatteryService.class);
+//        mSystemServiceManager.startService(BatteryService.class);
 
         // Tracks application usage stats.
         mSystemServiceManager.startService(UsageStatsService.class);
@@ -410,7 +410,7 @@ public final class SystemServer {
         final Context context = mSystemContext;
         AccountManagerService accountManager = null;
         ContentService contentService = null;
-        VibratorService vibrator = null;
+//        VibratorService vibrator = null;
         IAlarmManager alarm = null;
         MountService mountService = null;
         NetworkManagementService networkManagement = null;
@@ -435,7 +435,7 @@ public final class SystemServer {
         boolean disableMedia = SystemProperties.getBoolean("config.disable_media", false);
         boolean disableBluetooth = SystemProperties.getBoolean("config.disable_bluetooth", false);
         boolean disableTelephony = SystemProperties.getBoolean("config.disable_telephony", false);
-        boolean disableLocation = SystemProperties.getBoolean("config.disable_location", false);
+//        boolean disableLocation = SystemProperties.getBoolean("config.disable_location", false);
         boolean disableSystemUI = SystemProperties.getBoolean("config.disable_systemui", false);
         boolean disableNonCoreServices = SystemProperties.getBoolean("config.disable_noncore", false);
         boolean disableNetwork = SystemProperties.getBoolean("config.disable_network", false);
@@ -461,14 +461,14 @@ public final class SystemServer {
             mContentResolver = context.getContentResolver();
 
             // The AccountManager must come before the ContentService
-            try {
-                // TODO: seems like this should be disable-able, but req'd by ContentService
-                Slog.i(TAG, "Account Manager");
-                accountManager = new AccountManagerService(context);
-                ServiceManager.addService(Context.ACCOUNT_SERVICE, accountManager);
-            } catch (Throwable e) {
-                Slog.e(TAG, "Failure starting Account Manager", e);
-            }
+//            try {
+//                // TODO: seems like this should be disable-able, but req'd by ContentService
+//                Slog.i(TAG, "Account Manager");
+//                accountManager = new AccountManagerService(context);
+//                ServiceManager.addService(Context.ACCOUNT_SERVICE, accountManager);
+//            } catch (Throwable e) {
+//                Slog.e(TAG, "Failure starting Account Manager", e);
+//            }
 
             Slog.i(TAG, "Content Manager");
             contentService = ContentService.main(context,
@@ -477,9 +477,9 @@ public final class SystemServer {
             Slog.i(TAG, "System Content Providers");
             mActivityManagerService.installSystemProviders();
 
-            Slog.i(TAG, "Vibrator Service");
-            vibrator = new VibratorService(context);
-            ServiceManager.addService("vibrator", vibrator);
+//            Slog.i(TAG, "Vibrator Service");
+//            vibrator = new VibratorService(context);
+//            ServiceManager.addService("vibrator", vibrator);
 
             Slog.i(TAG, "Consumer IR Service");
             consumerIr = new ConsumerIrService(context);
@@ -537,7 +537,7 @@ public final class SystemServer {
         INotificationManager notification = null;
         InputMethodManagerService imm = null;
         WallpaperManagerService wallpaper = null;
-        LocationManagerService location = null;
+//        LocationManagerService location = null;
         CountryDetectorService countryDetector = null;
         TextServicesManagerService tsms = null;
         LockSettingsService lockSettings = null;
@@ -741,12 +741,12 @@ public final class SystemServer {
                 mountService.waitForAsecScan();
             }
 
-            try {
-                if (accountManager != null)
-                    accountManager.systemReady();
-            } catch (Throwable e) {
-                reportWtf("making Account Manager Service ready", e);
-            }
+//            try {
+//                if (accountManager != null)
+//                    accountManager.systemReady();
+//            } catch (Throwable e) {
+//                reportWtf("making Account Manager Service ready", e);
+//            }
 
             try {
                 if (contentService != null)
@@ -762,23 +762,23 @@ public final class SystemServer {
 
             mSystemServiceManager.startService(DeviceStorageMonitorService.class);
 
-            if (!disableLocation) {
-                try {
-                    Slog.i(TAG, "Location Manager");
-                    location = new LocationManagerService(context);
-                    ServiceManager.addService(Context.LOCATION_SERVICE, location);
-                } catch (Throwable e) {
-                    reportWtf("starting Location Manager", e);
-                }
-
-                try {
-                    Slog.i(TAG, "Country Detector");
-                    countryDetector = new CountryDetectorService(context);
-                    ServiceManager.addService(Context.COUNTRY_DETECTOR, countryDetector);
-                } catch (Throwable e) {
-                    reportWtf("starting Country Detector", e);
-                }
-            }
+//            if (!disableLocation) {
+//                try {
+//                    Slog.i(TAG, "Location Manager");
+//                    location = new LocationManagerService(context);
+//                    ServiceManager.addService(Context.LOCATION_SERVICE, location);
+//                } catch (Throwable e) {
+//                    reportWtf("starting Location Manager", e);
+//                }
+//
+//                try {
+//                    Slog.i(TAG, "Country Detector");
+//                    countryDetector = new CountryDetectorService(context);
+//                    ServiceManager.addService(Context.COUNTRY_DETECTOR, countryDetector);
+//                } catch (Throwable e) {
+//                    reportWtf("starting Country Detector", e);
+//                }
+//            }
 
             if (!disableNonCoreServices) {
                 try {
@@ -1004,11 +1004,11 @@ public final class SystemServer {
 
         // It is now time to start up the app processes...
 
-        try {
-            vibrator.systemReady();
-        } catch (Throwable e) {
-            reportWtf("making Vibrator Service ready", e);
-        }
+//        try {
+//            vibrator.systemReady();
+//        } catch (Throwable e) {
+//            reportWtf("making Vibrator Service ready", e);
+//        }
 
         if (lockSettings != null) {
             try {
@@ -1071,7 +1071,7 @@ public final class SystemServer {
         final NetworkScoreService networkScoreF = networkScore;
         final WallpaperManagerService wallpaperF = wallpaper;
         final InputMethodManagerService immF = imm;
-        final LocationManagerService locationF = location;
+//        final LocationManagerService locationF = location;
         final CountryDetectorService countryDetectorF = countryDetector;
         final NetworkTimeUpdateService networkTimeUpdaterF = networkTimeUpdater;
         final CommonTimeManagementService commonTimeMgmtServiceF = commonTimeMgmtService;
@@ -1162,16 +1162,16 @@ public final class SystemServer {
                 } catch (Throwable e) {
                     reportWtf("Notifying InputMethodService running", e);
                 }
-                try {
-                    if (locationF != null) locationF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying Location Service running", e);
-                }
-                try {
-                    if (countryDetectorF != null) countryDetectorF.systemRunning();
-                } catch (Throwable e) {
-                    reportWtf("Notifying CountryDetectorService running", e);
-                }
+//                try {
+//                    if (locationF != null) locationF.systemRunning();
+//                } catch (Throwable e) {
+//                    reportWtf("Notifying Location Service running", e);
+//                }
+//                try {
+//                    if (countryDetectorF != null) countryDetectorF.systemRunning();
+//                } catch (Throwable e) {
+//                    reportWtf("Notifying CountryDetectorService running", e);
+//                }
                 try {
                     if (networkTimeUpdaterF != null) networkTimeUpdaterF.systemRunning();
                 } catch (Throwable e) {

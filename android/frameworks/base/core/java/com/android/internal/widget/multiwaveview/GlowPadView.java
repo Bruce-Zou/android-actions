@@ -569,9 +569,9 @@ public class GlowPadView extends View {
         final boolean hapticEnabled = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.HAPTIC_FEEDBACK_ENABLED, 1,
                 UserHandle.USER_CURRENT) != 0;
-        if (mVibrator != null && hapticEnabled) {
-            mVibrator.vibrate(mVibrationDuration, VIBRATION_ATTRIBUTES);
-        }
+//        if (mVibrator != null && hapticEnabled) {
+//            mVibrator.vibrate(mVibrationDuration, VIBRATION_ATTRIBUTES);
+//        }
     }
 
     private ArrayList<TargetDrawable> loadDrawableArray(int resourceId) {
@@ -677,11 +677,11 @@ public class GlowPadView extends View {
      * @param enabled
      */
     public void setVibrateEnabled(boolean enabled) {
-        if (enabled && mVibrator == null) {
-            mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-        } else {
-            mVibrator = null;
-        }
+//        if (enabled && mVibrator == null) {
+//            mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+//        } else {
+//            mVibrator = null;
+//        }
     }
 
     /**

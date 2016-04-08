@@ -476,8 +476,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.android.dateformat=MM-dd-yyyy \
     ro.config.ringtone=Ring_Synth_04.ogg \
     ro.config.notification_sound=pixiedust.ogg \
-	ro.product.locale.language=en \
-	ro.product.locale.region=US \
+	ro.product.locale.language=zh \
+	ro.product.locale.region=CN \
 	dalvik.vm.dexopt-flags=m=y \
 	dalvik.vm.checkjni=false \
 	dalvik.vm.heapgrowthlimit=128m \

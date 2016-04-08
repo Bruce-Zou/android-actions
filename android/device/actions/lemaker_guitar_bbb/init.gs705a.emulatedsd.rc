@@ -553,14 +553,14 @@ on boot
 on init
 #   export BOOTCLASSPATH /system/framework/core.jar:/system/framework/conscrypt.jar:/system/framework/okhttp.jar:/system/framework/actionsframework.jar:/system/framework/core-junit.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/framework2.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/mms-common.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/apache-xml.jar:/system/framework/webviewchromium.jar:/system/framework/actions.jar
  
-# update system time from rtc
-service hwclock_update /system/xbin/busybox hwclock -s
-    class core
-    oneshot
-
-service batteryservice /charger
-    class charger
-    oneshot
+## update system time from rtc
+#service hwclock_update /system/xbin/busybox hwclock -s
+#    class core
+#    oneshot
+#
+#service batteryservice /charger
+#    class charger
+#    oneshot
 
 # virtual sdcard daemon running as media_rw (1023)
 service fuse_sdcard /system/bin/sdcard -u 1023 -g 1023 -t 4 -l /data/media /mnt/shell/emulated

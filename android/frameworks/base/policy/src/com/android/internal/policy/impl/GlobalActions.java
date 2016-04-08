@@ -124,7 +124,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private ToggleAction.State mAirplaneState = ToggleAction.State.Off;
     private boolean mIsWaitingForEcmExit = false;
     private boolean mHasTelephony;
-    private boolean mHasVibrator;
+    private boolean mHasVibrator = false;
     private final boolean mShowSilentToggle;
 
     /**
@@ -155,8 +155,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         mContext.getContentResolver().registerContentObserver(
                 Settings.Global.getUriFor(Settings.Global.AIRPLANE_MODE_ON), true,
                 mAirplaneModeObserver);
-        Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-        mHasVibrator = vibrator != null && vibrator.hasVibrator();
+//        Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+//        mHasVibrator = vibrator != null && vibrator.hasVibrator();
 
         mShowSilentToggle = SHOW_SILENT_TOGGLE && !mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_useFixedVolume);

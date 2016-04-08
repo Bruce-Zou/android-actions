@@ -239,13 +239,16 @@ public class AppLaunch extends InstrumentationTestCase {
     private void checkAccountSignIn() {
         // ensure that the device has the required account types before starting test
         // e.g. device must have a valid Google account sign in to measure a meaningful launch time
-        // for Gmail
+        // for Gmail    
+        
         if (mRequiredAccounts == null || mRequiredAccounts.isEmpty()) {
             return;
         }
         final AccountManager am =
                 (AccountManager) getInstrumentation().getTargetContext().getSystemService(
                         Context.ACCOUNT_SERVICE);
+        if(am == null)
+        	return;
         Account[] accounts = am.getAccounts();
         // use set here in case device has multiple accounts of the same type
         Set<String> foundAccounts = new HashSet<String>();
@@ -296,8 +299,11 @@ public class AppLaunch extends InstrumentationTestCase {
     }
 
     private void reportError(String appName, String processName) {
+    	         
         ActivityManager am = (ActivityManager) getInstrumentation()
                 .getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        if(am == null)
+        	return;
         List<ProcessErrorStateInfo> crashes = am.getProcessesInErrorState();
         if (crashes != null) {
             for (ProcessErrorStateInfo crash : crashes) {

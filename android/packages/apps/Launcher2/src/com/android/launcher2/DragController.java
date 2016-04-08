@@ -66,7 +66,7 @@ public class DragController {
 
     private Launcher mLauncher;
     private Handler mHandler;
-    private final Vibrator mVibrator;
+    private final Vibrator mVibrator = null;
 
     // temporaries to avoid gc thrash
     private Rect mRectTemp = new Rect();
@@ -151,7 +151,7 @@ public class DragController {
         mHandler = new Handler();
         mScrollZone = r.getDimensionPixelSize(R.dimen.scroll_zone);
         mVelocityTracker = VelocityTracker.obtain();
-        mVibrator = (Vibrator) launcher.getSystemService(Context.VIBRATOR_SERVICE);
+//        mVibrator = (Vibrator) launcher.getSystemService(Context.VIBRATOR_SERVICE);
 
         float density = r.getDisplayMetrics().density;
         mFlingToDeleteThresholdVelocity =
@@ -241,7 +241,7 @@ public class DragController {
         mDragObject.dragSource = source;
         mDragObject.dragInfo = dragInfo;
 
-        mVibrator.vibrate(VIBRATE_DURATION);
+//        mVibrator.vibrate(VIBRATE_DURATION);
 
         final DragView dragView = mDragObject.dragView = new DragView(mLauncher, b, registrationX,
                 registrationY, 0, 0, b.getWidth(), b.getHeight(), initialDragViewScale);

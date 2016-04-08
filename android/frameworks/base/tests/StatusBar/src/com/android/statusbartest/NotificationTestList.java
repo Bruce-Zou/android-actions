@@ -68,7 +68,7 @@ public class NotificationTestList extends TestActivity
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        mVibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+//        mVibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
         mActivityCreateTime = System.currentTimeMillis();
     }
 
@@ -509,35 +509,35 @@ public class NotificationTestList extends TestActivity
         new Test("Vibrate pattern") {
             public void run()
             {
-                mVibrator.vibrate(new long[] { 250, 1000, 500, 2000 }, -1);
+//                mVibrator.vibrate(new long[] { 250, 1000, 500, 2000 }, -1);
             }
         },
 
         new Test("Vibrate pattern repeating") {
             public void run()
             {
-                mVibrator.vibrate(new long[] { 250, 1000, 500 }, 1);
+//                mVibrator.vibrate(new long[] { 250, 1000, 500 }, 1);
             }
         },
 
         new Test("Vibrate 3s") {
             public void run()
             {
-                mVibrator.vibrate(3000);
+//                mVibrator.vibrate(3000);
             }
         },
 
         new Test("Vibrate 100s") {
             public void run()
             {
-                mVibrator.vibrate(100000);
+//                mVibrator.vibrate(100000);
             }
         },
 
         new Test("Vibrate off") {
             public void run()
             {
-                mVibrator.cancel();
+//                mVibrator.cancel();
             }
         },
 

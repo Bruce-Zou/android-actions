@@ -102,15 +102,15 @@ public final class AccountImageHelper {
         final String servicePackageName = "com.google.android.syncadapters.contacts";
         final Uri uri = ContentUris.withAppendedId(RawContacts.CONTENT_URI,
                 rawContactId);
-        final Intent intent = new Intent();
-        intent.setClassName(servicePackageName, serviceName);
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, RawContacts.CONTENT_ITEM_TYPE);
-        try {
-            context.startService(intent);
-        } catch (Exception e) {
-
-        }
+//        final Intent intent = new Intent();
+//        intent.setClassName(servicePackageName, serviceName);
+//        intent.setAction(Intent.ACTION_VIEW);
+//        intent.setDataAndType(uri, RawContacts.CONTENT_ITEM_TYPE);
+//        try {
+//            context.startService(intent);
+//        } catch (Exception e) {
+//
+//        }
     }
 
     /**
