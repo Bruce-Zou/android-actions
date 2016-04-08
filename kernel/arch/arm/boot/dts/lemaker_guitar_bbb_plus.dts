@@ -1062,29 +1062,8 @@
 		status = "okay";
 		hot_plugin_enable = <0>; /* 1-enable, 0-disable */
 		sensor_detect_list {
-			gc0308 = <0>;  /* 1-detect this sensor, 0-don't detect */
-			gc0328 = <0>;
-			gc0312 = <0>;
-			gc2035 = <0>;
-			gc2145 = <0>;
-			gc2155 = <0>;
-
-
-			bf3703 = <0>;
-			bf3920 = <0>;
-									
-			hi708 = <0>;
-			hi257 = <0>;
-			
-			ov2686 = <0>;
 			ov5640 = <1>;
 			
-			sp0718 = <0>;
-			sp0a19 = <0>;
-			sp2519 = <0>;
-			
-			
-			soc5140 = <0>;
     	};
     };
 
@@ -1108,7 +1087,7 @@ lcd0: lcd0@b02a0000 {
 		saturation = <7>;
 		contrast = <5>;
 
-		
+		/*
 		lcd_mode0:mode@1280x800p60 {
 		refresh = <60>;
                         xres = <1280>; 
@@ -1122,7 +1101,7 @@ lcd0: lcd0@b02a0000 {
                         vsync_len = <8>;
                         vmode = <0>;
 		};
-/*
+		*/
 		lcd_mode0:mode@1024x600p60 {
                         refresh = <60>;
                         xres = <1024>;
@@ -1136,8 +1115,6 @@ lcd0: lcd0@b02a0000 {
                         vsync_len = <4>;
                         vmode = <0>;
                 };
-*/
-
 	};
 	dsi: dsi@b0220000 {
 		status = "disabled";
@@ -1264,7 +1241,7 @@ lcd0: lcd0@b02a0000 {
 		//interrupts =< 0 0x4 >; /*SIRQ0*/
 		vol_range = <3100000 3110000>;
 
-		ctp_detect_list {
+/*		ctp_detect_list {
 			compatible = "ctp_detect_list";
 			ICN83XX =  <0>;
 			GSLX6X0 =  <0>;
@@ -1281,7 +1258,7 @@ lcd0: lcd0@b02a0000 {
 			MT395 =    <0>;
 			NT1100X =  <0>;
 			SSD254X =  <0>;
-	   };
+	   };*/
 	};
    
 	gpu@b0300000 {
