@@ -30,7 +30,7 @@ fi
 
 MAKER_BIN=../tools/fw_maker/Output/CompoundFW 
 
-$MAKER_BIN -fi:$IMAGE_OUTPUT_DIR/tmp.fw -fo:$IMAGE_OUTPUT_DIR/$FW_NAME.emmc.fw
+$MAKER_BIN -fi:$IMAGE_OUTPUT_DIR/tmp.fw -fo:$IMAGE_OUTPUT_DIR/$FW_NAME.sd.fw
 rm $IMAGE_OUTPUT_DIR/tmp.fw
 
 exit 0
