@@ -1,7 +1,10 @@
 rm android/out
 rm owl/out
-ln -s  android/out-pcba android/out
-ln -s owl/out-pcba owl/out
+cd android
+ln -s out-pcba out
+cd ../owl/
+ln -s out-pcba out
+cd ..
 ./autobuild.sh config
 ./autobuild.sh u-boot
 ./autobuild.sh kernel
