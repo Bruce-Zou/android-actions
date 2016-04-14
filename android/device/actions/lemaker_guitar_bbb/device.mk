@@ -17,8 +17,10 @@
 ifneq ($(filter $(TARGET_PRODUCT),lemaker_guitar_bbb),)
 
 #copy from config
-R_WIFI_TYPE=rtl8723bs
-R_BT_TYPE=rtl8723bs
+#R_WIFI_TYPE=rtl8723bs
+#R_BT_TYPE=rtl8723bs
+R_WIFI_TYPE=ap6212
+R_BT_TYPE=ap6212
 R_BT_USE_UART=ttyS2
 R_GMS_TYPE=base
 R_FIRMWARE_ROOTED=true
@@ -248,6 +250,56 @@ ifeq ($(strip $(R_BT_TYPE)), rtl8723bu)
         rtl8723b_fw
 endif
 
+ifeq ($(strip $(R_WIFI_TYPE)), ap6210)
+PRODUCT_PACKAGES += \
+        fw_bcmdhd.bin \
+        fw_bcm40181a2.bin \
+        fw_bcmdhd_p2p.bin \
+        fw_bcm40181a2_p2p.bin \
+        fw_bcmdhd_apsta.bin \
+        fw_bcm40181a2_apsta.bin \
+        nvram.txt \
+        dhcpcd.conf \
+        wpa_supplicant \
+        wpa_supplicant.conf \
+        wpa_supplicant_overlay.conf \
+        p2p_supplicant_overlay.conf \
+        init.wifi.rc
+endif
+
+ifeq ($(strip $(R_BT_TYPE)), ap6210)
+PRODUCT_PACKAGES += \
+        libbt-vendor \
+        bt_vendor.conf \
+        bcm20710a1.hcd \
+        audio.a2dp.default
+endif
+
+ifeq ($(strip $(R_WIFI_TYPE)), ap6212)
+PRODUCT_PACKAGES += \
+        fw_bcmdhd.bin \
+        fw_bcm43438a0.bin \
+        fw_bcmdhd_p2p.bin \
+        fw_bcm43438a0_p2p.bin \
+        fw_bcmdhd_apsta.bin \
+        fw_bcm43438a0_apsta.bin \
+        nvram.txt \
+        dhcpcd.conf \
+        wpa_supplicant \
+        wpa_supplicant.conf \
+        wpa_supplicant_overlay.conf \
+        p2p_supplicant_overlay.conf \
+        init.wifi.rc
+endif
+
+ifeq ($(strip $(R_BT_TYPE)), ap6212)
+PRODUCT_PACKAGES += \
+        libbt-vendor \
+        bt_vendor.conf \
+       	bcm43438a0.hcd \
+        audio.a2dp.default
+endif
+
 ifeq ($(strip $(R_WIFI_TYPE)), rtl8723bs)
 PRODUCT_PACKAGES += \
         dhcpcd.conf \
@@ -467,8 +519,8 @@ ADDITIONAL_BUILD_PROPERTIES += \
 	ro.config.hdmi_secure_check=0 \
 	ro.browser.search_engin=baidu \
 	ro.skia.img.decode.standard=ACTIONS \
-	ro.phone.mode=PHONE 
-    
+	ro.phone.mode=PHONE \
+	ro.wifi.suspend_policy=RMMOD_WLAN_KO 
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.device.model=S500 \

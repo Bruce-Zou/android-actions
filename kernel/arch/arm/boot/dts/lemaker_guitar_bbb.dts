@@ -939,7 +939,7 @@
 		phy-power-gpios = <&gpio 43 0>; /* GPIOB11 active  1:low  0:high*/		
 		phy-reset-gpios = <&gpio 127 0>; /* GPIOD31 active  1:low  0:high*/
 
-		phy_addr = <1>;
+		phy_addr = <0>;
 		address-bits = <48>;
 		//random-mac-address = "okay";		/*okay:     disable:*/
 		//local-mac-address = [ 00 18 fe 66 66 66 ];   /* if random address is enable,the local address will be unuseful*/
@@ -1226,7 +1226,8 @@ lcd0: lcd0@b02a0000 {
 	
 	wifi_bt_power_ctl {
 		compatible = "wifi,bt,power,ctl";
-		//bt_power_gpio = <&gpio  0>;/*GPIOA20, high active*/   /*BT_WAKE*/
+		bt_host_wake_gpio = <&gpio 72 0>;/*GPIOA20, high active*/   /*BT_WAKE*/
+		bt_wake_gpio =  <&gpio 32 0>;/*GPIOA20, high active*/   /*BT_WAKE*/
 		wifi_bt_power_gpios = <&gpio 126 0>; /* 86v GPIOD30 */
 		bt_en_gpios = <&gpio 67 0>;/*GPIOC3, high active*/
 		wifi_en_gpios = <&gpio 62 0>; /* 86v GPIOB30 */

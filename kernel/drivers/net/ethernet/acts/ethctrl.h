@@ -127,6 +127,7 @@ enum eth_phy_mode {
 enum eth_phy_id {
 	ETH_PHY_ID_RTL8201  = 0x001cc810,
 	ETH_PHY_ID_SR8201G = 0x001d2410,
+	ETH_PHY_ID_LAN8720 = 0x0007c0f0,
 };
 
 typedef struct mac_list {

@@ -1328,7 +1328,8 @@ static void mac_init(ec_priv_t *ecp)
 
 	//printk("before MAC_CTRL: 0x%x\n", (unsigned)getl(MAC_CTRL));
 	//putl(getl(MAC_CTRL) &(~(0x1<<1)), MAC_CTRL);
-	putl(getl(MAC_CTRL) | (0x1<<1), MAC_CTRL);
+	putl(getl(MAC_CTRL) | (0x1<<1) | (0x1 << 8), MAC_CTRL);   //REF_CLK from the Phy
+	//putl(getl(MAC_CTRL) | (0x1<<1) , MAC_CTRL);                    //REF_CLK from the mac
 	//printk("after MAC_CTRL: 0x%x\n", (unsigned)getl(MAC_CTRL));
 
 	hw_regs->er_miism &= 0x0;
@@ -1899,12 +1900,14 @@ static void phy_detect_func(struct work_struct *work)
 	//unsigned short phy_interrupt_status = 0;
 	unsigned short mmi_status = 0;
 	unsigned long flags;
+	unsigned short anlp;
+	unsigned short anar;
 
 	if(ecp->phy_model == ETH_PHY_MODEL_RTL8201_SR8201G){
 		if(((ecp->phy_id)  &  PHY_ID_MASK) == ETH_PHY_ID_RTL8201){
 			mmi_status =read_phy_reg(ecp, MII_BMSR);
 			mmi_status =read_phy_reg(ecp, MII_BMSR);//For the current link status,read this register twice as spec request
-		}else if(((ecp->phy_id)  &  PHY_ID_MASK) == ETH_PHY_ID_SR8201G){
+		}else if((((ecp->phy_id)  &  PHY_ID_MASK) == ETH_PHY_ID_SR8201G) || (((ecp->phy_id)  &  PHY_ID_MASK) == ETH_PHY_ID_LAN8720)){
 			mmi_status =read_phy_reg(ecp, MII_BMSR);
 		}
 	}

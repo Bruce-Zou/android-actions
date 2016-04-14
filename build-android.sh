@@ -1,9 +1,9 @@
 rm android/out
 rm owl/out
 cd android
-ln -s out-master out
+ln -s out-baifu out
 cd ../owl/
-ln -s out-master out
+ln -s out-baifu out
 cd ..
 ./autobuild.sh config
 ./autobuild.sh u-boot

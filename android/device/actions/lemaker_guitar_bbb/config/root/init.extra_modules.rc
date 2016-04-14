@@ -51,8 +51,8 @@ on post-fs
     
     setprop ro.bt.useusb0 "1" 
     # bluetooth
-#	insmod /misc/modules/rfkill-actions_bcmdhd.ko
-	insmod /misc/modules/rfkill-actions_8723bs.ko
+	insmod /misc/modules/rfkill-actions_bcmdhd.ko
+#	insmod /misc/modules/rfkill-actions_8723bs.ko
 	insmod /misc/modules/bt_rtl.ko
     # permissions for bluetooth.
     setprop ro.bt.bdaddr_path "/factory/bluetooth/bt_addr"
@@ -67,7 +67,7 @@ on post-fs
 	chmod 0777 /dev/ttyS*
 
     #bcm prealloc
-#    insmod /misc/modules/bcmdhd_prealloc.ko
+    insmod /misc/modules/bcmdhd_prealloc.ko
 
     #mkdir /data/camera for camcorder_profiles.xml
     mkdir /data/camera 0755 media media
