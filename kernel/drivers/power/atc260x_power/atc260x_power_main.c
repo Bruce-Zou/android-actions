@@ -2407,6 +2407,17 @@ static int atc260x_get_cfg_item(struct atc260x_charger *charger)
 		charger->cfg_items.bl_on_voltage = 3300;
 	}
 
+	property = of_get_property(charger->node, "gpiob18", &len);
+	if (property && len == sizeof(int))
+	{
+		charger->cfg_items.gpiob18 = (be32_to_cpup(property));
+		power_err("gpiob18: -----------------------------------------------------------------%d \n", charger->cfg_items.gpiob18); 
+	}
+	else
+	{
+		charger->cfg_items.gpiob18 = 50;
+	}
+
 	property = of_get_property(charger->node, "bl_on_voltage_diff", &len);
 	if (property && len == sizeof(int))
 	{
@@ -2702,6 +2713,8 @@ static  int atc260x_power_probe(struct platform_device *pdev)
 	/*check if battery is healthy*/
 	charger->battery_status = charger->check_health_pre(charger->atc260x);
 
+    gpio_direction_output(charger->cfg_items.gpiob18, 1);
+    pr_info("gpiob18=%d--------------------- active=%d\n", charger->cfg_items.gpiob18,1);
 	pr_info("charger=%p %d\n", charger, __LINE__);
 	pr_info("set_vbus_path=%p set_apds_vbus_pd=%p\n", charger->set_vbus_path, 
 	     charger->set_apds_vbus_pd);
@@ -2855,7 +2868,7 @@ static void atc260x_power_shutdown(struct platform_device *pdev)
 	struct atc260x_power *atc260x_power = platform_get_drvdata(pdev);
 	struct atc260x_charger *charger = &atc260x_power->charger;
 	cancel_delayed_work_sync(&charger->work); 
-
+    gpio_direction_output(charger->cfg_items.gpiob18, 0);
 	if (charger->cfg_items.charger_led_exist) 
 	{
 		gpio_free(charger->cfg_items.gpio_led_inner_pin);	
@@ -2874,10 +2887,11 @@ static void atc260x_power_shutdown(struct platform_device *pdev)
 	}
 	if (charger->atc260x == NULL)
 		return ;
-
+    
+    pr_info("gpiob18=%d--------------------- active=%d\n", charger->cfg_items.gpiob18,0);
 	dev_info(&pdev->dev, "atc260x_power_shutdown()\n");
 	pr_info("%s,cur_bat_cap:%d, bat_mv:%d\n", __func__, charger->cur_bat_cap, charger->bat_mv);
-	
+	//while(1);
 	if (charger->set_apds_wall_pd)
 		charger->set_apds_wall_pd(charger, true);
 	

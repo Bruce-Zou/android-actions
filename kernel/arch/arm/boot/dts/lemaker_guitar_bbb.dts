@@ -578,6 +578,7 @@
 				pwm-names = "ext_dcdc_pwm_ctl";                   /* pwm name */
 				ext_charger_exist = <0>;                          /* 1:exist external charger  0:do not exist external charger*/
 				charger_led_exist = <0>;                          /* 1:exist charger led 0:do not exist charger led */
+                gpiob18 = <50>;/*GPIOB18*/
 			};
 
 			atc260x-cap-gauge{

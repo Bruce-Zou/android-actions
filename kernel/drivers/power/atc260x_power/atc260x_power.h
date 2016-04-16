@@ -95,7 +95,8 @@ struct atc260x_cfg_items {
 	unsigned int usb_adapter_as_ac;
 	int boot_cap_threshold;
 	int bl_on_voltage;
-	
+	int gpiob18;
+
 	//struct gpio_pre_cfg charger_led_cfg;
 	//struct gpio_pre_cfg ext_chg_ctrl_cfg;
 
