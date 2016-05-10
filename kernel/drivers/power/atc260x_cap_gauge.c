@@ -2960,7 +2960,7 @@ static  int atc260x_gauge_probe(struct platform_device *pdev)
 	info->early_suspend.level = EARLY_SUSPEND_LEVEL_BLANK_SCREEN + 1;
 	info->early_suspend.suspend = atc260x_gauge_early_suspend;
 	info->early_suspend.resume = atc260x_gauge_later_resume;
-	register_early_suspend(&info->early_suspend);
+	//register_early_suspend(&info->early_suspend);
 #endif
 
 	/*Create a work queue for fuel gauge*/
@@ -2993,7 +2993,7 @@ static  int atc260x_gauge_remove(struct platform_device *pdev)
 	struct atc260x_gauge_info *info = platform_get_drvdata(pdev);
 
 #ifdef CONFIG_HAS_EARLYSUSPEND
-	unregister_early_suspend(&info->early_suspend);
+	//unregister_early_suspend(&info->early_suspend);
 #endif
 	kfifo_free(&info->fifo);
 	kfree(info);

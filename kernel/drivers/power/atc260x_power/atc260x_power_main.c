@@ -2622,7 +2622,7 @@ static  int atc260x_power_probe(struct platform_device *pdev)
 	charger->early_suspend.level = EARLY_SUSPEND_LEVEL_BLANK_SCREEN + 1;
 	charger->early_suspend.suspend = atc260x_power_early_suspend;
 	charger->early_suspend.resume = atc260x_power_later_resume;
-	register_early_suspend(&charger->early_suspend);
+	//register_early_suspend(&charger->early_suspend);
 #endif
 	
 	platform_set_drvdata(pdev, power);
@@ -2768,7 +2768,7 @@ static  int atc260x_power_remove(struct platform_device *pdev)
 	}
 
 #ifdef CONFIG_HAS_EARLYSUSPEND
-		unregister_early_suspend(&atc260x_power->charger.early_suspend);
+		//unregister_early_suspend(&atc260x_power->charger.early_suspend);
 #endif
 
 	cancel_delayed_work_sync(&atc260x_power->charger.work);

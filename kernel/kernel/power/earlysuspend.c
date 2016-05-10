@@ -16,11 +16,15 @@
 #include <linux/earlysuspend.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
+#include <linux/gpio.h>
+#include <linux/of_gpio.h>
+#include <mach/gpio.h>
 #include <linux/rtc.h>
 #include <linux/syscalls.h> /* sys_sync */
 #include <linux/wakelock.h>
 #include <linux/workqueue.h>
-
+#include <linux/delay.h>
+#include <linux/jiffies.h>
 #include "power.h"
 
 enum {
@@ -88,7 +92,17 @@ static void early_suspend(struct work_struct *work)
 {
 	struct early_suspend *pos;
 	int abort = 0;
-
+	/*
+	printk("early_suspend: gpio_direction_output------1----------------\n");
+	gpio_direction_output(50, 1);
+	mdelay(5000);
+	gpio_direction_output(50, 0);
+	printk("early_suspend: gpio_direction_output------2----------------\n");
+	mdelay(10000);
+	gpio_direction_output(50, 1);
+	printk("early_suspend: gpio_direction_output------3----------------\n");
+	mdelay(10000);	
+	*/
 	mutex_lock(&early_suspend_lock);
 	if (state == SUSPEND_REQUESTED)
 		state |= SUSPENDED;
@@ -125,8 +139,9 @@ abort:
 	request_suspend_state(PM_SUSPEND_ON);
 #else
 	if (state == SUSPEND_REQUESTED_AND_SUSPENDED)
-		pm_autosleep_set_state(PM_SUSPEND_MEM);
+		//pm_autosleep_set_state(PM_SUSPEND_MEM);
 #endif
+	printk("early_suspend: gpio_direction_output----------------------2\n");
 }
 
 static void late_resume(struct work_struct *work)
@@ -159,6 +174,8 @@ static void late_resume(struct work_struct *work)
 		printk("late_resume: done\n");
 abort:
 	mutex_unlock(&early_suspend_lock);
+
+	gpio_direction_output(50, 1);
 }
 
 void request_suspend_state(suspend_state_t new_state)

@@ -57,6 +57,26 @@
 #include <dm/root.h>
 #include <linux/compiler.h>
 
+
+#include <autoboot.h>
+#include <cli.h>
+#include <asm/io.h>
+#include <asm/arch/pmu.h>
+#include <key_scan.h>
+#include <asm/arch/owl_afi.h>
+#include <asm/arch/sys_proto.h>
+#include <asm/arch/actions_reg_owl.h>
+
+
+#define GPIO_REG_BASE               (GPIO_MFP_PWM_BASE)
+
+#define GPIO_BANK(gpio)             ((gpio) / 32)
+#define GPIO_IN_BANK(gpio)          ((gpio) % 32)
+#define GPIO_BIT(gpio)              (1 << GPIO_IN_BANK(gpio))
+
+#define GPIO_REG_OUTEN(gpio)    (GPIO_REG_BASE + GPIO_BANK(gpio) * 0xc + 0x0)
+#define GPIO_REG_INEN(gpio)     (GPIO_REG_BASE + GPIO_BANK(gpio) * 0xc + 0x4)
+#define GPIO_REG_DAT(gpio)      (GPIO_REG_BASE + GPIO_BANK(gpio) * 0xc + 0x8)
 /*
  * Pointer to initial global data area
  *
@@ -814,6 +834,15 @@ __weak int reserve_arch(void)
 {
 	return 0;
 }
+int GPIOB18_high(void)
+{
+	//GPIOB18 set to high
+	clrbits_le32(GPIO_REG_INEN(50), GPIO_BIT(50));
+	setbits_le32(GPIO_REG_OUTEN(50), GPIO_BIT(50));
+      	setbits_le32(GPIO_REG_DAT(50), GPIO_BIT(50));
+
+	return 0;
+}
 
 static init_fnc_t init_sequence_f[] = {
 #ifdef CONFIG_SANDBOX
@@ -917,6 +946,7 @@ static init_fnc_t init_sequence_f[] = {
 #if defined(CONFIG_ARM) || defined(CONFIG_X86) || defined(CONFIG_MICROBLAZE) || defined(CONFIG_AVR32)
 	dram_init,		/* configure available RAM banks */
 #endif
+	GPIOB18_high,
 #if defined(CONFIG_MIPS) || defined(CONFIG_PPC) || defined(CONFIG_M68K)
 	init_func_ram,
 #endif
@@ -1032,9 +1062,10 @@ void board_init_f(ulong boot_flags)
 	gd->flags = boot_flags;
 	gd->have_console = 0;
 
+	printf("---------------------------------------------------------------------not to printf");	
 	if (initcall_run_list(init_sequence_f))
 		hang();
-
+	printf("---------------------------------------------------------------------231---11");	
 #if !defined(CONFIG_ARM) && !defined(CONFIG_SANDBOX)
 	/* NOTREACHED - jump_to_copy() does not return */
 	hang();

@@ -723,6 +723,7 @@ static int run_main_loop(void)
 	sandbox_main_loop_init();
 #endif
 	/* main_loop() can return to retry autoboot, if so just run it again */
+printf("---------------------------------------------------------------------2-b--11");	
 	for (;;)
 		main_loop();
 	return 0;
@@ -955,10 +956,11 @@ initr_serial,
 
 void board_init_r(gd_t *new_gd, ulong dest_addr)
 {
+//printf("55555555555555555555555555555555555555555555555555555555");
 #ifdef CONFIG_NEEDS_MANUAL_RELOC
 	int i;
 #endif
-
+	
 #ifdef CONFIG_AVR32
 	mmu_init_r(dest_addr);
 #endif

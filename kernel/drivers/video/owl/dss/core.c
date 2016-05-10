@@ -636,7 +636,7 @@ static int __init owl_dss_init(void)
 		return r;
 	}	
 #ifdef CONFIG_EARLYSUSPEND
-	register_early_suspend(&owl_dss_early_suspend_desc);
+	//register_early_suspend(&owl_dss_early_suspend_desc);
 #endif
 	return 0;
 }
