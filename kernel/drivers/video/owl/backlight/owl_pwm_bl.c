@@ -28,7 +28,7 @@
 #include <linux/mfd/atc260x/atc260x.h>
 
 #if 0
-#define BL_PRINT(fmt, args...) printk(KERN_INFO fmt, ##args)
+#define BL_PRINT(fmt, args...) printk(KERN_ERR fmt, ##args)
 #else
 #define BL_PRINT(fmt, args...)
 #endif
@@ -78,8 +78,10 @@ struct owl_pwm_bl {
     u32                 delay_before_pwm;
     u32                 delay_after_pwm;
 	bool 				need_update_bl;
+	
 };
-
+static int last_brightness = 0;
+static int bl_sleep = 1;
 static struct backlight_device *owl_pwm_bl_device = NULL;
 
 static int owl_pwm_bl_update_status(struct backlight_device *bl) {
@@ -92,7 +94,18 @@ static int owl_pwm_bl_update_status(struct backlight_device *bl) {
 
     /* the percent of backlight, used to adjust charging cuurent */
     int brightness_percent;
-
+    BL_PRINT("bl_sleep------------------------------------------------ = %d\n", bl_sleep);
+    BL_PRINT("brightness---------------1--------------------------------- = %d\n", brightness);
+    if(bl_sleep == 0){
+		if(brightness == last_brightness)
+			bl_sleep = 1;
+		if(brightness < last_brightness)
+			brightness = last_brightness;
+	}
+    BL_PRINT("brightness--------------2---------------------------------- = %d\n", brightness);	
+	if((brightness != 0)&&(bl_sleep == 1))
+		  last_brightness =  bl->props.brightness;
+    BL_PRINT("bl->props.brightness = %d-----------------------------------------------pb->.last_brightness- = %d\n", bl->props.brightness,last_brightness);
     BL_PRINT("owl pwm bl update status\n");
 
     if (bl->props.power != FB_BLANK_UNBLANK
@@ -140,6 +153,7 @@ static int owl_pwm_bl_update_status(struct backlight_device *bl) {
         BL_PRINT("disable device, turn off backlight\n");
 
         pb->dev_enable = 0;
+		bl_sleep = 0;
 
         if (gpio_is_valid(pb->en_gpio.gpio)) {
             gpio_set_value(pb->en_gpio.gpio, pb->en_gpio.active_low);
@@ -161,7 +175,7 @@ static int owl_pwm_bl_update_status(struct backlight_device *bl) {
         BL_PRINT("turn on backlight\n");
         BL_PRINT("duty_ns = %x\n", brightness * pb->period / total_steps);
         BL_PRINT("period_ns = %x\n", pb->period);
-
+	 
         pwm_set_polarity(pb->pwm, pb->polarity_inversed);
         pwm_config(pb->pwm, (total_steps - brightness) * pb->period / total_steps,
                    pb->period);
@@ -353,7 +367,7 @@ static int owl_pwm_bl_probe(struct platform_device *pdev) {
     int                                 has_of_data = 0;
 
     printk("%s: name = %s\n", __func__, pdev->name);
-
+    last_brightness = 0;
     BL_PRINT("%s: get platform data\n", __func__);
     if (!data) {
         /* pdev has no platform data, get them from DT */
@@ -497,6 +511,8 @@ static int owl_pwm_bl_remove(struct platform_device *pdev) {
 #ifdef CONFIG_PM
 static int owl_pwm_bl_suspend(struct platform_device *pdev,
                                  pm_message_t state) {
+
+								 
 #if 0
     struct backlight_device *bl = platform_get_drvdata(pdev);
     struct owl_pwm_bl *pb = dev_get_drvdata(&bl->dev);
