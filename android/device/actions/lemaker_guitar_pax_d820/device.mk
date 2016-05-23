@@ -455,6 +455,8 @@ PRODUCT_COPY_FILES += \
 	device/actions/lemaker_guitar_pax_d820/config/system/wallpaper_010_small.png:system/etc/wallpaper/wallpaper_010_small.png \
 	device/actions/lemaker_guitar_pax_d820/config/system/wallpaper_011_small.png:system/etc/wallpaper/wallpaper_011_small.png \
 	device/actions/lemaker_guitar_pax_d820/config/system/wallpaper_012_small.png:system/etc/wallpaper/wallpaper_012_small.png \
+	device/actions/lemaker_guitar_pax_d820/config/system/monkey:system/bin/monkey \
+	device/actions/lemaker_guitar_pax_d820/config/system/monkey.jar:system/framework/monkey.jar \
 	device/actions/lemaker_guitar_pax_d820/config/root/build_bba.prop:system/build_bba.prop \
 	device/actions/lemaker_guitar_pax_d820/config/root/build_bbb.prop:system/build_bbb.prop \
 	device/actions/lemaker_guitar_pax_d820/config/root/build_bbb_plus.prop:system/build_bbb_plus.prop \
