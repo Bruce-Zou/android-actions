@@ -1,6 +1,6 @@
 
 #candidate: userdebug, eng, user
-lunch_type=userdebug
+lunch_type=user
 
 R_OS_DIR=$(TOP_DIR)/../android
 FW_RECOVERY=$(OUT_DIR)/recovery

@@ -125,7 +125,7 @@ service console /sbin/sh
     console
     user root
     
-on property:ro.debuggable=1
+on property:ro.debuggable=0
     start console
 
 service recovery /sbin/recovery
@@ -138,7 +138,7 @@ service adbd /sbin/adbd --root_seclabel=u:r:su:s0 --device_banner=recovery
     seclabel u:r:adbd:s0
 
 # Always start adbd on userdebug and eng builds
-on property:ro.debuggable=1
+on property:ro.debuggable=0
     write /sys/class/android_usb/android0/iManufacturer ${ro.product.manufacturer}
     write /sys/class/android_usb/android0/iProduct ${ro.product.model}
     write /sys/class/android_usb/android0/enable 0

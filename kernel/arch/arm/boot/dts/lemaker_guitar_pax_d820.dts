@@ -8,7 +8,7 @@
 
 	/*default*/
 	chosen {
-		bootargs = "earlyprintk clk_ignore_unused selinux=0";
+		bootargs = "earlyprintk clk_ignore_unused selinux=1";
 	};
 
 	cpus {
