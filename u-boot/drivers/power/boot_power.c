@@ -266,6 +266,7 @@ void check_power(void)
 	int wall_mv,vbus_mv,bat_mv;
 	int low_power_boot_choice = 0;
 	int cap;
+	int dat;
 	
 	gd->flags &= 0x3ffff;
 	
@@ -296,6 +297,51 @@ void check_power(void)
 			/* so, clear the flag, and exit. */
 			atc260x_pstore_set(ATC260X_PSTORE_TAG_DIS_MCHRG, 0);
 			return;
+		}
+		
+		dat = atc260x_reg_read(pmu_sys_ctl0[OWL_PMU_ID]);
+		debug("******PMU_SYS_CTL0 = 0x%x******\n", dat);
+		dat = atc260x_reg_read(pmu_sys_ctl5[OWL_PMU_ID]);
+		debug("******PMU_SYS_CTL5 = 0x%x******\n", dat);
+		
+		
+		atc260x_set_bits(pmu_sys_ctl5[OWL_PMU_ID], (1<<7), 0);    /* disable WALL detect wake */	
+		mdelay(10);
+		atc260x_set_bits(pmu_sys_ctl0[OWL_PMU_ID], (1<<14), 0); 	/* disable WALL WK_EN wake */	
+		atc260x_set_bits(pmu_sys_ctl0[OWL_PMU_ID], (1<<7), 0);    /* disable HDSW WK_EN wake */	
+		mdelay(10);
+		
+		dat = atc260x_reg_read(pmu_sys_ctl1[OWL_PMU_ID]);
+		debug("******PMU_SYS_CTL1 = 0x%x******\n", dat);		
+		if((dat & (1 << 13)) == 0x2000)
+		{
+			debug("******Wake-up source is onoff key******\n");
+		}
+		else if((dat & (1 << 6)) == 0x0040)
+		{
+			debug("******Wake-up source is RESET key******\n");
+		}		
+		else if((dat & (1 << 14)) == 0x4000)
+		{
+			debug("******Wake-up source is WALL power******\n");
+			dat = atc260x_set_bits(pmu_sys_ctl3[OWL_PMU_ID], PMU_SYS_CTL3_EN_S2 | PMU_SYS_CTL3_EN_S3, PMU_SYS_CTL3_EN_S3);
+			dat = atc260x_set_bits(pmu_sys_ctl1[OWL_PMU_ID], PMU_SYS_CTL1_EN_S1, 0);
+			while (dat == 0) { /* wait for powerdown if success. */
+				debug("......\n");
+			}
+		}
+		else if((dat & (1 << 7)) == 0x0080)
+		{
+			debug("******Wake-up source is HDSW power******\n");
+			dat = atc260x_set_bits(pmu_sys_ctl3[OWL_PMU_ID], PMU_SYS_CTL3_EN_S2 | PMU_SYS_CTL3_EN_S3, PMU_SYS_CTL3_EN_S3);
+			dat = atc260x_set_bits(pmu_sys_ctl1[OWL_PMU_ID], PMU_SYS_CTL1_EN_S1, 0);
+			while (dat == 0) { /* wait for powerdown if success. */
+				debug("......\n");
+			}
+		}			
+		else
+		{
+			debug("******Wake-up source is others******\n");
 		}
 		
 		if(!support_minicharger())
