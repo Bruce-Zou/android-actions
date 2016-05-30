@@ -49,11 +49,12 @@ static DEFINE_MUTEX(freq_table_mux);
 
 static struct cpu0_opp_table cpu0_table[] = {
 	/*khz		uV*/
-
+	{1308000, 1250000},
 	{1104000, 1175000},
 	{ 900000, 1025000},
 	{ 720000,  975000},
 	{ 504000,  950000},
+	{ 408000,  950000},
 	{ 240000,  950000},
 };
 
@@ -69,7 +70,7 @@ static struct cpu0_opp_info cpu0_opp_info;
 static struct cpu0_opp_info *cpu0_opp_info_cur;
 
 static u32 cpuinfo_max_freq;
-static u32 scaling_max_freq;
+static u32 scaling_max_freq = 900000;
 static u32 cpuinfo_min_freq;
 
 /*
@@ -95,7 +96,7 @@ static int find_cpu0_opp_info_max_min_freq(u32 *max_freq, u32 *scaling_max_freq,
 		return -EINVAL;
 
 	*max_freq = max_tmp;
-	*scaling_max_freq = max_tmp;
+//	*scaling_max_freq = max_tmp;
 	*min_freq = min_tmp;
 	return 0;
 }
