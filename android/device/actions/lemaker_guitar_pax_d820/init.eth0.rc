@@ -4,6 +4,15 @@ mkdir /data/misc/wif0/sockets 0770 wifi wifi
 mkdir /data/misc/dhcp 0770 dhcp dhcp
 chown dhcp dhcp /data/misc/dhcp
 
+service dhcpcd_br0 /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+ 
+service iprenew_br0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
 
 service dhcpcd_eth0 /system/bin/dhcpcd -aABDKL
     class late_start
@@ -15,4 +24,5 @@ service iprenew_eth0 /system/bin/dhcpcd -n
     class late_start
     disabled
     oneshot
+
 
