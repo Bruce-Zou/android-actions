@@ -868,19 +868,15 @@
 			status = "okay";
 			compatible = "tchip,ilitek";
 			reg = <0x41>;
-			tp_vcc = "ldo5";
+
 			//touch-gpio = <&gpio7 GPIO_A6 IRQ_TYPE_EDGE_RISING>;
 			//ilitek,irq-gpio = <&gpio8 GPIO_A7 IRQ_TYPE_EDGE_FALLING>;
 			//ilitek,reset-gpio = <&gpio8 GPIO_A6 GPIO_ACTIVE_LOW>;
-			//touch-gpio =  <&gpio 24 2>;
+			touch-gpio =  <&gpio 24 1>;
 			reset-gpio =  <&gpio 35 1>;
 			//enable-gpio = <&gpio8 GPIO_B0 GPIO_ACTIVE_HIGH>;
 			//max-x = <1600>;
-			//max-y = <900>;
-			rotate_degree = <270>;  /* 0 90 180 270 */
-    			interrupt-parent = <&sirq>;
-    			interrupts =< 0 0x2>; /*SIRQ0*/
-			vol_range = <3100000 3110000>;			
+			//max-y = <900>;		
 		};
 		
 		focaltech@38 {

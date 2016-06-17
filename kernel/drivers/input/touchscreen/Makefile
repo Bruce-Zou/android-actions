@@ -78,4 +78,5 @@ obj-$(CONFIG_TOUCHSCREEN_GSL3680)     += GSL3680/
 #obj-$(CONFIG_TOUCHSCREEN_FT5X06)		  += FT5406/
 #obj-$(CONFIG_TOUCHSCREEN_GT9XX)                  += GT9XX/
 #obj-$(CONFIG_TOUCHSCREEN_DETECT)		  += ctp_detect/
-obj-y += FT7811/
+#obj-y += FT7811/
+obj-y += ilitek2302/
