@@ -43,7 +43,7 @@
 #define CFG_TP_USE_CONFIG 1
 //default value
 #define CTP_RESET_PIN       OWL_GPIO_PORTB(3)
-#define CTP_I2C_ADAPTER     (1)
+#define CTP_I2C_ADAPTER     (2)
 #define CTP_DETECT_NAME		"ctp_detect"
 #define CFG_CTP_DETECT_LIST "ctp_detect_list"
 static int scan_start = 0;

@@ -16,6 +16,26 @@ struct ctp_device
 struct ctp_device ctp_device_list[]=
 {
 //注意如果两个ic的i2c地址相同，把有chipid的放在前面。
+	//ft7811
+	{
+		"ft7811",			//0.IC名称
+		"fts_ts.ko",	//1.ko名称
+		true,				//2.是否扫描
+		0x38,				//3.i2c地址
+		false,	//确实无			//4.有chipid
+		0,				//5.chipid寄存器
+		0,				//6.chipid
+	},	
+	//ilitek2302
+	{
+		"ilitek",			//0.IC名称
+		"ilitek230x.ko",	//1.ko名称
+		true,				//2.是否扫描
+		0x41,				//3.i2c地址
+		false,	//确实无			//4.有chipid
+		0,				//5.chipid寄存器
+		0,				//6.chipid
+	},		
 	//ICN83XX
 	{
 		"ICN83XX",			//0.IC名称

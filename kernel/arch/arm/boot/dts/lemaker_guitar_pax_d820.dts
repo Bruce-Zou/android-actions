@@ -1308,6 +1308,37 @@ lcd0: lcd0@b02a0000 {
       stk8313 = <0>;
 	  };
 	};
+
+	ctp_detect {
+		compatible = "owl-ctp-detect";
+		i2c_adapter_id = <2>;
+		//tp_vcc = "ldo5";
+		//reset_gpios = <&gpio 35 1>;    /*GPIOB(3) 0: high, 1: low*/
+		//interrupt-parent = <&sirq>;
+		//interrupts =< 0 0x4 >; /*SIRQ0*/
+		vol_range = <3100000 3110000>;
+
+		ctp_detect_list {
+			compatible = "ctp_detect_list";
+			ilitek =  <1>;
+			ft7811 =  <1>;
+			FT52-406 = <0>;
+			FT5606 =   <0>;
+			Goodix-TS =<0>;
+			AW5206 =   <0>;
+			AW5209 =   <0>;
+			CT36X =    <0>;
+			HL3X06 =   <0>;
+			ILITEK =   <0>;
+			ili2672 =  <0>;
+			ft5x06 =   <0>;
+			MT395 =    <0>;
+			NT1100X =  <0>;
+			SSD254X =  <0>;
+			ICN83XX =  <0>;
+			GSLX6X0 =  <0>;
+	   };
+	};
    
 	gpu@b0300000 {
 		gpuvdd-supply = <&vdd_gpu_dcdc>;
