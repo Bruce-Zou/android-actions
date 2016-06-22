@@ -28,6 +28,9 @@ on post-fs
    start insmod_gsensor
    wait /dev/input/event2
 
+#start led
+    start lemakerled
+
     #tp
     start insmod_ctp
 
@@ -110,7 +113,11 @@ service insmod_ctp /insmod_ctp.sh
 service eth0_up /LMKNetwork.sh eth0 start
     class modules
     oneshot
-
+    
+service lemakerled /lemakerled.sh
+   class modules
+   oneshot
+   
 service eth0_up_static /LMKNetwork.sh eth0  start_static
     class modules
     oneshot

@@ -1,0 +1,34 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+	<!--AutoTest 为是否执行自动化测试标识， 0：不会自动执行下一项；1 ：会自动执行下一项-->
+	<int name="AutoTest" value="1" />
+	 
+	<!--OnOff测试配置项-->
+	<!-- OnOffTest值，0：不会测试这一项，1 ：会测试这一项-->
+	<int name="OnOffTest" value="0" />
+	<!--OnOffTotalTimes 为需要自动开关屏测试的次数，例如下面的5次-->
+	<int name="OnOffTotalTimes" value="0" />
+	<int name="CurrentOnOffTimes" value="0" />
+	<!--OnOffIntervalSeconds 为每次开关屏的隔间时间，单位为：s-->
+	<int name="OnOffIntervalSeconds" value="15" />
+	
+	
+	 <!--自动开关机测试配置项-->
+	<!-- reboot值，0：不会测试这一项，1 ：会测试这一项-->
+	<int name="reboot" value="0" />
+	<!--RebootTotalTimes 为需要自动开关机测试的次数，例如下面的2次-->
+	<int name="RebootTotalTimes" value="0" />
+	<int name="CurrentRebootTimes" value="0" />
+	
+	
+	 <!--自动恢复出厂设置测试配置项-->
+	<!-- recovery值，0：不会测试这一项，1 ：会测试这一项-->
+	<int name="recovery" value="0" />
+	 <!--RecoveryTotalTimes 为需要自动恢复出厂设置测试的次数，例如下面的2次-->
+	<int name="RecoveryTotalTimes" value="0" />
+	<int name="CurrentRecoveryTimes" value="0" />
+	
+	<!--是否在以上测试完成后自动执行视频和游戏老化。0表示不测试这一项；1表示测试这一项 -->
+	<int name="startVideoAndGame" value="1" />
+	
+</map>
