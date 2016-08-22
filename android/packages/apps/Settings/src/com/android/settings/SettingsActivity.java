@@ -1125,7 +1125,9 @@ public class SettingsActivity extends Activity
                             if(tile.id != R.id.sim_settings || Utils.showSimCardTile(this)){
                                 category.addTile(tile);
                             }
-
+                            if(tile.id == R.id.sim_settings){
+                                category.addTile(tile);
+                            }
                         } else {
                             XmlUtils.skipCurrentTag(parser);
                         }

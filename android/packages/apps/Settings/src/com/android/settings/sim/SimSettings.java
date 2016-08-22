@@ -57,7 +57,7 @@ import java.util.List;
 
 public class SimSettings extends RestrictedSettingsFragment implements Indexable {
     private static final String TAG = "SimSettings";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
     private static final String DISALLOW_CONFIG_SIM = "no_config_sim";
     private static final String SIM_CARD_CATEGORY = "sim_cards";
@@ -138,7 +138,7 @@ public class SimSettings extends RestrictedSettingsFragment implements Indexable
             (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
 
         addPreferencesFromResource(R.xml.sim_settings);
-
+				if (DBG) log("createPreferences-----------------------------------\n");
         mSimCards = (PreferenceScreen)findPreference(SIM_CARD_CATEGORY);
 
         final int numSlots = tm.getSimCount();
@@ -156,6 +156,7 @@ public class SimSettings extends RestrictedSettingsFragment implements Indexable
         }
 
         updateActivitesCategory();
+        if (DBG) log("createPreferences-----------------------------------\n");
     }
 
     private void updateAvailableSubInfos(){
@@ -174,7 +175,9 @@ public class SimSettings extends RestrictedSettingsFragment implements Indexable
 
     private void updateAllOptions() {
         updateSimSlotValues();
+        if (DBG) log("createPreferences-----------1------------------------\n");
         updateActivitesCategory();
+        if (DBG) log("createPreferences-----------2------------------------\n");
     }
 
     private void updateSimSlotValues() {
