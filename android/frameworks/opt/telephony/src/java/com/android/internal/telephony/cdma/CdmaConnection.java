@@ -41,7 +41,7 @@ import com.android.internal.telephony.uicc.IccCardApplicationStatus.AppState;
  */
 public class CdmaConnection extends Connection {
     static final String LOG_TAG = "CdmaConnection";
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
 
     //***** Instance Variables
 

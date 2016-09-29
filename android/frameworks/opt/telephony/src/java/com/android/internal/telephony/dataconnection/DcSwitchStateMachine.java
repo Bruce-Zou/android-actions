@@ -31,7 +31,7 @@ import android.telephony.Rlog;
 
 public class DcSwitchStateMachine extends StateMachine {
     private static final boolean DBG = true;
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
     private static final String LOG_TAG = "DcSwitchSM";
 
     // ***** Event codes for driving the state machine

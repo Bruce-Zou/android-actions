@@ -46,7 +46,7 @@ import java.util.HashMap;
  */
 class DcController extends StateMachine {
     private static final boolean DBG = true;
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
 
     private PhoneBase mPhone;
     private DcTrackerBase mDct;

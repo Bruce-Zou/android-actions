@@ -45,7 +45,7 @@ public class FdnSetting extends PreferenceActivity
         implements EditPinPreference.OnPinEnteredListener, DialogInterface.OnCancelListener {
 
     private static final String LOG_TAG = PhoneGlobals.LOG_TAG;
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
     private SubscriptionInfoHelper mSubscriptionInfoHelper;
     private Phone mPhone;

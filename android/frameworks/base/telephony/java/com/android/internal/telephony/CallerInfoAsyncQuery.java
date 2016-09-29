@@ -43,7 +43,7 @@ import android.util.Log;
  * {@hide}
  */
 public class CallerInfoAsyncQuery {
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
     private static final String LOG_TAG = "CallerInfoAsyncQuery";
 
     private static final int EVENT_NEW_QUERY = 1;

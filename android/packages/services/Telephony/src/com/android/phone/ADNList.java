@@ -45,7 +45,7 @@ import android.widget.TextView;
  */
 public class ADNList extends ListActivity {
     protected static final String TAG = "ADNList";
-    protected static final boolean DBG = false;
+    protected static final boolean DBG = true;
 
     private static final String[] COLUMN_NAMES = new String[] {
         "name",

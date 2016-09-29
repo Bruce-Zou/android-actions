@@ -30,7 +30,7 @@ import com.android.internal.telephony.HbpcdLookup.ArbitraryMccSidMatch;
 
 public final class HbpcdUtils {
     private static final String LOG_TAG = "HbpcdUtils";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
     private ContentResolver resolver = null;
 
     public HbpcdUtils(Context context) {

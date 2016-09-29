@@ -832,16 +832,16 @@ public class DataUsageSummary extends HighlightingFragment implements Indexable 
         mBinding = false;
 
         int seriesColor = resources.getColor(R.color.sim_noitification);
-        //ActionsCode(phchen, BUGFIX: BUG00306752 ),
-        //if (mCurrentTab != null && mCurrentTab.length() > TAB_MOBILE.length() ){
-        //    final int slotId = Integer.parseInt(mCurrentTab.substring(TAB_MOBILE.length(),
-        //            mCurrentTab.length()));
-        //    final SubscriptionInfo sir = com.android.settings.Utils.findRecordBySlotId(context,
-        //            slotId);
-        //    if (sir != null) {
-        //        seriesColor = sir.getIconTint();
-        //    }
-        //}
+        if (mCurrentTab != null && mCurrentTab.length() > TAB_MOBILE.length() ){
+            final int slotId = Integer.parseInt(mCurrentTab.substring(TAB_MOBILE.length(),
+                    mCurrentTab.length()));
+            final SubscriptionInfo sir = com.android.settings.Utils.findRecordBySlotId(context,
+                    slotId);
+
+            if (sir != null) {
+                seriesColor = sir.getIconTint();
+            }
+        }
 
         final int secondaryColor = Color.argb(127, Color.red(seriesColor), Color.green(seriesColor),
                 Color.blue(seriesColor));

@@ -50,7 +50,7 @@ import java.util.Locale;
  */
 public class CallerInfo {
     private static final String TAG = "CallerInfo";
-    private static final boolean VDBG = Rlog.isLoggable(TAG, Log.VERBOSE);
+    private static final boolean VDBG = true;//Rlog.isLoggable(TAG, Log.VERBOSE);
 
     /**
      * Please note that, any one of these member variables can be null,

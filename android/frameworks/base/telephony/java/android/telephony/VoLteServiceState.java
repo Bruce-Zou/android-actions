@@ -29,7 +29,7 @@ import android.telephony.Rlog;
 public final class VoLteServiceState implements Parcelable {
 
     private static final String LOG_TAG = "VoLteServiceState";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
     //Use int max, as -1 is a valid value in signal strength
     public static final int INVALID = 0x7FFFFFFF;

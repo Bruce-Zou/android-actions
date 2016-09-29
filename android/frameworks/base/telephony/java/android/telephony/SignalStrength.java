@@ -28,7 +28,7 @@ import android.content.res.Resources;
 public class SignalStrength implements Parcelable {
 
     private static final String LOG_TAG = "SignalStrength";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
     /** @hide */
     public static final int SIGNAL_STRENGTH_NONE_OR_UNKNOWN = 0;
@@ -377,7 +377,6 @@ public class SignalStrength implements Parcelable {
         mLteRsrq = ((mLteRsrq >= 3) && (mLteRsrq <= 20)) ? -mLteRsrq : SignalStrength.INVALID;
         mLteRssnr = ((mLteRssnr >= -200) && (mLteRssnr <= 300)) ? mLteRssnr
                 : SignalStrength.INVALID;
-        mLteRssnr = (mLteRssnr == -1) ? SignalStrength.INVALID : mLteRssnr;  //by alic-20150415.  
         // Cqi no change
         if (DBG) log("Signal after validate=" + this);
     }

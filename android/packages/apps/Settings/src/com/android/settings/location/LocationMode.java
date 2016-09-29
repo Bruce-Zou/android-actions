@@ -80,16 +80,16 @@ public class LocationMode extends LocationSettingsBase
         mBatterySaving.setOnClickListener(this);
 
 	//ActionsCode(phchen, BUGFIX: BUG00253042 ), 
-		if ((!getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) 
+	/*	if ((!getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) 
 			|| (SystemProperties.getBoolean("ro.settings.support.gps", false) == false)){
 
 			root.removePreference(root.findPreference(KEY_HIGH_ACCURACY));
 			root.removePreference(root.findPreference(KEY_SENSORS_ONLY));
 		}
-		else{
+		else{*/
 			mHighAccuracy.setOnClickListener(this);
 			mSensorsOnly.setOnClickListener(this);
-		}
+		//}
 
         refreshLocationMode();
         return root;

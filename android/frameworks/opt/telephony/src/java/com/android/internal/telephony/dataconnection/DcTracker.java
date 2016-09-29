@@ -2758,11 +2758,7 @@ public final class DcTracker extends DcTrackerBase {
         }
 
         IccRecords newIccRecords = getUiccRecords(UiccController.APP_FAM_3GPP);
-        //actions_code(lichenchen, for cdma2000)
-        if (newIccRecords == null){
-            if (DBG) log("newIccRecords is in APP_FAM_3GPP2");
-            newIccRecords = mUiccController.getIccRecords(mPhone.getPhoneId(), UiccController.APP_FAM_3GPP2);
-        }
+
         IccRecords r = mIccRecords.get();
         if (r != newIccRecords) {
             if (r != null) {

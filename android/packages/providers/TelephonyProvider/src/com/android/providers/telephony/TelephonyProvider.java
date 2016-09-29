@@ -60,7 +60,7 @@ public class TelephonyProvider extends ContentProvider
 {
     private static final String DATABASE_NAME = "telephony.db";
     private static final boolean DBG = true;
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
 
     private static final int DATABASE_VERSION = 13 << 16;
     private static final int URL_UNKNOWN = 0;

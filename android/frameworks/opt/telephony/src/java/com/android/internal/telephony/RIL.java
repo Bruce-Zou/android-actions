@@ -484,9 +484,6 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             int retryCount = 0;
             String rilSocket = "rild";
 
-            //actions_code(lichenchen, After reboot pad 3g dongle don't work!)
-            SystemProperties.set("so.3g.ready", "1");
-
             try {for (;;) {
                 LocalSocket s = null;
                 LocalSocketAddress l;

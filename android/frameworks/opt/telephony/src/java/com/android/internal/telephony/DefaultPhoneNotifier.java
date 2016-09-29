@@ -44,7 +44,7 @@ import java.util.List;
  */
 public class DefaultPhoneNotifier implements PhoneNotifier {
     private static final String LOG_TAG = "DefaultPhoneNotifier";
-    private static final boolean DBG = false; // STOPSHIP if true
+    private static final boolean DBG = true; // STOPSHIP if true
 
     protected ITelephonyRegistry mRegistry;
 

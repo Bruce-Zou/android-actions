@@ -24,8 +24,6 @@ import android.os.Binder;
 import android.os.RemoteException;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.Rlog;
-//actions_code(phchen & lichenchen, for cts)
-import android.os.SystemProperties;
 
 import com.android.internal.telephony.uicc.IsimRecords;
 import com.android.internal.telephony.uicc.UiccCard;
@@ -34,7 +32,7 @@ import com.android.internal.telephony.uicc.UiccCardApplication;
 public class PhoneSubInfo {
     static final String LOG_TAG = "PhoneSubInfo";
     private static final boolean DBG = true;
-    private static final boolean VDBG = false; // STOPSHIP if true
+    private static final boolean VDBG = true; // STOPSHIP if true
 
     private Phone mPhone;
     private Context mContext;
@@ -94,11 +92,6 @@ public class PhoneSubInfo {
      */
     public String getDeviceSvn() {
         mContext.enforceCallingOrSelfPermission(READ_PHONE_STATE, "Requires READ_PHONE_STATE");
-		//actions_code(phchen & lichenchen, for cts)
-        if (SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-        {
-        	return null;
-        }//end
         return mPhone.getDeviceSvn();
     }
 

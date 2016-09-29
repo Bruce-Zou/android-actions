@@ -39,7 +39,7 @@ import com.android.internal.telephony.HbpcdLookup.MccSidRange;
 import com.android.internal.telephony.HbpcdLookup.NanpAreaCode;
 
 public class HbpcdLookupProvider extends ContentProvider {
-    private static boolean DBG = false;
+    private static boolean DBG = true;
     private static final String TAG = "HbpcdLookupProvider";
 
     public static final String TABLE_MCC_IDD = "mcc_idd";

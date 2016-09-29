@@ -60,7 +60,7 @@ public final class CallManager {
 
     private static final String LOG_TAG ="CallManager";
     private static final boolean DBG = true;
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
 
     private static final int EVENT_DISCONNECT = 100;
     private static final int EVENT_PRECISE_CALL_STATE_CHANGED = 101;
@@ -440,10 +440,11 @@ public final class CallManager {
                         phone.getPhoneName() + " " + phone + ")");
             }
 
-            Phone vPhone = basePhone.getImsPhone();
-            if (vPhone != null) {
-               unregisterPhone(vPhone);
-            }
+            // ImsPhone is unregistered in PhoneBase.updateImsPhone()
+            //Phone vPhone = basePhone.getImsPhone();
+            //if (vPhone != null) {
+            //   unregisterPhone(vPhone);
+            //}
 
             mPhones.remove(basePhone);
             mRingingCalls.remove(basePhone.getRingingCall());

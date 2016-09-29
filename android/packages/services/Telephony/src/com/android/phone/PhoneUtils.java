@@ -71,10 +71,10 @@ import java.util.List;
  */
 public class PhoneUtils {
     private static final String LOG_TAG = "PhoneUtils";
-    private static final boolean DBG = (PhoneGlobals.DBG_LEVEL >= 2);
+    private static final boolean DBG = true;//(PhoneGlobals.DBG_LEVEL >= 2);
 
     // Do not check in with VDBG = true, since that may write PII to the system log.
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
 
     /** Control stack trace for Audio Mode settings */
     private static final boolean DBG_SETAUDIOMODE_STACK = false;

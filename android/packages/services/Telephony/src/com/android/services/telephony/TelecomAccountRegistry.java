@@ -47,7 +47,7 @@ import java.util.List;
  * removal of SIMs and SIP accounts.
  */
 final class TelecomAccountRegistry {
-    private static final boolean DBG = false; /* STOP SHIP if true */
+    private static final boolean DBG = true; /* STOP SHIP if true */
 
     // This icon is the one that is used when the Slot ID that we have for a particular SIM
     // is not supported, i.e. SubscriptionManager.INVALID_SLOT_ID or the 5th SIM in a phone.

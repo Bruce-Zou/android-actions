@@ -91,7 +91,7 @@ import java.util.TimeZone;
  */
 final class GsmServiceStateTracker extends ServiceStateTracker {
     static final String LOG_TAG = "GsmSST";
-    static final boolean VDBG = false;
+    static final boolean VDBG = true;
     //CAF_MSIM make it private ??
     private static final int EVENT_ALL_DATA_DISCONNECTED = 1001;
     private GSMPhone mPhone;

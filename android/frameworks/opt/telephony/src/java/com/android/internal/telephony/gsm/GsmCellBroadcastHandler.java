@@ -37,7 +37,7 @@ import java.util.Iterator;
  * Handler for 3GPP format Cell Broadcasts. Parent class can also handle CDMA Cell Broadcasts.
  */
 public class GsmCellBroadcastHandler extends CellBroadcastHandler {
-    private static final boolean VDBG = false;  // log CB PDU data
+    private static final boolean VDBG = true;  // log CB PDU data
 
     /** This map holds incomplete concatenated messages waiting for assembly. */
     private final HashMap<SmsCbConcatInfo, byte[][]> mSmsCbPageMap =

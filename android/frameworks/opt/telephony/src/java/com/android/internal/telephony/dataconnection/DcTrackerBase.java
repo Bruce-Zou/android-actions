@@ -78,7 +78,7 @@ import java.util.PriorityQueue;
  */
 public abstract class DcTrackerBase extends Handler {
     protected static final boolean DBG = true;
-    protected static final boolean VDBG = false; // STOPSHIP if true
+    protected static final boolean VDBG = true; // STOPSHIP if true
     protected static final boolean VDBG_STALL = true; // STOPSHIP if true
     protected static final boolean RADIO_TESTS = false;
 
@@ -147,8 +147,7 @@ public abstract class DcTrackerBase extends Handler {
     // 2 min for round trip time
     protected static final int POLL_LONGEST_RTT = 120 * 1000;
     // Default sent packets without ack which triggers initial recovery steps
-	//actions_code(lichenchen, extend watchdog package number)
-    protected static final int NUMBER_SENT_PACKETS_OF_HANG = 1000 * 100;
+    protected static final int NUMBER_SENT_PACKETS_OF_HANG = 10;
     // how long to wait before switching back to default APN
     protected static final int RESTORE_DEFAULT_APN_DELAY = 1 * 60 * 1000;
     // system property that can override the above value

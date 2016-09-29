@@ -87,7 +87,7 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigInteger;
+
 
 /**
  * {@hide}
@@ -98,7 +98,7 @@ public class GSMPhone extends PhoneBase {
     // log.  (Use "adb logcat -b radio" to see them.)
     static final String LOG_TAG = "GSMPhone";
     private static final boolean LOCAL_DEBUG = true;
-    private static final boolean VDBG = false; /* STOPSHIP if true */
+    private static final boolean VDBG = true; /* STOPSHIP if true */
 
     // Key used to read/write current ciphering state
     public static final String CIPHERING_KEY = "ciphering_key";
@@ -1010,123 +1010,15 @@ public class GSMPhone extends PhoneBase {
 
         return ret;
     }
-	//actions_code(ywwang , generate imei identity)
-	public static  String FAKE_IMEI="";
-	public static  String FAKE_IMEI_SV="10";
-	public static final Object fakeSyncObject = new Object();
-	private static class ImeiGenerator {
-		//len of hex char
-		private final int SERAIO_LEN=16;
-		//len of hex char
-		private final static int IMEI_LEN=14;
-		private final static Object synobj =new Object();
-		private static String seriano="";
-		
-		static String generateIMEI(){
-			synchronized(synobj){
-				if("".equals(seriano)){
-					seriano=SystemProperties.get("ro.serialno", "A0DF90F31D8F86C0");
-				}
-			}
-			String result;
-			result=convertToImei(seriano);
-			result+= computeDc(result);
-			return result;
-		}
-		
-		static String generateIMEISV(){
-			return "10";
-		}
-		
-		static String  convertToImei(String serianopara){
-			int len=serianopara.length();
-			//11 bytes, songzhining: fix imei error when len(serialno) > 16
-			String last11;
-			if(len < 11) {
-				last11 = serianopara;
-			}else{
-				last11 = serianopara.substring(len-11);
-			}
-			String imeihigh14=  hexStringToBytes(last11);
-			String imeidc1;
-			int prefixzeronum= IMEI_LEN-imeihigh14.length();
-			for(int i=0; i<prefixzeronum; i++){
-				imeihigh14 ="0"+imeihigh14;
-			}
-		
-			return imeihigh14;
-		}
-		
-		static private  String computeDc(String imei){
-			int len=imei.length();
-			char[] chars = imei.toCharArray();
-			int checksum=0;
-			int achar;
-			
-			for(int i=0; i<len; i++){
-				achar=chars[i]-'0';
-				if(i%2==0){
-					checksum+=achar;
-				}else{
-					achar=achar*2;
-					String acharString=String.valueOf(achar);
-					char[] acharArray = acharString.toCharArray();
-					int sumofachar=0;
-					for(int j=0; j<acharString.length(); j++){
-						sumofachar+=acharArray[j]-'0';
-					}
-					checksum+=sumofachar;
-				}
-			}
-			if(checksum%10==0){
-				checksum=0;
-			}else{
-				checksum=10-checksum%10;
-			}
-			return String.valueOf(checksum);
-		}
-		public static  String  hexStringToBytes(String hexString) {
-			hexString = hexString.toUpperCase();
-			int length = hexString.length();
-			char[] hexChars = hexString.toCharArray();
-			BigInteger result=BigInteger.valueOf(0);
-			
-			for (int i = 0; i < length; i++) {
-				int val=charToByte(hexChars[length-i-1]);
-				BigInteger tmp =BigInteger.valueOf(val);
-				tmp = tmp.shiftLeft(i*4);
-				result=result.add(tmp);
-			}
-			return result.toString();
-		}
-		static byte charToByte(char c) {
-			return (byte) "0123456789ABCDEF".indexOf(c);
-		}
-    }
 
-    //actions_code(ywwang , generate FAKE_IMEI)
     @Override
     public String getDeviceId() {
-        if((mImei==null ||mImei.isEmpty()) 
-                &&(!SystemProperties.get("ro.phone.mode").equals("NO_PHONE"))){
-        			synchronized(fakeSyncObject){
-        			if(FAKE_IMEI.equals("")){
-        					FAKE_IMEI=ImeiGenerator.generateIMEI();
-        				}
-        			return FAKE_IMEI;
-        			}
-        		}else{
-            	return  mImei;
-          }
+        return mImei;
     }
-	//actions_code(ywwang , generate mImeiSv)
-    @Override
-    public String getDeviceSvn() {		
-    		if(mImeiSv==null ||mImeiSv.isEmpty()){
-    			return FAKE_IMEI_SV;
-    		}
-        return mImeiSv;
 
+    @Override
+    public String getDeviceSvn() {
+        return mImeiSv;
     }
 
     @Override

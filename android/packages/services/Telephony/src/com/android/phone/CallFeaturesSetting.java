@@ -101,7 +101,7 @@ public class CallFeaturesSetting extends PreferenceActivity
                 EditPhoneNumberPreference.OnDialogClosedListener,
                 EditPhoneNumberPreference.GetDefaultNumberListener {
     private static final String LOG_TAG = "CallFeaturesSetting";
-    private static final boolean DBG = (PhoneGlobals.DBG_LEVEL >= 2);
+    private static final boolean DBG = true;//(PhoneGlobals.DBG_LEVEL >= 2);
     // STOPSHIP if true. Flag to override behavior default behavior to hide VT setting.
     private static final boolean ENABLE_VT_FLAG = false;
 

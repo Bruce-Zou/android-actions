@@ -27,7 +27,7 @@ import android.view.WindowManager;
  */
 public class PhoneDisplayMessage {
     private static final String LOG_TAG = "PhoneDisplayMessage";
-    private static final boolean DBG = (SystemProperties.getInt("ro.debuggable", 0) == 1);
+    private static final boolean DBG = true;//(SystemProperties.getInt("ro.debuggable", 0) == 1);
 
     /** Display message dialog */
     private static AlertDialog sDisplayMessageDialog = null;

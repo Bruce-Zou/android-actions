@@ -629,9 +629,7 @@ public class CatService extends Handler implements AppInterface {
 
         // Locale Language Setting
         String lang = SystemProperties.get("persist.sys.language");
-        if(null == lang || 0 == lang.length()) {
-            lang = SystemProperties.get("ro.product.locale.language");
-        }
+
         if (lang != null) {
             // tag
             int tag = ComprehensionTlvTag.LANGUAGE.value();

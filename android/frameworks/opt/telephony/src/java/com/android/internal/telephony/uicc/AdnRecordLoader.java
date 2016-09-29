@@ -26,7 +26,7 @@ import android.telephony.Rlog;
 
 public class AdnRecordLoader extends Handler {
     final static String LOG_TAG = "AdnRecordLoader";
-    final static boolean VDBG = false;
+    final static boolean VDBG = true;
 
     //***** Instance Variables
 

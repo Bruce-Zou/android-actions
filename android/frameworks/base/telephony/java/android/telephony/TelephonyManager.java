@@ -1678,15 +1678,7 @@ public class TelephonyManager {
      * Returns the ISO country code equivalent for the SIM provider's country code.
      */
     public String getSimCountryIso() {
-    	//actions_code(lichenchen, for cts)
-		String result = null;
-		result = getSimCountryIso(getDefaultSubscription());
-		
-		if ((result == null || result.length() == 0) && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-			result = "CN";
-		}
-		return result;
+        return getSimCountryIsoForPhone(getDefaultPhone());
     }
 
     /**
@@ -1730,15 +1722,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getSimSerialNumber() {
-	    //actions_code(phchen & lichenchen, for cts)
-        String result = null;
-        result = getSimSerialNumber(getDefaultSubscription());
-        if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-			result = "012345678901234";
-		}
-		return result;
-		
+         return getSimSerialNumber(getDefaultSubscription());
     }
 
     /**
@@ -1812,14 +1796,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getSubscriberId() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
-        result = getSubscriberId(getDefaultSubscription());
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-			result = "012345678901234";
-		}
-		return result;
+        return getSubscriberId(getDefaultSubscription());
     }
 
     /**
@@ -1891,15 +1868,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getLine1Number() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
-        result = getLine1NumberForSubscriber(getDefaultSubscription());
-		
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-			result = "012345678901234";
-		}
-		return result;
+        return getLine1NumberForSubscriber(getDefaultSubscription());
     }
 
     /**
@@ -1983,14 +1952,7 @@ public class TelephonyManager {
      * nobody seems to call this.
      */
     public String getLine1AlphaTag() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
-        result = getLine1AlphaTagForSubscriber(getDefaultSubscription());
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-			result = "012345678901234";
-		}
-		return result;
+        return getLine1AlphaTagForSubscriber(getDefaultSubscription());
     }
 
     /**
@@ -2051,14 +2013,7 @@ public class TelephonyManager {
      * @hide
      */
     public String getMsisdn() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
-        result = getMsisdn(getDefaultSubscription());
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-		    result = "012345678901234";
-		}
-		return result;
+        return getMsisdn(getDefaultSubscription());
     }
 
     /**
@@ -2089,14 +2044,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getVoiceMailNumber() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
-        result = getVoiceMailNumber(getDefaultSubscription());
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-		    result = "012345678901234";
-		}
-		return result;
+        return getVoiceMailNumber(getDefaultSubscription());
     }
 
     /**
@@ -2128,14 +2076,7 @@ public class TelephonyManager {
      * @hide
      */
     public String getCompleteVoiceMailNumber() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
-        result = getCompleteVoiceMailNumber(getDefaultSubscription());
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-		  result = "012345678901234";
-		}
-		return result;
+        return getCompleteVoiceMailNumber(getDefaultSubscription());
     }
 
     /**
@@ -2229,14 +2170,7 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getVoiceMailAlphaTag() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
-        result = getVoiceMailAlphaTag(getDefaultSubscription());
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-		  result = "012345678901234";
-		}
-		return result;
+        return getVoiceMailAlphaTag(getDefaultSubscription());
     }
 
     /**
@@ -2282,21 +2216,14 @@ public class TelephonyManager {
      * @hide
      */
     public String getIsimDomain() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
         try {
-            result = getSubscriberInfo().getIsimDomain();
+            return getSubscriberInfo().getIsimDomain();
         } catch (RemoteException ex) {
-            result = null;
+            return null;
         } catch (NullPointerException ex) {
             // This could happen before phone restarts due to crashing
-            result = null;
+            return null;
         }
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-		    result = "012345678901234";
-		}
-		return result;
     }
 
     /**
@@ -2549,14 +2476,7 @@ public class TelephonyManager {
      * @hide
      */
     public String getCdmaEriText() {
-	    //actions_code(phchen & lichenchen, for cts)
-	    String result = null;
-        result = getCdmaEriText(getDefaultSubscription());
-		if (result == null && !SystemProperties.get("ro.phone.mode", "").equals("NO_PHONE"))
-		{
-		    result = "012345678901234";
-		}
-		return result;
+        return getCdmaEriText(getDefaultSubscription());
     }
 
     /**

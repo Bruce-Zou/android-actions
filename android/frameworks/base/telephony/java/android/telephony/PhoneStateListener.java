@@ -53,7 +53,7 @@ import java.util.List;
  */
 public class PhoneStateListener {
     private static final String LOG_TAG = "PhoneStateListener";
-    private static final boolean DBG = false; // STOPSHIP if true
+    private static final boolean DBG = true; // STOPSHIP if true
 
     /**
      * Stop listening for updates.

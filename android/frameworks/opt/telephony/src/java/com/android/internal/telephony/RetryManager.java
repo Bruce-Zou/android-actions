@@ -74,8 +74,8 @@ import java.util.ArrayList;
  */
 public class RetryManager {
     static public final String LOG_TAG = "RetryManager";
-    static public final boolean DBG = false;
-    static public final boolean VDBG = false;
+    static public final boolean DBG = true;
+    static public final boolean VDBG = true;
 
     /**
      * Retry record with times in milli-seconds

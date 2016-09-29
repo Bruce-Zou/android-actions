@@ -97,7 +97,7 @@ public class LocationSettings extends LocationSettingsBase
         mSwitchBar.show();
 
         //ActionsCode(phchen, BUGFIX: BUG00253042 )
-        Boolean gpsEnabled = SystemProperties.getBoolean("ro.settings.support.gps", false);
+        Boolean gpsEnabled = true;//SystemProperties.getBoolean("ro.settings.support.gps", false);
         if (gpsEnabled) {
             mDefaultLocationMode = android.provider.Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
         } else {

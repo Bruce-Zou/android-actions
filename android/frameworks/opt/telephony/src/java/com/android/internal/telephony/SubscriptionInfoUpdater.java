@@ -253,10 +253,7 @@ public class SubscriptionInfoUpdater extends Handler {
     };
 
     private void handleSimLocked(int slotId, String reason) {
-        //Actions code(author:lichenchen, refresh iccId)
-        //if (mIccId[slotId] != null && mIccId[slotId].equals(ICCID_STRING_FOR_NO_SIM)) {
-        if (mIccId[slotId] != null){
-            logd("handleSimLocked, force clean SIM iccId");
+        if (mIccId[slotId] != null && mIccId[slotId].equals(ICCID_STRING_FOR_NO_SIM)) {
             logd("SIM" + (slotId + 1) + " hot plug in");
             mIccId[slotId] = null;
         }

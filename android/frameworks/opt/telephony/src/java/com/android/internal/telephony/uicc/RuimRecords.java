@@ -231,11 +231,6 @@ public final class RuimRecords extends IccRecords {
         return mImsi.substring(0, 3 + MccTable.smallestDigitsMccForMnc(mcc));
     }
 
-	//actions_code(lichenchen, for cdma2000)
-    @Override
-    public String getOperatorNumeric() {
-        return getRUIMOperatorNumeric();
-    }
     // Refer to ETSI TS 102.221
     private class EfPlLoaded implements IccRecordLoaded {
         @Override

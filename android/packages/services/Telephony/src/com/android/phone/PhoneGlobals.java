@@ -94,8 +94,8 @@ public class PhoneGlobals extends ContextWrapper {
      */
     public static final int DBG_LEVEL = 0;
 
-    private static final boolean DBG =
-            (PhoneGlobals.DBG_LEVEL >= 1) && (SystemProperties.getInt("ro.debuggable", 0) == 1);
+    private static final boolean DBG =true;
+            //(PhoneGlobals.DBG_LEVEL >= 1) && (SystemProperties.getInt("ro.debuggable", 0) == 1);
     private static final boolean VDBG = (PhoneGlobals.DBG_LEVEL >= 2);
 
     // Message codes; see mHandler below.

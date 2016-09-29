@@ -22,7 +22,7 @@ import static com.android.phone.TimeConsumingPreferenceActivity.EXCEPTION_ERROR;
 
 public class CallForwardEditPreference extends EditPhoneNumberPreference {
     private static final String LOG_TAG = "CallForwardEditPreference";
-    private static final boolean DBG = (PhoneGlobals.DBG_LEVEL >= 2);
+    private static final boolean DBG = true;//(PhoneGlobals.DBG_LEVEL >= 2);
 
     private static final String SRC_TAGS[]       = {"{0}"};
     private CharSequence mSummaryOnTemplate;
