@@ -206,7 +206,7 @@
 				gauge_bus_id = <2>;      /*gauge bus id: 0~n*/
 				gauge_id = <1>;      /*0:default gauge, 1:hwgauge*/
 				boot_cap_threshold = <7>;     /*7%,the lowest capacity permitted to boot*/ 
-				support_minicharger = < 1 >;	/* 1:support minicharer  0:do not support minicharger */  
+				support_minicharger = < 0 >;	/* 1:support minicharer  0:do not support minicharger */  
 			};
 		};
 	};
@@ -314,8 +314,8 @@
                         vsync_len = <8>;
                         vmode = <0>;
                 };
-
-*/		
+*/
+		
         };
 
         dsi: dsi@b0220000 {

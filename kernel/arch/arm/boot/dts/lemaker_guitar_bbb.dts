@@ -1136,8 +1136,8 @@ lcd0: lcd0@b02a0000 {
                         vsync_len = <8>;
                         vmode = <0>;
 		};
-
 */
+
 
 	};
 	dsi: dsi@b0220000 {
